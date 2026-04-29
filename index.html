@@ -51,6 +51,7 @@
     .tag-pill { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 6px; border: 1px solid var(--border); background: #f8fafc; cursor: pointer; color: var(--gray); transition: all 0.2s; user-select: none; }
     .tag-pill:hover { border-color: var(--primary); color: var(--primary); }
     .tag-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .tag-reset { font-size: 0.7rem; color: var(--primary); cursor: pointer; font-weight: 700; display: none; align-items: center; gap: 0.2rem; }
     
     #myGrid { flex: 1; width: 100%; }
 
@@ -113,7 +114,10 @@
         </button>
       </div>
     </div>
-    <div id="tag-cloud"></div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div id="tag-cloud"></div>
+      <span id="tag-reset-btn" class="tag-reset" onclick="resetTags()">✕ Effacer les tags</span>
+    </div>
   </div>
 
   <div id="myGrid"></div>
@@ -294,7 +298,20 @@
         selectedTags.add(tag);
         el.classList.add('active');
       }
+      updateTagResetVisibility();
       gridApi.onFilterChanged();
+    }
+
+    function resetTags() {
+      selectedTags.clear();
+      document.querySelectorAll('.tag-pill').forEach(el => el.classList.remove('active'));
+      updateTagResetVisibility();
+      gridApi.onFilterChanged();
+    }
+
+    function updateTagResetVisibility() {
+      const btn = document.getElementById('tag-reset-btn');
+      btn.style.display = selectedTags.size > 0 ? 'flex' : 'none';
     }
 
     function onFilterChanged() {
