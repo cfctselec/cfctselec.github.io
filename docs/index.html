@@ -131,19 +131,23 @@
           valueFormatter: params => params.value ? params.value.replace(/_/g, ' ') : '' },
         { field: "difficulty", headerName: "Niveau", width: 100, sortable: true,
           cellRenderer: params => {
-            const dots = Array.from({length: 5}, (_, i) => `<div class="diff-dot ${i < params.value ? 'fill' : ''}"></div>`).join('');
+            const dots = Array.from({length: 5}, (_, i) => `<div class="diff-dot ${i < params.value ? 'fill' : ''}" style="${i < params.value ? 'background:#f59e0b' : ''}"></div>`).join('');
             return `<div class="diff-bar">${dots}</div>`;
           }
         },
-        { headerName: "Ressources", width: 220, 
+        { headerName: "Ressources", width: 230, 
           cellRenderer: params => {
             const ex = params.data;
             return `
               <div class="ex-actions">
-                <a href="${ex.donnee_url}" target="_blank" download class="ex-link" title="Énoncé" style="color:#2563eb">énoncé</a>
-                <a href="${ex.solution_url}" target="_blank" download class="ex-link" title="Corrigé" style="color:#059669">corrigé</a>
-                ${ex.octave_url ? `<a href="${ex.octave_url}" target="_blank" download class="ex-btn" title="Octave">💻</a>` : ''}
-                ${ex.tex_url ? `<a href="${ex.tex_url}" target="_blank" download class="ex-btn" title="LaTeX">📝</a>` : ''}
+                <a href="${ex.donnee_url}" target="_blank" class="btn-res btn-donnee" title="Ouvrir l'énoncé (PDF)">
+                  <span>📄</span> Énoncé
+                </a>
+                <a href="${ex.solution_url}" target="_blank" class="btn-res btn-solution" title="Ouvrir le corrigé (PDF)">
+                  <span>💡</span> Corrigé
+                </a>
+                ${ex.octave_url ? `<a href="${ex.octave_url}" download class="btn-res btn-source" title="Télécharger Octave (.m)">💻</a>` : ''}
+                ${ex.tex_url ? `<a href="${ex.tex_url}" download class="btn-res btn-source" title="Télécharger LaTeX (.tex)">📝</a>` : ''}
               </div>`;
           }
         }
