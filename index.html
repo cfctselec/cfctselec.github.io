@@ -345,7 +345,10 @@
           // Peupler les tags
           const tags = [...new Set(data.flatMap(d => d.tags || []))].sort();
           const tagCloud = document.getElementById('tag-cloud');
-          tagCloud.innerHTML = tags.map(t => `<span class="tag-pill" onclick="toggleTag('${t}', this)">#${t}</span>`).join('');
+          tagCloud.innerHTML = tags.map(t => {
+            const escapedTag = t.replace(/'/g, "\\'");
+            return `<span class="tag-pill" onclick="toggleTag('${escapedTag}', this)">#${t}</span>`;
+          }).join('');
         });
     });
 
