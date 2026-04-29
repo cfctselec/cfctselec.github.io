@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1200">
   <title>Exercices Électrotechnique / Électronique / Mécanique / Physique /</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
   <!-- AG Grid Scripts & Styles -->
@@ -83,23 +83,6 @@
     .button-green:hover { background: #047857; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2); }
     .button-amber { background: #d97706; }
     .button-amber:hover { background: #b45309; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2); }
-
-    /* Ajustements Mobile */
-    @media (max-width: 768px) {
-      header { padding: 0.5rem 1rem; }
-      h1 { font-size: 1rem; }
-      .subtitle { display: block; font-size: 0.75rem; }
-      .header-buttons { gap: 0.4rem; }
-      .button { padding: 0.35rem 0.6rem; font-size: 0.75rem; }
-      
-      .controls { padding: 0.5rem 1rem; }
-      .filters-bar { flex-direction: column; align-items: stretch; }
-      .filter-group { width: 100%; }
-      .actions-toolbar { width: 100%; justify-content: space-between; }
-      
-      .btn-res { padding: 4px 8px; font-size: 0.7rem; }
-      #tag-cloud { max-height: 60px; }
-    }
   </style>
 </head>
 <body class="ag-theme-alpine">
@@ -139,7 +122,7 @@
     let gridApi;
     let selectedTags = new Set();
 
-    const isMobile = window.innerWidth < 768;
+    const isMobile = false; // Désactive la détection mobile pour garder le layout PC
 
     const gridOptions = {
       columnDefs: [
