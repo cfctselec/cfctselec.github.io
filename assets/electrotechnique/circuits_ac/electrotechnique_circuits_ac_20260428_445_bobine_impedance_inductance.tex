@@ -1,0 +1,225 @@
+% ---
+% filename : ["electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.tex"]
+% id : "electrotechnique_circuits_ac_20260428_445"
+% title : "Bobine, impédance et inductance"
+% domain : "Électrotechnique"
+% subdomain : "Circuits AC"
+% tags : ["bobine", "résistance", "impédance", "inductance", "réactance", "courant alternatif", "ts"]
+% difficulty : 2
+% time_solve : 12
+% has_octave : True
+% octave_files : ["electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+%\usepackage{a4wide}
+\usepackage{microtype}      % Meilleure répartition du texte
+\usepackage{float}          % Positionnement [H]
+\usepackage{needspace}      % Saut conditionnel intelligent
+
+% Éviter les veuves/orphelines (optionnel, à décommenter si besoin)
+% \widowpenalty=10000
+% \clubpenalty=10000
+
+% Espacement vertical flexible
+\raggedbottom
+\setlength{\parskip}{0.5em plus 0.2em minus 0.1em}
+\setlength{\parindent}{0pt}
+
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ + PGFPlots
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+
+\usepackage{sankey}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{28.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\begin{document}
+\unframedsolutions
+\pointsinmargin
+\bracketedpoints
+\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+\begin{questions}
+
+\question En courant continu, on mesure dans une bobine un courant de \qty{0,4}{[\ampere]} sous une tension de \qty{10}{[\volt]}. En courant alternatif, la valeur de l'intensité dans la même bobine est de \qty{2}{[\ampere]} sous une tension de \qty{110}{[\volt]}~/~\qty{50}{[\hertz]}. Calculer les valeurs suivantes~?
+
+\begin{parts}
+	\part[3] La résistance de la bobine.
+	\part[3] L'impédance de la bobine.
+	\part[3] L'inductance de la bobine.
+\end{parts}
+\vspace{0.5em}
+\needspace{55\baselineskip}
+\begin{solution}
+	\begin{align*}
+		U_{DC} &= \qty{10}{[\volt]} \quad ; \quad I_{DC} = \qty{0,4}{[\ampere]} \\[6pt]
+		R &= \dfrac{U_{DC}}{I_{DC}} = \dfrac{\qty{10}{[\volt]}}{\qty{0,4}{[\ampere]}} = \qty{25}{[\ohm]} \\[6pt]
+		U_{AC} &= \qty{110}{[\volt]} \quad ; \quad I_{AC} = \qty{2}{[\ampere]} \\[6pt]
+		Z &= \dfrac{U_{AC}}{I_{AC}} = \dfrac{\qty{110}{[\volt]}}{\qty{2}{[\ampere]}} = \qty{55}{[\ohm]} \\[6pt]
+		X_L &= \sqrt{Z^2 - R^2} = \sqrt{(\qty{55}{})^2 - (\qty{25}{})^2} \\[6pt]
+		X_L &= \sqrt{\qty{3025}{} - \qty{625}{}} = \qty{48,99}{[\ohm]} \\[6pt]
+		L &= \dfrac{X_L}{2 \cdot \pi \cdot f} = \dfrac{\qty{48,99}{[\ohm]}}{2 \cdot \pi \cdot \qty{50}{[\hertz]}} \\[6pt]
+		L &= \qty{0,1559}{[\henry]} = \qty{155,9}{[\milli\henry]} \\[6pt]
+	\end{align*}
+	
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données de l'exercice
+		U_dc = 10;      % Tension continue [V]
+		I_dc = 0.4;     % Courant continu [A]
+		U_ac = 110;     % Tension alternative [V]
+		I_ac = 2;       % Courant alternatif [A]
+		f = 50;         % Fréquence [Hz]
+		
+		% a) Calcul de la résistance R
+		R = U_dc / I_dc;
+		
+		% b) Calcul de l'impédance Z
+		Z = U_ac / I_ac;
+		
+		% c) Calcul de la réactance XL et de l'inductance L
+		Xl = sqrt(Z^2 - R^2);
+		L = Xl / (2 * pi * f);
+		
+		% Affichage des résultats intermédiaires et finaux
+		printf("Resistance de la bobine (DC) : %.2f [Ohm]\n", R);
+		printf("Impedance de la bobine (AC) : %.2f [Ohm]\n", Z);
+		printf("Reactance inductive XL : %.2f [Ohm]\n", Xl);
+		printf("Inductance L calculee : %.4f [H] soit %.2f [mH]\n", L, L*1000);
+	\end{verbatim}
+\end{solution}
+
+	
+\end{questions}
+\end{document}

@@ -1,0 +1,190 @@
+% ---
+% filename : ["electrotechnique_puissance_20260429_901_consommation_chauffe_eau.tex"]
+% id : "electrotechnique_puissance_20260429_901"
+% title : "Consommation énergétique d'un chauffe-eau"
+% domain : "Électrotechnique"
+% subdomain : "Puissance"
+% tags : ["énergie électrique", "puissance", "chauffe-eau", "temps", "kWh", "ts"]
+% difficulty : 1
+% time_solve : 2
+% has_octave : True
+% octave_files : ["electrotechnique_puissance_20260429_901_consommation_chauffe_eau.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+%\usepackage{a4wide}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ + PGFPlots
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+
+\usepackage{sankey}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{29.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\begin{document}
+	
+	
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+	\begin{questions}
+
+\question[3] Un chauffe-eau électrique d'une puissance de \qty{2200}{[\watt]} fonctionne à pleine puissance pendant une durée de \qty{3,5}{[\hour]} pour chauffer un réservoir d'eau. Calculer l'énergie électrique consommée par cet appareil en kilowattheures~?
+
+\begin{solution}
+	\begin{align*}
+		P &= \qty{2200}{[\watt]} = \qty{2,2}{[\kilo\watt]} \\[6pt]
+		t &= \qty{3,5}{[\hour]} \\[6pt]
+		W &= P \cdot t \\[6pt]
+		W &= \qty{2,2}{[\kilo\watt]} \cdot \qty{3,5}{[\hour]} \\[6pt]
+		W &= \qty{7,7}{[\kilo\watt\hour]} \\[6pt]
+	\end{align*}
+	
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données
+		P = 2200;    % Puissance [W]
+		t = 3.5;     % Temps [h]
+		
+		% Calcul
+		W_kwh = (P / 1000) * t;
+		
+		% Affichage
+		printf("Puissance de l'appareil : %.1f [kW]\n", P/1000);
+		printf("Temps de fonctionnement : %.1f [h]\n", t);
+		printf("Énergie consommée : %.2f [kWh]\n", W_kwh);
+	\end{verbatim}
+\end{solution}
+\end{questions}
+\end{document}

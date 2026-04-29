@@ -1,0 +1,262 @@
+% ---
+% filename : ["electrotechnique_circuits_ac_20260428_251_circuit_rc_parallele.tex"]
+% id : "electrotechnique_circuits_ac_20260428_251"
+% title : "Circuit RC parallèle : grandeurs physiques"
+% domain : "Électrotechnique"
+% subdomain : "Circuits AC"
+% tags : ["circuit rc", "parallèle", "impédance", "puissance active", "puissance réactive", "facteur de puissance", "ts"]
+% difficulty : 2
+% time_solve : 16  # Calcul : 2 (difficulté) * (4 questions * 2)
+% has_octave : true
+% octave_files : ["electrotechnique_circuits_ac_20260428_251_circuit_rc_parallele.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% Fichier : preambule_generer_exercice.sty
+%
+% ---------------------------------------------------------
+% LANGUE ET ENCODAGE
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}   % Ajout recommandé (manquait)
+\usepackage[french]{babel} % Ajout pour la langue française
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}      % Meilleure répartition du texte
+\usepackage{float}          % Positionnement [H]
+\usepackage{needspace}      % Saut conditionnel intelligent
+
+% Éviter les veuves/orphelines (optionnel, à décommenter si besoin)
+% \widowpenalty=10000
+% \clubpenalty=10000
+
+% Espacement vertical flexible
+\raggedbottom
+\setlength{\parskip}{0.5em plus 0.2em minus 0.1em}
+\setlength{\parindent}{0pt}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES (TikZ + CircuitikZ + PGFPlots)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% Sankey diagram
+\usepackage{sankey}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}      % Alternative à tabularx (garde les deux, pas de redondance critique)
+\usepackage{booktabs}  % Pour des tableaux propres
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% CODE (LISTINGS)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+% ---------------------------------------------------------
+% MISE EN TEXTE DIVERSES
+% ---------------------------------------------------------
+\usepackage{enumitem}
+\setlist[enumerate]{label=\Alph*)}
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{29.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur de points en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+
+
+
+
+% Options de l'exercice
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+\shadedsolutions
+\unframedsolutions
+
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\renewcommand{\thepartno}{\arabic{partno}}
+\renewcommand{\partlabel}{\thepartno)}
+\begin{document}
+\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+	
+\begin{questions}
+
+\question Un circuit est composé d'un condensateur de capacité $C = \qty{6,37}{[\mu F]}$ monté en parallèle avec une résistance $R = \qty{500}{[\ohm]}$. L'ensemble est alimenté par une tension alternative de $U = \qty{500}{[V]}$ à une fréquence de $f = \qty{50}{[Hz]}$.
+
+Déterminez l'ensemble des grandeurs physiques de ce circuit (courants, impédance, puissances et facteur de puissance).
+\begin{parts}
+	\part[3] Calcul de la réactance capacitive.
+	\part[3] Calcul des intensités des courants dans les branches et du courant total.
+	\part[3] Calcul de l'impédance totale.
+	\part[3] Calcul du facteur de puissance de l'installation.
+	\part[3] Calcul des puissances.
+\end{parts}
+\vspace{0.5em}
+\needspace{50\baselineskip}
+\begin{solution}
+	\begin{parts}
+		\part Calcul de la réactance capacitive $X_C$ :
+		\begin{align*}
+			\omega &= 2 \cdot \pi \cdot f = 2 \cdot \pi \cdot \qty{50}{[Hz]} = \qty{314,16}{[rad/s]} \\[6pt]
+			X_C &= \dfrac{1}{C \cdot \omega} = \dfrac{1}{\qty{6,37e{-6}}{} \cdot \qty{314,16}{}} = \qty{500}{[\ohm]}
+		\end{align*}
+		
+		\part Calcul des intensités des courants dans les branches et du courant total :
+		\begin{align*}
+			I_R &= \dfrac{U}{R} = \dfrac{\qty{500}{[V]}}{\qty{500}{[\ohm]}} = \qty{1}{[A]} \\[6pt]
+			I_C &= \dfrac{U}{X_C} = \dfrac{\qty{500}{[V]}}{\qty{500}{[\ohm]}} = \qty{1}{[A]} \\[6pt]
+			I_{tot} &= \sqrt{I_R^2 + I_C^2} = \sqrt{\qty{1}{[A]}^2 + \qty{1}{[A]}^2} = \qty{1,414}{[A]}
+		\end{align*}
+		
+		\part Calcul de l'impédance totale $Z$ et du facteur de puissance $\cos \varphi$ :
+		\begin{align*}
+			Z &= \dfrac{U}{I_{tot}} = \dfrac{\qty{500}{[V]}}{\qty{1,414}{[A]}} = \qty{353,6}{[\ohm]} \\[6pt]
+			\cos \varphi &= \dfrac{I_R}{I_{tot}} = \dfrac{\qty{1}{[A]}}{\qty{1,414}{[A]}} = \qty{0,707}{}
+		\end{align*}
+		
+		\part Calcul des puissances active $P$, réactive $Q$ et apparente $S$ :
+		\begin{align*}
+			P &= U \cdot I_R = \qty{500}{[V]} \cdot \qty{1}{[A]} = \qty{500}{[W]} \\[6pt]
+			Q &= U \cdot I_C = \qty{500}{[V]} \cdot \qty{1}{[A]} = \qty{500}{[var]} \\[6pt]
+			S &= U \cdot I_{tot} = \qty{500}{[V]} \cdot \qty{1,414}{[A]} = \qty{707}{[VA]}
+		\end{align*}
+	\end{parts}
+	\vspace{0.5em}
+	\needspace{30\baselineskip}
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données du problème
+		U = 500;        % Tension [V]
+		R = 500;        % Résistance [Ohm]
+		C = 6.37e-6;    % Capacité [F]
+		f = 50;         % Fréquence [Hz]
+		
+		% Calculs intermédiaires
+		omega = 2 * pi * f;
+		printf('Pulsation omega = %.2f rad/s\n', omega);
+		
+		Xc = 1 / (C * omega);
+		printf('Réactance capacitive Xc = %.2f Ohm\n', Xc);
+		
+		% Intensités
+		Ir = U / R;
+		Ic = U / Xc;
+		Itot = sqrt(Ir^2 + Ic^2);
+		printf('Courant Ir = %.2f A, Ic = %.2f A, Itot = %.3f A\n', Ir, Ic, Itot);
+		
+		% Impédance et facteur de puissance
+		Z = U / Itot;
+		cos_phi = Ir / Itot;
+		printf('Impédance Z = %.2f Ohm, cos(phi) = %.3f\n', Z, cos_phi);
+		
+		% Puissances
+		P = U * Ir;
+		Q = U * Ic;
+		S = U * Itot;
+		printf('Puissance P = %.2f W, Q = %.2f var, S = %.2f VA\n', P, Q, S);
+	\end{verbatim}
+\end{solution}
+
+\end{questions}
+\end{document}

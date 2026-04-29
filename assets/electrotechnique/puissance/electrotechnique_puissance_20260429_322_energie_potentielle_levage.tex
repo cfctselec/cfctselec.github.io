@@ -1,0 +1,205 @@
+% ---
+% filename : ["electrotechnique_puissance_20260429_322_energie_potentielle_levage.tex"]
+% id : "electrotechnique_puissance_20260429_322"
+% title : "Énergie potentielle de levage"
+% domain : "Électrotechnique"
+% subdomain : "Puissance"
+% tags : ["énergie potentielle", "travail", "mécanique", "levage", "gravité", "joule", "masse", "ts"]
+% difficulty : 1
+% time_solve : 2  # Calcul : 1 (difficulte) * (1 question * 2)
+% has_octave : true
+% octave_files : ["electrotechnique_puissance_20260429_322_energie_potentielle_levage.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+%\usepackage{a4wide}
+\usepackage{microtype}      % Meilleure répartition du texte
+\usepackage{float}          % Positionnement [H]
+\usepackage{needspace}      % Saut conditionnel intelligent
+
+% Éviter les veuves/orphelines (optionnel, à décommenter si besoin)
+% \widowpenalty=10000
+% \clubpenalty=10000
+
+% Espacement vertical flexible
+\raggedbottom
+\setlength{\parskip}{0.5em plus 0.2em minus 0.1em}
+\setlength{\parindent}{0pt}
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ + PGFPlots
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+
+\usepackage{sankey}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{29.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\begin{document}
+	
+	
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+	\begin{questions}
+
+\question[6] Un monte-charge doit élever une palette de \qty{650}{[\kilo\gram]} à une hauteur de \qty{12}{[\meter]}. En négligeant les frottements, calculer l'énergie mécanique (travail) nécessaire pour effectuer ce déplacement. On utilisera $g = \qty{9,81}{[\meter/\second^2]}$~?
+\vspace{0.5em}
+\needspace{55\baselineskip}
+\begin{solution}
+	\begin{align*}
+		m &= \qty{650}{[\kilo\gram]} \\[6pt]
+		g &= \qty{9,81}{[\meter/\second^2]} \\[6pt]
+		h &= \qty{12}{[\meter]} \\[6pt]
+		W_p &= m \cdot g \cdot h \\[6pt]
+		W_p &= \qty{650}{[\kilo\gram]} \cdot \qty{9,81}{[\meter/\second^2]} \cdot \qty{12}{[\meter]} \\[6pt]
+		W_p &= \qty{76518}{[\joule]} = \qty{76,52}{[\kilo\joule]} \\[6pt]
+	\end{align*}
+	
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données
+		m = 650;     % Masse [kg]
+		g = 9.81;    % Gravité [m/s^2]
+		h = 12;      % Hauteur [m]
+		
+		% Calcul
+		Wp = m * g * h;
+		
+		% Affichage
+		printf("Masse de la charge : %.0f [kg]\n", m);
+		printf("Hauteur de levage : %.0f [m]\n", h);
+		printf("Énergie potentielle (travail) : %.2f [J]\n", Wp);
+		printf("Soit : %.2f [kJ]\n", Wp / 1000);
+	\end{verbatim}
+\end{solution}
+\end{questions}
+\end{document}
