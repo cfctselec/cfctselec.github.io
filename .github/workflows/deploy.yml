@@ -1,0 +1,38 @@
+name: 🚀 Build & Deploy Exercices
+
+on:
+  push:
+    branches: [main]
+    paths: ['contributions/**', 'scripts/**', 'docs/index.html']
+  workflow_dispatch:
+
+env:
+  ENABLE_GEMINI: ${{ secrets.ENABLE_GEMINI || 'true' }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11', cache: 'pip'}
+      
+      - run: pip install pyyaml google-genai
+      
+      - name: 📊 Extraction & Enrichissement
+        run: python scripts/process_exercises.py
+        continue-on-error: true  # Déploiement même si Gemini échoue
+      
+      - name: 📤 Déploiement GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          keep_files: false

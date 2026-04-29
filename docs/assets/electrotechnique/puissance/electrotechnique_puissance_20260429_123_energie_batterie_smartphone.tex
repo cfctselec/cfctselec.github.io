@@ -1,0 +1,201 @@
+% ---
+% filename : ["electrotechnique_puissance_20260429_123_energie_batterie_smartphone.tex"]
+% id : "electrotechnique_puissance_20260429_123"
+% title : "Énergie stockée dans une batterie de smartphone"
+% domain : "Électrotechnique"
+% subdomain : "Puissance"
+% tags : ["batterie", "capacité", "énergie électrique", "conversion d'unité", "kWh", "ts"]
+% difficulty : 1
+% time_solve : 4
+% has_octave : True
+% octave_files : ["electrotechnique_puissance_20260429_123_energie_batterie_smartphone.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+%\usepackage{a4wide}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ + PGFPlots
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+
+\usepackage{sankey}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{29.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\begin{document}
+	
+	
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+	\begin{questions}
+
+\question La batterie d'un smartphone récent possède une capacité de \qty{4500}{[\milli\ampere\hour]} sous une tension nominale de \qty{3,8}{[\volt]}.
+\begin{parts}
+	\part[3] Calculer l'énergie stockée dans cette batterie en wattheures~?
+	\part[3] Convertir cette énergie en joules~?
+\end{parts}
+
+\begin{solution}
+	\begin{align*}
+		\text{a) Calcul de l'énergie en wattheures (Wh) :} & \\[6pt]
+		Q &= \qty{4500}{[\milli\ampere\hour]} = \qty{4,5}{[\ampere\hour]} \\[6pt]
+		U &= \qty{3,8}{[\volt]} \\[6pt]
+		W &= U \cdot Q = \qty{3,8}{[\volt]} \cdot \qty{4,5}{[\ampere\hour]} \\[6pt]
+		W &= \qty{17,1}{[\watt\hour]} \\[6pt]
+		\text{b) Conversion en joules (J) :} & \\[6pt]
+		\text{Sachant que } \qty{1}{[\watt\hour]} &= \qty{3600}{[\joule]} \\[6pt]
+		W_{joules} &= W \cdot 3600 = \qty{17,1}{[\watt\hour]} \cdot 3600 \\[6pt]
+		W_{joules} &= \qty{61560}{[\joule]} \\[6pt]
+	\end{align*}
+	
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données
+		Q_mah = 4500;    % Capacité en mAh
+		U = 3.8;         % Tension nominale [V]
+		
+		% Calculs
+		Q_ah = Q_mah / 1000;
+		W_wh = U * Q_ah;
+		W_j = W_wh * 3600;
+		
+		% Affichage
+		printf("Capacité : %.1f [Ah]\n", Q_ah);
+		printf("Énergie stockée : %.2f [Wh]\n", W_wh);
+		printf("Énergie stockée : %.0f [J]\n", W_j);
+	\end{verbatim}
+\end{solution}
+\end{questions}
+\end{document}

@@ -1,0 +1,281 @@
+% ---
+% filename : ["electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.tex"]
+% id : "electrotechnique_circuits_dc_20260429_154"
+% title : "Courant dans un circuit mixte de résistances"
+% domain : "Électrotechnique"
+% subdomain : "Circuits DC"
+% tags : ["circuits dc", "résistance", "loi d'Ohm", "circuit mixte", "groupement parallèle", "groupement série", "ts"]
+% difficulty : 2
+% time_solve : 4  # Calcul : 2 (difficulte) * (1 question * 2)
+% has_octave : true
+% octave_files : ["electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+%\usepackage{a4wide}
+\usepackage{microtype}      % Meilleure répartition du texte
+\usepackage{float}          % Positionnement [H]
+\usepackage{needspace}      % Saut conditionnel intelligent
+
+% Éviter les veuves/orphelines (optionnel, à décommenter si besoin)
+% \widowpenalty=10000
+% \clubpenalty=10000
+
+% Espacement vertical flexible
+\raggedbottom
+\setlength{\parskip}{0.5em plus 0.2em minus 0.1em}
+\setlength{\parindent}{0pt}
+
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ + PGFPlots
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+
+\usepackage{sankey}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{29.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\begin{document}
+	
+
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+
+\begin{questions}\question[9]
+% Un micro-réseau de distribution industrielle est modélisé par le schéma de résistances ci-dessous. Les câbles et les récepteurs forment un circuit complexe. Calculer l'intensité du courant total $I$ circulant dans le circuit lorsqu'une tension de \qty{230}{[\volt]} est appliquée entre la borne d'entrée (point D) et la borne de sortie (point C)~?
+	Dans une armoire de distribution, plusieurs barres de cuivre et traverses métalliques sont modélisées par un circuit de résistances.  
+%	On applique une tension de $\qty{230}{[\volt]}$ entre la barre principale $D$ et la barre de retour $C$.
+%		Le réseau de barres est modélisé par le schéma ci-dessous vu entre $D$ et $C$~:
+		Calculer l'intensité du courant total $I$ circulant dans le circuit lorsqu'une tension de \qty{230}{[\volt]} est appliquée entre la borne d'entrée (point D) et la borne de sortie (point C)~?
+\begin{center}
+	\fbox{
+		\begin{minipage}{0.85\linewidth}
+			\textbf{Valeurs des résistances~:}
+			\begin{align*}
+				R_1 &= \qty{60}{[\ohm]}  & R_6 &= \qty{120}{[\ohm]} \\
+				R_2 &= \qty{35}{[\ohm]}  & R_7 &= \qty{460}{[\ohm]} \\
+				R_3 &= \qty{35}{[\ohm]}  & R_8 &= \qty{20}{[\ohm]}  \\
+				R_4 &= \qty{80}{[\ohm]}  & R_9 &= \qty{1500}{[\ohm]} \\
+				R_5 &= \qty{120}{[\ohm]} & R_{10} &= \qty{850}{[\ohm]}
+			\end{align*}
+			
+		\end{minipage}
+	}
+\end{center}
+\begin{center}
+\begin{circuitikz}[scale=1,thick]
+	% Entree D et premier segment
+	%	\draw (0,0) node[left] {D} to[short, -*] (0.5,0);
+	%	\draw (0.5,0) to[R, l=$R_7$] (2.5,0);
+	
+	% Branche superieure (R3 + R2 + R5)
+	\draw (2.5,0) -- (2.5,1.5);
+	\draw (2.5,1.5) to[R, l=$R_3$] (4.5,1.5);
+	\draw (4.5,1.5) to[R, l=$R_2$] (6.5,1.5);
+	\draw (6.5,1.5) to[R, l=$R_5$] (8.5,1.5);
+	\draw (8.5,1.5) -- (8.5,0);
+	
+	% Branche inferieure (R6)
+	\draw (2.5,0) -- (2.5,-1.5);
+	\draw (2.5,-1.5) to[R, l=$R_6$] (8.5,-1.5);
+	\draw (8.5,-1.5) -- (8.5,0);
+	
+	% Sortie R8 et R10
+	\draw (8.5,0) to[R, l=$R_8$] (10.5,0);
+	\draw (10.5,0) to[R, l=$R_{10}$,-o] (13.5,0) node[right] {C};
+
+	\draw (0,0) node[left] {D} to[R,l=$R_7$, o-] (2.5,0);
+
+	% Branches ouvertes
+	\draw (4.5,1.5) to[R, l=$R_4$,-o] (4.5,4.5) node[above] {T};
+	\draw (6.5,1.5) to[R, l=$R_1$,-o] (6.5,4.5) node[above] {A};
+	\draw (10.75,0) to[R, l=$R_9$,-o] (10.75,-3) node[below] {B};
+	
+	\draw (0,-5) to[V, l_=$U_{DC}$, v={$230[V]$}] (13.5,-5);
+	\draw (0,-5) to[short,-o] (0,0);
+	\draw (13.5,-5) to[short,-o] (13.5,0);
+\end{circuitikz}
+\end{center}
+\vspace{0.5em}
+\needspace{55\baselineskip}
+\begin{solution}
+	L'analyse du chemin parcouru par le courant entre les points D et C permet d'identifier les résistances actives dans le circuit. Les branches aboutissant aux points A et B ainsi que la résistance $R_4$ sont en circuit ouvert par rapport au trajet D-C.
+	
+	\begin{align*}
+		\text{Le trajet actif est le suivant : } &D \to R_7 \to (R_6 // (R_3 + R_2 + R_5)) \to R_8 \to R_{10} \to C \\[6pt]
+		R_{branche\_gauche} &= R_3 + R_2 + R_5 = \qty{35}{[\ohm]} + \qty{35}{[\ohm]} + \qty{120}{[\ohm]} = \qty{190}{[\ohm]} \\[6pt]
+		R_{parallel} &= \dfrac{1}{\dfrac{1}{R_{branche\_gauche}} + \dfrac{1}{R_6}} = \dfrac{1}{\dfrac{1}{\qty{190}{[\ohm]}} + \dfrac{1}{\qty{120}{[\ohm]}}} \\[6pt]
+		R_{parallel} &= \qty{73,55}{[\ohm]} \\[6pt]
+		\text{2. Calcul de la résistance équivalente totale } (R_{equ}) \text{ :} \\[6pt]
+		R_{equ} &= R_7 + R_{parallel} + R_8 + R_{10} \\[6pt]
+		R_{equ} &= \qty{460}{[\ohm]} + \qty{73,55}{[\ohm]} + \qty{20}{[\ohm]} + \qty{850}{[\ohm]} = \qty{1403,55}{[\ohm]} \\[6pt]
+		\text{3. Calcul de l'intensité du courant } (I) \text{ :} \\[6pt]
+		I &= \dfrac{U}{R_{equ}} = \dfrac{\qty{230}{[\volt]}}{\qty{1403,55}{[\ohm]}} \\[6pt]
+		I &= \qty{0,16386}{[\ampere]} = \qty{163,86}{[\milli\ampere]} \\[6pt]
+	\end{align*}
+	\vspace{0.5em}
+	\needspace{55\baselineskip}
+	
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données
+		U = 230;            % Tension appliquee entre D et C [V]
+		R7 = 460;           % Resistance segment entree [Ohm]
+		R3 = 35;            % Resistance segment derivation 1 [Ohm]
+		R2 = 35;            % Resistance segment derivation 2 [Ohm]
+		R5 = 120;           % Resistance segment derivation 3 [Ohm]
+		R6 = 120;           % Resistance charge en parallele [Ohm]
+		R8 = 20;            % Resistance segment de liaison [Ohm]
+		R10 = 850;          % Resistance segment sortie [Ohm]
+		
+		% Calcul de la branche en derivation
+		R_br = R3 + R2 + R5;
+		% Calcul du groupement mixte parallele
+		R_par = 1 / (1/R_br + 1/R6);
+		
+		% Resistance totale du circuit de distribution
+		Requ = R7 + R_par + R8 + R10;
+		
+		% Intensite du courant total par la loi d'Ohm
+		I = U / Requ;
+		
+		% Affichage detaille des etapes de calcul
+		printf("Resistance de la branche en derivation : %.2f [Ohm]\n", R_br);
+		printf("Resistance equivalente du bloc parallele : %.2f [Ohm]\n", R_par);
+		printf("Resistance totale equivalente (D-C) : %.2f [Ohm]\n", Requ);
+		printf("Courant total circulant : %.4f [A] soit %.2f [mA]\n", I, I*1000);
+	\end{verbatim}
+	\end{solution}
+\end{questions}
+\end{document}

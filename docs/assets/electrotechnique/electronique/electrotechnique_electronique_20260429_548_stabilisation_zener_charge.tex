@@ -1,0 +1,240 @@
+% ---
+% filename : ["electrotechnique_electronique_20260429_548_stabilisation_zener_charge.tex"]
+% id : "electrotechnique_electronique_20260429_548"
+% title : "Stabilisation de tension par diode Zener"
+% domain : "Électrotechnique"
+% subdomain : "Électronique"
+% tags : ["diode zener", "stabilisation", "résistance", "puissance", "loi d'Ohm", "ts"]
+% difficulty : 2
+% time_solve : 20  # Calcul : 2 (difficulte) * (5 questions * 2)
+% has_octave : true
+% octave_files : ["electrotechnique_electronique_20260429_548_stabilisation_zener_charge.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+%\usepackage{a4wide}
+\usepackage{microtype}      % Meilleure répartition du texte
+\usepackage{float}          % Positionnement [H]
+\usepackage{needspace}      % Saut conditionnel intelligent
+
+% Éviter les veuves/orphelines (optionnel, à décommenter si besoin)
+% \widowpenalty=10000
+% \clubpenalty=10000
+
+% Espacement vertical flexible
+\raggedbottom
+\setlength{\parskip}{0.5em plus 0.2em minus 0.1em}
+\setlength{\parindent}{0pt}
+
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ + PGFPlots
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+
+\usepackage{sankey}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{29.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\begin{document}
+\unframedsolutions
+\pointsinmargin
+\bracketedpoints
+
+\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+
+\begin{questions}
+\question
+On considère le montage ci-dessous (stabilisateur de tension) constitué d'une résistance série\\ $R_V = \qty{100}{[\Omega]}$, d'une diode Zener de tension $U_Z = \qty{6,2}{[V]}$ et d'une résistance de charge $R_L = \qty{220}{[\Omega]}$. La tension d'entrée est de $U_1 = \qty{12}{[V]}$. 
+
+\begin{center}
+
+	\begin{circuitikz}
+		\draw (0,2) to[short, o-] (0.5,2);
+		\draw (0,2) to[R, l^=$R_V$, current/distance = -1.7, i=$I_{Rv}$, o-] (3,2);
+		\draw (3,2) to[short, -o] (5,2);
+		\draw (3,0) to[zD*, l=$U_Z$, i^<=$I_Z$] (3,2);
+		\draw (4.5,2) to[R, l_=$R_L$] (4.5,0);
+		\draw (0,0) to[short, o-o] (5,0);
+		\draw[->, >=stealth] (0,1.9) -- (0,0.1) node[midway, left] {$U_1$};
+		\draw[->, >=stealth] (5,1.9) -- (5,0.1) node[midway, right] {$U_2$};
+	\end{circuitikz}
+\end{center}
+
+\begin{parts}
+	\part[3] Calculer la tension de sortie $U_2$ aux bornes de la charge $R_L$.
+	\part[3] Déterminer l'intensité du courant $I_{Rv}$ circulant dans la résistance de protection $R_V$. 
+	\part[3] Déterminer l'intensité du courant $I_L$ absorbée par la charge. 
+	\part[3] En déduire l'intensité du courant $I_Z$ qui traverse la diode Zener. 
+	\part[3] Calculer la puissance $P_Z$ dissipée par la diode Zener. 
+\end{parts}
+\vspace{0.5em}
+\needspace{55\baselineskip}
+\begin{solution}
+	\begin{align*}
+		a) \quad \text{Comme } &U_1 > U_Z \text{, la diode Zener est passante et stabilise la tension.}\\
+		U_2 = U_Z = \qty{6,2}{[V]} \\[6pt]
+		b) \quad I_{Rv} &= \dfrac{U_1 - U_2}{R_V} = \dfrac{12 - 6,2}{100} = \qty{0,058}{[A]} = \qty{58}{[mA]} \\[6pt]
+		c) \quad I_L &= \dfrac{U_2}{R_L} = \dfrac{6,2}{220} = \qty{0,0282}{[A]} = \qty{28,2}{[mA]} \\[6pt]
+		d) \quad I_Z &= I_{Rv} - I_L = 58 - 28,2 = \qty{29,8}{[mA]} \\[6pt]
+		e) \quad P_Z &= U_Z \cdot I_Z = 6,2 \cdot 0,0298 = \qty{0,1848}{[W]} = \qty{184,8}{[mW]} \\
+	\end{align*}
+
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		U1 = 12;    % [V] Tension d'entrée
+		Rv = 100;   % [Ohm] Résistance série
+		Uz = 6.2;   % [V] Tension Zener
+		Rl = 220;   % [Ohm] Résistance de charge
+		
+		% a) Tension de sortie
+		U2 = Uz;
+		printf("a) Tension de sortie : U2 = %.2f [V]\n", U2);
+		
+		% b) Courant dans la résistance série
+		Irv = (U1 - U2) / Rv;
+		printf("b) Courant Irv : Irv = %.4f [A] (%.2f [mA])\n", Irv, Irv*1000);
+		
+		% c) Courant dans la charge
+		Il = U2 / Rl;
+		printf("c) Courant charge Il : Il = %.4f [A] (%.2f [mA])\n", Il, Il*1000);
+		
+		% d) Courant dans la Zener
+		Iz = Irv - Il;
+		printf("d) Courant Zener Iz : Iz = %.4f [A] (%.2f [mA])\n", Iz, Iz*1000);
+		
+		% e) Puissance Zener
+		Pz = Uz * Iz;
+		printf("e) Puissance dissipee Pz : Pz = %.4f [W] (%.2f [mW])\n", Pz, Pz*1000);
+	\end{verbatim}
+	\end{solution}
+\end{questions}
+\end{document}

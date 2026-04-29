@@ -1,0 +1,609 @@
+% ---
+% filename : ["electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.tex"]
+% id : "electrotechnique_triphase_20260429_410"
+% title : "Calcul du courant de neutre en régime triphasé déséquilibré"
+% domain : "Électrotechnique"
+% subdomain : "Triphasé"
+% tags : ["triphasé", "courant de neutre", "addition vectorielle", "loi des nœuds", "déséquilibre", "ts"]
+% difficulty : 2
+% time_solve : 20  # Calcul : 2 (difficulte) * (5 etapes de calcul * 2)
+% has_octave : true
+% octave_files : ["electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% Fichier : preambule_generer_exercice.sty
+% ---------------------------------------------------------
+% LANGUE ET ENCODAGE
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}   % Ajout recommandé (manquait)
+\usepackage[french]{babel} % Ajout pour la langue française
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}      % Meilleure répartition du texte
+\usepackage{float}          % Positionnement [H]
+\usepackage{needspace}      % Saut conditionnel intelligent
+
+% Éviter les veuves/orphelines (optionnel, à décommenter si besoin)
+% \widowpenalty=10000
+% \clubpenalty=10000
+
+% Espacement vertical flexible
+\raggedbottom
+\setlength{\parskip}{0.5em plus 0.2em minus 0.1em}
+\setlength{\parindent}{0pt}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES (TikZ + CircuitikZ + PGFPlots)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% Sankey diagram
+\usepackage{sankey}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}      % Alternative à tabularx (garde les deux, pas de redondance critique)
+\usepackage{booktabs}  % Pour des tableaux propres
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% CODE (LISTINGS)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+% ---------------------------------------------------------
+% MISE EN TEXTE DIVERSES
+% ---------------------------------------------------------
+\usepackage{enumitem}
+\setlist[enumerate]{label=\Alph*)}
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{29.04.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur de points en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+
+
+
+
+% Options de l'exercice
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+\shadedsolutions
+\unframedsolutions
+
+% ---------------------------------------------------------
+% DOCUMENT
+% ---------------------------------------------------------
+\renewcommand{\thepartno}{\arabic{partno}}
+\renewcommand{\partlabel}{\thepartno)}
+\begin{document}
+\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+
+\begin{questions}
+
+\question Dans une boulangerie, on étudie le courant circulant dans le conducteur neutre d'une installation triphasée $3 \times \qty{400}{[\volt]} / \qty{230}{[\volt]}$. Les récepteurs résistifs sont déséquilibrés et les courants de ligne mesurés sont les suivants (référence $U_{ph1}$ à $0^\circ$)~:
+\begin{enumerate}
+	\item $\vv{I_{ph1}} = \qty{30}{[\ampere]} \angle 0^\circ$ (R1)
+	\item $\vv{I_{ph2}} = \qty{22}{[\ampere]} \angle 240^\circ$ (R2)
+	\item $\vv{I_{ph3}} = \qty{16}{[\ampere]} \angle 120^\circ$ (R3)
+\end{enumerate}
+
+Nous allons utiliser une grille de repère pour dessiner ces vecteurs et de les additionner afin de connaître la valeur du courant dans le neutre (résultante) $\vv{I_{N}} + \vv{I_{ph1}} + \vv{I_{ph2}} + \vv{I_{ph3}} = \vv{0}$
+
+\begin{center}
+	\begin{tikzpicture}[x=0.27cm,y=0.27cm, >=stealth]
+		% Grille de repère pour les débutants
+		\draw[help lines, color=gray!20, step=1] (-30,-30) grid (35,30);
+		\draw[help lines, color=gray!50, thin, step=5] (-30,-30) grid (35,30);
+		
+		% Axes
+		\draw[->, thick] (-30,0) -- (36,0) node[right] {$x$};
+		\draw[->, thick] (0,-30) -- (0,31) node[above] {$y$};
+		
+		% Cercles de référence pour les modules (tous les 10A)
+		\draw[color=blue!30, dashed] (0,0) circle (16);
+		\draw[color=blue!30, dashed] (0,0) circle (22);
+		\draw[color=blue!30, dashed] (0,0) circle (30);
+		
+		% Lignes d'angle triphasé standard 
+		\draw[color=green!40, dashed] (0,0) -- ({30*cos(120)}, {30*sin(120)}) node[above left] {$120^\circ$};
+		\draw[color=green!40, dashed] (0,0) -- ({30*cos(240)}, {30*sin(240)}) node[below left] {$240^\circ$};
+		
+		% Graduation
+		\foreach \x in {-20,-10,10,20,30} \draw (\x,0.5) -- (\x,-0.5) node[below, scale=0.7] {\x};
+		\foreach \y in {-20,-10,10,20} \draw (0.5,\y) -- (-0.5,\y) node[left, scale=0.7] {\y};
+		
+		\node at (0,0) [below left] {$O$};
+	\end{tikzpicture}
+\end{center}
+
+\vspace{0.5em}
+\needspace{5\baselineskip}
+\begin{parts}
+\part[1] Sur la grille indiquer les 4 quadrants.
+\part[1] Sur la grille indiquer le sens trigonométrique.
+\part[1] Quelle est l'unité physique de l'intensité du courant électrique~?
+\vspace*{1cm}
+\part[1] Que représente graphiquement la flèche au-dessus de la lettre $\vv{I_{ph1}}$~?
+\vspace*{1cm}
+\part[1] Quel est le module (la longueur) du vecteur $\vv{I_{ph1}}$~?
+\vspace*{1cm}
+\part[1] Quel est l'angle de ce premier vecteur par rapport à l'axe horizontal~?
+\vspace*{1cm}
+\part[1] Sur la grille, tracez le vecteur $\vv{I_{ph1}}$ en partant du point $O$.
+\part[1] Quel est le module (la longueur) du vecteur $\vv{I_{ph2}}$~?
+\vspace*{1cm}	
+\part[1] Quel est l'angle de ce vecteur~?
+\vspace*{1cm}	
+\part[1] Sur la grille, dans quel quadrant se situe un angle de $240^\circ$~?
+\vspace*{1cm}
+\part[1] Tracez le vecteur $\vv{I_{ph2}}$ le long de la ligne pointillée correspondante.
+\part[1] Quel est le module (la longueur) du vecteur $\vv{I_{ph3}}$~?
+\vspace*{1cm}	
+\part[1] Quel est l'angle du vecteur $\vv{I_{ph3}}$~?
+\vspace*{1cm}
+\part[1] Tracez le vecteur $\vv{I_{ph3}}$ le long de la ligne pointillée correspondante.
+
+\part \textbf{Addition vectorielle}\\
+Tracer l'addition vectorielle  sur la grille $\vv{I_{N}} + \vv{I_{ph1}} + \vv{I_{ph2}} + \vv{I_{ph3}} = \vv{0}$\\
+Le but est de trouver le module (longueur) de $I_N$ et son argument (angle)\\
+L'équation $\vv{I_{N}} = -\left( \vv{I_{ph1}} + \vv{I_{ph2}} + \vv{I_{ph3}} \right)$\\
+\textbf{Comprendre le signe « $-$ » dans le domaine vectoriel}\\
+Le symbole « $-$ » devant un vecteur (ex: $-\vec{I}_{\text{ph2}}$) ne se dessine \textbf{pas} sur le graphique. Il indique une \textbf{rotation de $180^\circ$} : le vecteur garde sa longueur et sa direction, mais sa flèche pointe dans le sens exactement opposé.
+
+
+
+\part[1] \textbf{Construction géomètrique de l'addition vectorielle}\\À l'extrémité (la pointe) du vecteur $\vv{I_{ph1}}$, tracez le vecteur $-\vv{I_{ph2}}$.
+
+	
+%1. Tracez $\vec{I}_{\text{ph1}}$ à partir de l'origine $O$.\\
+%2. Placez l'origine de $\vec{I}_{\text{ph2}}$ à l'extrémité de $\vec{I}_{\text{ph1}}$, puis tracez-le avec son angle réel.\\
+\part[1] À l'extrémité (la pointe) du vecteur $-\vv{I_{ph2}}$, tracez le vecteur $-\vv{I_{ph3}}$.
+\part[1] Tracer le vecteur $\vv{I_N}$ qui à pour origine le centre $O$ à la pointe du vecteur $-\vv{I_{ph3}}$.
+
+\part[1] Tracer un TRAIT (sans flèche) entre l'extrémité (la pointe) du vecteur $-\vv{I_{ph3}}$ le centre $O$.
+
+\part[1] La flèche de ce TRAIT doit être orientée du coté de la pointe de $-\vv{I_{ph3}}$, cela dépend du signe (moins) "-" de l'équation précédente.\\
+Voilà la construction est terminée.
+
+\part[3] \textbf{Détermination graphique de $\vv{I_N}$}\\
+À l'aide d'une règle, mesurer la longueur du vecteur $\vv{I_N}$ à partir de l'origine. À l'aide d'un rapporteur mesurer l'argument (l'angle) du vecteur  $\vv{I_N}$ par rapport à l'axe $x$.
+
+\vspace{0.5em}
+\needspace{25\baselineskip}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	\part[3] \textbf{Décomposition vectorielle avec la TI-30 Eco RS} \\
+	\textit{Objectif : convertir chaque courant $I_{ph}\angle\theta$ en composantes $(I_{ph}x~;~I_{ph}y)$.}
+	
+	\medskip
+	\noindent\textbf{Rappel des touches utiles :}
+	\begin{itemize}[leftmargin=2cm, labelsep=0.5cm]
+		\item[\texttt{[2nd][P$\to$R]}]  (au-dessus de la touche \texttt{x}) Polaire $\to$ Rectangulaire : donne $x$ puis $y$
+		\item[\texttt{[x$\leftrightarrow$y]}] (au-dessus de la touche \texttt{$\pi$}) Affiche l'autre composante
+		\item[\texttt{[2nd][R$\to$P]}] (au-dessus de la touche \texttt{-}) Rectangulaire $\to$ Polaire : donne $r$ puis $\theta$
+	\end{itemize}
+	
+	\medskip
+	\noindent\textbf{Mode d'emploi pas à pas :}
+	\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*]
+				\item \textbf{Pour R1 ($30\angle0^\circ$)}
+		\begin{enumerate}
+			\item $I_{ph1}x = 30[A]$ (car $\cos 0^\circ = 1$), $I_{ph1}y = 0[A]$ (car $\sin 0^\circ = 0$)
+			\item \textit{Astuce : vous pouvez aussi utiliser P$\to$R, mais c'est plus rapide de le faire de tête}
+		\end{enumerate}
+		
+		
+		\item \textbf{Pour R2 ($22\angle240^\circ$)}
+		\begin{enumerate}
+			\item Tapez \texttt{22} \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} \texttt{240} \texttt{[2nd][P$\to$R]}   $\rightarrow$ affiche $I_{ph2}x$
+			\item Appuyez sur \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} $\rightarrow$ affiche $I_{ph2}y$
+			\item Notez les deux valeurs dans le tableau
+		\end{enumerate}
+
+
+		\item \textbf{Pour R3 ($16\angle120^\circ$)}
+		\begin{enumerate}
+			\item Tapez \texttt{16} \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} \texttt{120} \texttt{[2nd][P$\to$R]} $\rightarrow$ affiche $I_{ph3}x$
+			\item Appuyez sur \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} $\rightarrow$ affiche $I_{ph3}y$
+			\item Notez les deux valeurs dans le tableau
+		\end{enumerate}		
+
+		
+
+		
+		\item \textbf{Somme des composantes}
+		\begin{enumerate}
+			\item Additionnez les 3 valeurs de la colonne $I_{ph}x$ $\rightarrow$ $\Sigma I_{ph}x$
+			\item Additionnez les 3 valeurs de la colonne $I_{ph}y$ $\rightarrow$ $\Sigma I_{ph}y$
+		\end{enumerate}
+		
+		\item \textbf{Courant du neutre $I_N$} :
+		\begin{enumerate}
+			\item Tapez \texttt{$\Sigma I_{ph}x$} \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} \texttt{$\Sigma I_{ph}y$} \texttt{[2nd]}\texttt{[R$\to$P]} $\rightarrow$ affiche $\|\vv{I_N}\|$
+			\item Appuyez sur \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} $\rightarrow$ affiche $\theta_N$
+		\end{enumerate}
+	\end{enumerate}
+	
+	\begin{table}[htbp]
+		\centering
+		\renewcommand{\arraystretch}{1.8}
+		\begin{tabular}{cccccc}
+			\toprule
+			\textbf{Récepteur} & \textbf{Module} & \textbf{Angle} & \textbf{$I_{ph}x$ [A]} & \textbf{$I_{ph}y$ [A]} & \textbf{Vérif.} \\
+			& $I_{ph}$ [A] & $\theta$ [$^\circ$] & \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} \texttt{[2nd][P$\to$R]} & \texttt{[2nd]}\texttt{[x$\leftrightarrow$y]} & \\
+			\midrule
+			R1 & 30 & 0 &  &  & $I_{ph1}x=30[A]$, $I_{ph1}y=0[A]$ \\
+			\midrule
+			R2 & 22 & 240 & &  & \\
+			\midrule
+			R3 & 16 & 120 &  &  & \\
+			\midrule
+			\multicolumn{3}{r}{\textbf{Totaux $\Sigma$}} &  &  & \\
+			\midrule
+			\multicolumn{4}{r}{\textbf{Courant $I_N$}} & \multicolumn{2}{c}{\hspace{0.6cm} [A] $\angle$ \hspace{1.7cm}$^\circ$} \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\medskip
+	\noindent\textbf{Vérification :}
+	\begin{enumerate}[leftmargin=*, label=$\rightarrow$]
+		\item Pour R2 ($240^\circ$) : $I_{ph}x$ et $I_{ph}y$ doivent être \textbf{négatifs} (3\textsuperscript{ème} quadrant)
+		\item Pour R3 ($120^\circ$) : $I_{ph}x$ \textbf{négatif}, $I_{ph}y$ \textbf{positif} (2\textsuperscript{ème} quadrant)
+		\item Si $\Sigma I_{ph}x = \Sigma I_{ph}y$, alors $\theta_N = \pm 45^\circ$ ou $\pm 135^\circ$
+	\end{enumerate}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+\vspace{0.5em}
+\needspace{5\baselineskip}
+
+
+\part[3] \textbf{Triangle rectangle et tangente (Rappel)}
+
+Le vecteur résultant $\vv{I_N}$ forme un \textbf{triangle rectangle} $OAB$~:
+
+\vspace{0.5cm}
+
+
+\begin{center}
+	\begin{tikzpicture}[scale=0.8, >=stealth]
+		% Grille pour guider le regard (optionnel)
+		\draw[step=1cm,help lines,gray!30] (-1,-1) grid (7,6);
+		
+		% Axes
+		\draw[->, thick] (-0.5,0) -- (7,0) node[right] {$I_{ph}x$ [A]};
+		\draw[->, thick] (0,-0.5) -- (0,6) node[above] {$I_{ph}y$ [A]};
+		
+		% Coordonnées (exemple)
+		\coordinate (O) at (0,0);
+		\coordinate[label=below:$A$] (A) at (4,0);  % ΣIphx
+		\coordinate[label=above:$B$] (B) at (4,3);  % ΣIphy + vecteur résultant
+		
+		% Composante ΣIphx (adjacent)
+		\draw[->, red, very thick] (O) -- (A);
+		\node[red, below=2pt] at (2,0) {$\Sigma I_{ph}x$};
+		
+		% Composante ΣIphy (opposé)
+		\draw[->, blue, very thick] (A) -- (B);
+		\node[blue, right=2pt] at (4,1.5) {$\Sigma I_{ph}y$};
+		
+		% Vecteur résultant IN
+		\draw[->, black, ultra thick] (O) -- (B);
+		\node[black, above left=2pt] at (2.2,1.8) {$\vv{I_N}$};
+		
+		% Marque angle droit au point A
+		\draw (3.8,0) -- (3.8,0.2) -- (4,0.2);
+		
+		% Angle θN au point O
+		\draw[orange, thick] (1,0) arc (0:36.87:1);
+		\node[orange, right=2pt] at (1.1,0.4) {$\theta_N$};
+		
+		% Point O
+		\fill (O) circle (2pt) node[below left] {$O$};
+	\end{tikzpicture}
+\end{center}
+\part[3] \textbf{Méthode "manuelle" pour le calcul du courant de neutre} \\
+En utilisant les sommes des composantes, calculez l'intensité efficace du courant de neutre $I_N$ à l'aide de la relation de Pythagore~:
+\[ I_N = \sqrt{(\Sigma I_{ph}x)^2 + (\Sigma I_{ph}y)^2} = \]
+
+
+\part[3] \textbf{Définition de la tangente de l'angle $\theta_N$}~:
+\[
+\tan(\theta_N) = \frac{\text{côté opposé à l'angle} \ \theta_N}{\text{côté adjacent à l'angle} \ \theta_N } = \frac{OB}{OA} = \frac{\Sigma I_{ph}y}{\Sigma I_{ph}x}
+\]
+
+\textbf{Calcul de l'argument (angle) $\theta_N$ du vecteur courant $\vv{I_N}$} :
+
+Calculer l'arc tangente de  $tan(\theta_N)$ elle se nomme la fonction réciproque de la tangente $\theta_N$ qui permet de connaître la valeur de l'angle $\theta_N$~:
+\[
+\theta_N = \arctan\left(\frac{\Sigma I_{ph}y}{\Sigma I_{ph}x}\right)
+\]
+\begin{enumerate}
+	\item \textbf{TI-30 Eco RS}~: Tapez \texttt{[(]} \texttt{$\Sigma I_{ph}y$} \texttt{[/]} \texttt{$\Sigma I_{ph}x$} \texttt{[)]} \texttt{[=]} \texttt{[2nd]}\texttt{[TAN$^{-1}$]} $\rightarrow$ affiche $\theta_N$
+	\item \textbf{TI-30X Plus MathPrint}~: Attention, touches à deux fonctions.\\Tapez \texttt{[TAN/TAN$^{-1}$]}\texttt{[TAN/TAN$^{-1}$]} \texttt{$\Sigma I_{ph}y$} \texttt{[/]} \texttt{$\Sigma I_{ph}x$}\texttt{[)]}\texttt{[enter]} $\rightarrow$ affiche $\theta_N$
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+\vspace{0.5em}
+\needspace{25\baselineskip}
+\part[6] \textbf{Accompagnement TI-30X Plus MathPrint (Méthode Directe)} \\
+Utiliser le mode "nombre complexe" pour calculer le module $\|\vv{I_N}\|$  et son argument (angle) en une seule ligne~:
+\[ \|\vv{I_N}\| = 30 \angle 0 + 22 \angle 240 + 16 \angle 120 \]
+\begin{enumerate}
+	\item Appuyer sur \texttt{[mode]}, sélectionner \textbf{DEGREE} et valider par [enter].
+	\item Sur l'affichage de la calculatrice, 3 lignes en-dessous, sélectionner le format polaire \textbf{r$\angle\theta$} et valider par [enter].
+	\item Quitter avec \texttt{[2nd] [quit]}.
+	\item \texttt{30} \texttt{[2nd][complex]} \texttt{1} \texttt{0 + 22} \texttt{[2nd][complex]} \texttt{1} \texttt{240 + 16} \texttt{[2nd][complex]} \texttt{1} \texttt{120} et valider par [enter].
+	\item Noter le module et l'angle du courant de neutre :
+	$I_N =$
+	\vspace*{0.5cm}
+	\item Noter l'argument (l'angle) du courant de neutre~: $\theta_N = $
+	\vspace*{0.5cm}
+	\item Noter le résultat de $\vv{I_N}$ sous forme polaire~:
+	\vspace*{0.5cm}	
+\end{enumerate}
+
+
+
+\part[3] \textbf{Analyse physique} \\
+Comparez les résultats obtenus par les trois méthodes (tableau, ECO RS et MathPrint). Expliquez brièvement pourquoi, malgré trois récepteurs de puissances différentes, le courant de neutre $I_N$ est ici inférieur au plus petit courant $I_{ph3}$.
+
+
+\end{parts}
+
+
+
+
+
+\vspace{0.5em}
+\needspace{35\baselineskip}
+\begin{solution}
+	\begin{parts}
+		\part Les quadrants sont numérotés de I à IV en partant du haut à droite, dans le sens inverse des aiguilles d'une montre.
+		\part Le sens trigonométrique est le sens inverse des aiguilles d'une montre (anti-horaire).
+		\part L'unité est l'Ampère \qty{}{[A]}.
+		\part Elle représente un vecteur (grandeur ayant un module, une direction et un sens).
+		\part $I_{ph1} = \qty{30}{[A]}$.
+		\part $\theta_1 = \qty{0}{[^\circ]}$.
+		\part Tracé : flèche horizontale vers la droite de 30 unités.
+		\part $I_{ph2} = \qty{22}{[A]}$.
+		\part $\theta_2 = \qty{240}{[^\circ]}$.
+		\part Il se situe dans le 3ème quadrant ($180 < 240 < 270$).
+		\part Tracé : flèche vers le bas-gauche.
+		\part $I_{ph3} = \qty{16}{[A]}$.
+		\part $\theta_3 = \qty{120}{[^\circ]}$.
+		\part Tracé : flèche vers le haut-gauche.
+		\part $\vec{I}_{ph1} + \vec{I}_{ph2} + \vec{I}_{ph3} + \vec{I}_N = 0$.
+		\part $-\vec{I}_{ph2}$ est le vecteur $\vec{I}_{ph2}$ retourné de \qty{180}{[^\circ]} (soit \qty{60}{[^\circ]}).
+		\part $-\vec{I}_{ph3}$ est retourné de \qty{180}{[^\circ]} (soit \qty{300}{[^\circ]}).
+		\part Tracé de la résultante de $O$ vers la fin de la chaîne.
+		\part Le signe "$-$" indique que $\vec{I}_N$ compense la somme vectorielle des courants de phase.
+		\part Ils ont la même longueur et direction, mais des sens opposés (\qty{180}{[^\circ]} de différence).
+		\part Par mesure : $I_N \approx \qty{12,2}{[A]}$ et $\theta_N \approx \qty{155}{[^\circ]}$.
+		\part Décomposition :
+		\begin{align*}
+			I_{ph1x} &= 30 \cdot \cos(0) = \qty{30}{[A]} & I_{ph1y} &= 30 \cdot \sin(0) = \qty{0}{[A]} \\
+			I_{ph2x} &= 22 \cdot \cos(240) = \qty{-11}{[A]} & I_{ph2y} &= 22 \cdot \sin(240) = \qty{-19,05}{[A]} \\
+			I_{ph3x} &= 16 \cdot \cos(120) = \qty{-8}{[A]} & I_{ph3y} &= 16 \cdot \sin(120) = \qty{13,86}{[A]} \\
+			\Sigma I_x &= 30 - 11 - 8 = \qty{11}{[A]} & \Sigma I_y &= 0 - 19,05 + 13,86 = \qty{-5,19}{[A]}
+		\end{align*}
+		\part Le vecteur est l'hypoténuse, $I_x$ est le côté adjacent et $I_y$ le côté opposé.
+		\part Calcul de $I_N$ :
+		\begin{align*}
+			I_N &= \sqrt{(-\Sigma I_x)^2 + (-\Sigma I_y)^2} = \sqrt{(-11)^2 + (5,19)^2} \\
+			I_N &= \sqrt{121 + 26,94} = \qty{12,16}{[A]}
+		\end{align*}
+		\part Calcul de l'angle $\theta_N$ :
+		\begin{align*}
+			\theta_{sum} &= \arctan\left(\dfrac{-5,19}{11}\right) = \qty{-25,26}{[^\circ]} \\
+			\theta_N &= -25,26 + 180 = \qty{154,74}{[^\circ]}
+		\end{align*}
+		\part Sous forme polaire : $I_N = \qty{12,16}{[A]} \angle \qty{154,74}{[^\circ]}$.
+		\part Car les vecteurs de phase sont déphasés de \qty{120}{[^\circ]} les uns des autres, ce qui tend à annuler la résultante (symétrie partielle).
+	\end{parts}
+	\vspace{0.5em}
+	\needspace{15\baselineskip}
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données (Polaire : Module et Angle en degrés)
+		I1_mag = 30; theta1_deg = 0;
+		I2_mag = 22; theta2_deg = 240;
+		I3_mag = 16; theta3_deg = 120;
+		
+		% Conversion Polaire vers Rectangulaire (sans nombres complexes)
+		% Calcul des composantes x (horizontales)
+		I1x = I1_mag * cos(deg2rad(theta1_deg));
+		I2x = I2_mag * cos(deg2rad(theta2_deg));
+		I3x = I3_mag * cos(deg2rad(theta3_deg));
+		printf('I1x = %.2f A, I2x = %.2f A, I3x = %.2f A\n', I1x, I2x, I3x);
+		
+		% Calcul des composantes y (verticales)
+		I1y = I1_mag * sin(deg2rad(theta1_deg));
+		I2y = I2_mag * sin(deg2rad(theta2_deg));
+		I3y = I3_mag * sin(deg2rad(theta3_deg));
+		printf('I1y = %.2f A, I2y = %.2f A, I3y = %.2f A\n', I1y, I2y, I3y);
+		
+		% Sommes des composantes
+		Sum_x = I1x + I2x + I3x;
+		Sum_y = I1y + I2y + I3y;
+		printf('Somme totale x = %.2f A, Somme totale y = %.2f A\n', Sum_x, Sum_y);
+		
+		% Composantes du courant de neutre (In = -Sum)
+		In_x = -Sum_x;
+		In_y = -Sum_y;
+		printf('Composantes du neutre : In_x = %.2f A, In_y = %.2f A\n', In_x, In_y);
+		
+		% Conversion Rectangulaire vers Polaire (Pythagore et Atan2)
+		In_mag = sqrt(In_x^2 + In_y^2);
+		In_theta_deg = rad2deg(atan2(In_y, In_x));
+		
+		printf('--- RESULTATS ---\n');
+		printf('Module du courant de neutre In = %.2f A\n', In_mag);
+		printf('Angle du courant de neutre theta_N = %.2f degres\n', In_theta_deg);
+	\end{verbatim}
+\end{solution}
+
+
+\end{questions}
+\end{document}
