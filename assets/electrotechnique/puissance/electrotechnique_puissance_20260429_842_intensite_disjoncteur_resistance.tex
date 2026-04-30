@@ -1,14 +1,14 @@
 % ---
-% filename : ["electrotechnique_electromagnetisme_20260428_421_electroaimant_u.tex"]
-% id : "electrotechnique_electromagnetisme_20260428_421"
-% title : "Électroaimant en U et polarité"
+% filename : ["electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.tex"]
+% id : "electrotechnique_puissance_20260429_842"
+% title : "Intensité, disjoncteur et résistance d'un appareil"
 % domain : "Électrotechnique"
-% subdomain : "Électromagnétisme"
-% tags : ["électroaimant", "champ magnétique", "ferromagnétisme", "bobine", "polarité", "ts"]
-% difficulty : 2
-% time_solve : 20
-% has_octave : True
-% octave_files : ["electrotechnique_electromagnetisme_20260428_421_electroaimant_u.m"]
+% subdomain : "Puissance"
+% tags : ["énergie_électrique", "intensité", "disjoncteur", "résistance", "loi_ohm", "ts"]
+% difficulty : 1
+% time_solve : 6
+% has_octave : true
+% octave_files : ["electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.m"]
 % author : "om"
 % ---
 \documentclass[a4paper,11pt,answers,addpoints]{exam}
@@ -173,64 +173,76 @@ linkcolor=blue]{hyperref}
 	\unframedsolutions
 	\pointsinmargin
 	\bracketedpoints
-
+	
 \section*{Préparation TS PQ CFC ELMO,IELE,PELE}
 \begin{questions}
-\question Soit un électroaimant en forme de U. Sur le dessin ci-dessous~:
-\vspace{0.5cm}
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.3]{electroaimant_u_inverse_1.png}
-%	\caption{Mon image}
-\end{figure}
-\vspace{1.5cm}
+\question L'énergie absorbée par un appareil est de \qty{34}{[kWh]}.\\ Il a fonctionné de \qty{8}{[h]} à \qty{20}{[h]} sous une tension de \qty{230}{[V]}.
 \begin{parts}
-	\part[1] Imposer la polarité positive de la source de tension sur la borne de gauche.
-	\part[1] Inscrire les pôles magnétiques (N et S) aux extrémités de l'électroaimant.
-	\part[1] Tracer les lignes de champ magnétique à l'intérieur et à l'extérieur, en précisant leur sens de circulation.
-	\part[3] Détailler le mécanisme physique d'aimantation par influence qui permet l'attraction d'un corps ferromagnétique par l'électroaimant.
-	\part[3] Déterminer les pôles magnétiques résultants apparaissant sur un induit ferromagnétique placé face à l'aimant.
-	\part[3] Citer deux méthodes permettant de démagnétiser un aimant permanent.
-	\part[3] Est-il possible d'isoler le pôle d'un aimant (existence de monopôles) ? Justifier.
-	\part[3] Quelle est l'influence d'un matériau amagnétique (comme l'aluminium) sur un champ magnétique ?
-	\part[3] Citer trois propriétés fondamentales des lignes de champ magnétique.
-	\part[3] Définir le flux magnétique $\Phi$, son symbole et son unité légale.
-	\part[3] Définir l'induction magnétique $B$, son symbole et son unité légale.
-	\part[3] Expliquer à quoi correspond le phénomène de saturation magnétique d'un matériau.
-	\part[3] Donner la relation mathématique entre l'induction $B$, le flux $\Phi$ et la section $S$.
-	\part[3] Citer une application utile des courants de Foucault et un cas où ils sont indésirables.
-	\part[3] Expliquer l'effet de l'insertion d'un noyau de fer dans une bobine sur la valeur de l'induction $B$.
+	\part[3] Calculer l'intensité du courant dans l'appareil~?
+	\part[3] Quelle est la valeur du disjoncteur de protection~?
+	\part[3] Calculer la résistance de cet appareil totalement ohmique~?
 \end{parts}
-\vspace{0.5em}
-\needspace{50\baselineskip}
+
+
 \begin{solution}
-	\begin{center}
-
-
-%\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.3]{electroaimant_u_inverse_N_S_reponse.png}
-%\end{figure}
-	\end{center}
-
-\begin{align*}
-	&\text{a) La borne (+) est reliée au côté gauche de l'enroulement.} \\[6pt]
-	&\text{b) Par la règle de la main droite, le pôle Nord (N) est identifié là où le flux sort.} \\[6pt]
-	&\text{c) Les lignes vont du Nord vers le Sud à l'extérieur du noyau et du Sud vers le Nord à l'intérieur du noyau.} \\[6pt]
-	&\text{d) L'induction de l'aimant oriente les domaines magnétiques du matériau ferromagnétique, } \\
-	&\text{créant des pôles opposés face à face qui génèrent la force d'attraction.} \\[6pt]
-	&\text{e) Un pôle Sud apparaît face au Nord de l'aimant, et un pôle Nord face au Sud.} \\[6pt]
-	&\text{f) Méthodes de démagnétisation : élévation de température (point de Curie) ou chocs mécaniques.} \\[6pt]
-	&\text{g) Non, si un pôle Nord existe, un pôle Sud existe obligatoirement.} \\[6pt]
-	&\text{h) Un matériau amagnétique n'a aucune influence sur le champ magnétique.} \\[6pt]
-	&\text{i) Propriétés : boucles fermées, ne se croisent jamais, sortent perpendiculairement aux pôles.} \\[6pt]
-	&\text{j) Le flux } \Phi \text{ représente l'ensemble des lignes de champ. Unité : Weber \qty{}{[\weber]}.} \\[6pt]
-	&\text{k) L'induction } B \text{ est le nombre de lignes par unité de surface. Unité : Tesla \qty{}{[T]}} \\[6pt]
-	&\text{l) La saturation est l'état où une augmentation de l'excitation } H \text{ n'augmente plus } B  \\[6pt]
-	&\text{m) Relation fondamentale : } B = \dfrac{\Phi}{S} \unit{[\tesla]} \\[6pt]
-	&\text{n) Utile : freinage (ralentisseurs). Indésirable : pertes dans les transformateurs.} \\[6pt]
-	&\text{o) Le noyau de fer renforce considérablement l'induction } B \text{ par rapport à l'air.}
-\end{align*}
-\end{solution}	
+	Calcul de la durée de fonctionnement ($t$) :
+	\begin{align*}
+		t &= t_{fin} - t_{debut} \\[6pt]
+		t &= \qty{20}{[h]} - \qty{8}{[h]} = \qty{12}{[h]}
+	\end{align*}
+	
+	Calcul de la puissance absorbée ($P$) :
+	\begin{align*}
+		P &= \dfrac{W}{t} \\[6pt]
+		P &= \dfrac{\qty{34}{[kWh]}}{\qty{12}{[h]}} = \qty{2,8333}{[kW]} = \qty{2833,33}{[W]}
+	\end{align*}
+	
+	Calcul de l'intensité du courant ($I$) :
+	\begin{align*}
+		I &= \dfrac{P}{U} \\[6pt]
+		I &= \dfrac{\qty{2833,33}{[W]}}{\qty{230}{[V]}} = \qty{12,3188}{[A]}
+	\end{align*}
+	
+	Choix du disjoncteur :
+	Le calibre nominal du disjoncteur ($I_n$) doit être supérieur à l'intensité nominale de l'appareil pour éviter les déclenchements intempestifs. Pour un courant de \qty{12,32}{[A]}, on choisit généralement un calibre standard de :
+	\begin{align*}
+		I_n &= \qty{13}{[A]}
+	\end{align*}
+	
+	Calcul de la résistance de l'appareil ($R$) :
+	\begin{align*}
+		R &= \dfrac{U}{I} \\[6pt]
+		R &= \dfrac{\qty{230}{[V]}}{\qty{12,3188}{[A]}} = \qty{18,6706}{[\Omega]}
+	\end{align*}
+	\vspace{0.5em}
+	\needspace{20\baselineskip}
+	\begin{verbatim}
+		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+		% Puis copier-coller le code dans OCTAVE
+		
+		% Données de l'énoncé
+		W_kwh = 34;         % Énergie absorbée [kWh]
+		t_debut = 8;        % Heure de début [h]
+		t_fin = 20;         % Heure de fin [h]
+		U = 230;            % Tension d'alimentation [V]
+		
+		% 1. Calcul de la durée de fonctionnement
+		t = t_fin - t_debut;
+		printf("Durée de fonctionnement : t = %d [h]\n", t);
+		
+		% 2. Calcul de la puissance absorbée
+		% Conversion de kWh en W (W_wh / t)
+		P = (W_kwh * 1000) / t;
+		printf("Puissance absorbée : P = %.2f [W]\n", P);
+		
+		% 3. Calcul de l'intensité du courant
+		I = P / U;
+		printf("Intensité du courant : I = %.4f [A]\n", I);
+		
+		% 4. Calcul de la résistance
+		R = U / I;
+		printf("Résistance de l'appareil : R = %.4f [Ohm]\n", R);
+	\end{verbatim}
+\end{solution}
 \end{questions}
 \end{document}
