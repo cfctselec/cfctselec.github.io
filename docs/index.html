@@ -88,7 +88,7 @@
 </head>
 <body class="ag-theme-alpine">
   <header>
-    <h1>Préparation aux CFC en électricité (ELMO,IELE,PELE) <span class="subtitle">Exercices corrigés PQ CFC</span></h1>
+    <h1>Préparation aux CFC en électricité (ELMO,IELE,PELE) <span class="subtitle">Exercices corrigés PQ CFC</span> <span id="total-count" class="subtitle" style="margin-left: 10px; color: var(--primary); font-weight: bold;"></span></h1>
     <div class="header-buttons">
       <a href="https://cfctselec.github.io/cfcflashcards/" class="button button-blue" target="_blank">Révisions CFC ELMO/IELE/PELE/TELE</a>
       <a href="https://qrhd1.github.io/oldcfc/  " class="button button-green" target="_blank">CFC TS;DT;TC</a>
@@ -131,6 +131,15 @@
     const gridOptions = {
       columnDefs: [
         { width: 50, pinned: isMobile ? null : 'left' },
+        { 
+          headerName: "N°", 
+          valueGetter: "node.rowIndex + 1", 
+          width: 70, 
+          pinned: isMobile ? null : 'left',
+          sortable: false,
+          filter: false,
+          cellStyle: { color: 'var(--gray)', fontWeight: 'bold', textAlign: 'center' }
+        },
         { field: "domain", headerName: "Domaine", sortable: true, filter: true, width: 120, hide: isMobile, cellStyle: { fontWeight: 'bold' } },
         { field: "subdomain", headerName: "Sous-Domaine", sortable: true, filter: true, width: 120, hide: isMobile },
         { field: "title", headerName: "Sujet de l'exercice", sortable: true, flex: 1, 
@@ -327,6 +336,9 @@
         .then(response => response.json())
         .then(data => {
           gridApi.setGridOption('rowData', data);
+          
+          // Afficher le nombre total d'exercices
+          document.getElementById('total-count').textContent = `— ${data.length} exercices au total`;
           
           // Peupler les selects de filtrage
           const populateSelect = (id, key) => {
