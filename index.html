@@ -40,11 +40,16 @@
     }
     .actions-toolbar.visible { visibility: visible; opacity: 1; }
     
-    .btn-merge { 
-      padding: 0.5rem 1.2rem; background: var(--primary); color: white; border: none; border-radius: 6px; 
+    .btn-export { 
+      padding: 0.4rem 0.8rem; background: var(--primary); color: white; border: none; border-radius: 6px; 
       font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
     }
-    .btn-merge:hover { background: #1d4ed8; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+    .btn-export:hover { background: #1d4ed8; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+    .btn-export.secondary { background: var(--gray); }
+    .btn-export.secondary:hover { background: var(--slate); }
+    .btn-export.success { background: var(--success); }
+    .btn-export.success:hover { background: #047857; }
+
     .selection-info { font-size: 0.85rem; font-weight: 600; color: #1e40af; }
     
     #tag-cloud { display: flex; gap: 0.4rem; flex-wrap: wrap; max-height: 80px; overflow-y: auto; padding: 2px; }
@@ -109,8 +114,14 @@
         <span class="selection-info">
           <span id="selected-count">0</span> exercice(s) sélectionné(s)
         </span>
-        <button onclick="downloadSelectedAsZip()" class="btn-merge">
-          ⚡ Fusionner & Télécharger (.zip)
+        <button onclick="exportSelected('donnee')" class="btn-export success">
+          📄 PDF Énoncés
+        </button>
+        <button onclick="exportSelected('solution')" class="btn-export secondary">
+          💡 PDF Corrigés
+        </button>
+        <button onclick="exportSelected('zip')" class="btn-export">
+          ⚡ Pack Complet (.zip)
         </button>
       </div>
     </div>
@@ -247,59 +258,69 @@
       else toolbar.classList.remove('visible');
     }
 
-    async function downloadSelectedAsZip() {
+    // Fonction générique de fusion PDF
+    async function mergePDFs(rows, type) {
+      const { PDFDocument } = PDFLib;
+      const targetDoc = await PDFDocument.create();
+      
+      const urlKey = type === 'donnee' ? 'donnee_url' : 'solution_url';
+      
+      const tasks = rows.map(async (ex) => {
+        const url = ex[urlKey];
+        if (!url) return;
+        try {
+          const bytes = await fetch(url).then(res => res.arrayBuffer());
+          const srcDoc = await PDFDocument.load(bytes);
+          const copiedPages = await targetDoc.copyPages(srcDoc, srcDoc.getPageIndices());
+          copiedPages.forEach(page => targetDoc.addPage(page));
+        } catch (e) { console.error(`Erreur fusion ${type}:`, url, e); }
+      });
+      
+      await Promise.all(tasks);
+      return await targetDoc.save();
+    }
+
+    async function exportSelected(mode) {
       const selectedRows = gridApi.getSelectedRows();
       if (selectedRows.length === 0) {
         alert("Veuillez sélectionner au moins un exercice dans la liste.");
         return;
       }
 
-      const { PDFDocument } = PDFLib;
-      const zip = new JSZip();
-      const mainPdfDoc = await PDFDocument.create();
-      const solPdfDoc = await PDFDocument.create();
-      
-      const fetchTasks = selectedRows.map(async (ex) => {
-        const folder = zip.folder(slugify(ex.title));
+      const dateStr = new Date().toISOString().slice(0,10);
+
+      if (mode === 'donnee') {
+        const bytes = await mergePDFs(selectedRows, 'donnee');
+        saveAs(new Blob([bytes]), `Pack_Enonces_${dateStr}.pdf`);
+      } 
+      else if (mode === 'solution') {
+        const bytes = await mergePDFs(selectedRows, 'solution');
+        saveAs(new Blob([bytes]), `Pack_Corriges_${dateStr}.pdf`);
+      } 
+      else if (mode === 'zip') {
+        const zip = new JSZip();
+        const mainPdfBytes = await mergePDFs(selectedRows, 'donnee');
+        const solPdfBytes = await mergePDFs(selectedRows, 'solution');
         
-        // 1. Gérer les PDF pour la fusion
-        const processPdf = async (url, targetDoc) => {
-          try {
-            const bytes = await fetch(url).then(res => res.arrayBuffer());
-            const srcDoc = await PDFDocument.load(bytes);
-            const copiedPages = await targetDoc.copyPages(srcDoc, srcDoc.getPageIndices());
-            copiedPages.forEach(page => targetDoc.addPage(page));
-          } catch (e) { console.error("Erreur PDF:", url, e); }
-        };
+        zip.file("00_ENONCES_GROUPES.pdf", mainPdfBytes);
+        zip.file("00_SOLUTIONS_GROUPES.pdf", solPdfBytes);
 
-        // 2. Gérer les fichiers sources pour le ZIP
-        const addFileToZip = async (url) => {
-          if (!url) return;
-          try {
-            const blob = await fetch(url).then(res => res.blob());
-            folder.file(url.split('/').pop(), blob);
-          } catch (e) { console.error("Erreur Source:", url, e); }
-        };
+        const fetchSources = selectedRows.map(async (ex) => {
+          const folder = zip.folder(slugify(ex.title));
+          const addFile = async (url) => {
+            if (!url) return;
+            try {
+              const blob = await fetch(url).then(res => res.blob());
+              folder.file(url.split('/').pop(), blob);
+            } catch (e) { console.error("Erreur Source:", url, e); }
+          };
+          return Promise.all([addFile(ex.tex_url), addFile(ex.octave_url)]);
+        });
 
-        return Promise.all([
-          processPdf(ex.donnee_url, mainPdfDoc),
-          processPdf(ex.solution_url, solPdfDoc),
-          addFileToZip(ex.tex_url),
-          addFileToZip(ex.octave_url)
-        ]);
-      });
-
-      await Promise.all(fetchTasks);
-
-      // Finaliser les PDF fusionnés
-      const mainPdfBytes = await mainPdfDoc.save();
-      const solPdfBytes = await solPdfDoc.save();
-      
-      zip.file("00_ENONCES_GROUPES.pdf", mainPdfBytes);
-      zip.file("00_SOLUTIONS_GROUPES.pdf", solPdfBytes);
-
-      const content = await zip.generateAsync({ type: "blob" });
-      saveAs(content, `Pack_Exercices_${new Date().toISOString().slice(0,10)}.zip`);
+        await Promise.all(fetchSources);
+        const content = await zip.generateAsync({ type: "blob" });
+        saveAs(content, `Pack_Complet_${dateStr}.zip`);
+      }
     }
 
     // Fonction slugify améliorée pour gérer les accents
