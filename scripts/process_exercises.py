@@ -227,10 +227,8 @@ def get_existing_structure():
     return domains, structure
 
 def process_exercises():
-    if not CONTRIB_DIR.exists():
-        CONTRIB_DIR.mkdir(parents=True)
-        logging.info("📁 Dossier contributions/ créé. Déposez-y vos 4 fichiers.")
-        return
+    # S'assurer que le dossier existe sans arrêter le script
+    CONTRIB_DIR.mkdir(parents=True, exist_ok=True)
 
     # --- Phase 1 : Identification, compilation et préparation des mouvements ---
     logging.info("🚀 Phase 1 : Identification et compilation des exercices dans 'contributions/'...")
@@ -249,81 +247,83 @@ def process_exercises():
             logging.warning("⚠️ Des fichiers non .tex sont présents dans 'contributions/' mais aucun exercice n'a été détecté (pas de .tex).")
             for f in unassociated_files:
                 logging.warning(f"   - Ignoré : {f.name}")
-        return
 
-    # Process each .tex file
-    for tex_file in tex_files_in_contrib:
-        base_name = tex_file.stem # e.g., "electrotechnique_circuits_dc_20260429_420_pente_loi_ohm"
-        
-        # Compile the .tex file if needed
-        try:
-            compile_latex_if_needed(tex_file)
-        except Exception as e:
-            logging.error(f"❌ Erreur compilation sur {tex_file.name}: {e}")
-            continue # Skip this exercise if compilation fails
-
-        # Read content and parse YAML
-        content = tex_file.read_text(encoding="utf-8")
-        meta = parse_yaml(content)
-
-        # Enrichissement Gemini si champs critiques manquants
-        if ENABLE_GEMINI and (not meta.get("domain") or not meta.get("tags")):
-            gemini = call_gemini(content, meta)
-            for k, v in gemini.items():
-                if v and k not in meta:
-                    meta[k] = v
-
-        # Calculate destination path slugs
-        prefix_domain = base_name.split('_')[0] if '_' in base_name else "divers"
-        domain_val = meta.get("domain", prefix_domain)
-        domain_slug = slugify(domain_val)
-        sub_val = meta.get("subdomain", "").strip()
-        subdomain_slug = slugify(sub_val) if sub_val else ""
-
-        # Collect all files in CONTRIB_DIR that are related to this base_name
-        related_files = [f for f in CONTRIB_DIR.iterdir() if f.is_file() and (f.stem == base_name or (f.name.startswith(f"{base_name}") and f.suffix in ['.pdf', '.log', '.aux', '.out', '.toc', '.m', '.png', '.jpg', '.jpeg']))]
-        
-        exercises_to_process[base_name] = {
-            "tex_file": tex_file, "related_files": related_files, "meta": meta,
-            "domain_slug": domain_slug, "subdomain_slug": subdomain_slug
-        }
-    
-    # Log any files in CONTRIB_DIR that were not part of any identified exercise
-    all_processed_files = set()
-    for ex_data in exercises_to_process.values():
-        for f in ex_data['related_files']:
-            all_processed_files.add(f)
-            
-    unassociated_files = [f for f in CONTRIB_DIR.iterdir() if f.is_file() and f not in all_processed_files]
-    for f in unassociated_files:
-        logging.warning(f"⚠️ Fichier non associé à un exercice (.tex) et ignoré dans 'contributions/': {f.name}")
-
-    ASSETS_DIR.mkdir(parents=True, exist_ok=True)
-    logging.info(f"📦 Phase 2 : Analyse de {len(exercises_to_process)} exercices détectés...")
-    
-    # Convert exercises_to_process dict to a list for the validation phase
     planned_moves = []
-    for base_name, ex_data in exercises_to_process.items():
-        planned_moves.append({
-            "base": base_name,
-            "files": ex_data['related_files'],
-            "domain": ex_data['domain_slug'],
-            "subdomain": ex_data['subdomain_slug'],
-            "meta": ex_data['meta'],
-            "tex": ex_data['tex_file']
-        })
+    # On ne procède aux phases 1 et 2 que s'il y a des fichiers .tex
+    if tex_files_in_contrib:
+        # Process each .tex file
+        for tex_file in tex_files_in_contrib:
+            base_name = tex_file.stem # e.g., "electrotechnique_circuits_dc_20260429_420_pente_loi_ohm"
+            
+            # Compile the .tex file if needed
+            try:
+                compile_latex_if_needed(tex_file)
+            except Exception as e:
+                logging.error(f"❌ Erreur compilation sur {tex_file.name}: {e}")
+                continue # Skip this exercise if compilation fails
 
-    # Validation interactive des nouveaux répertoires
-    existing_domains, existing_struct = get_existing_structure()
-    known_domains = set(existing_domains)
-    known_subdirs = set()  # Format: "domaine/sous_domaine"
+            # Read content and parse YAML
+            content = tex_file.read_text(encoding="utf-8")
+            meta = parse_yaml(content)
 
-    for move in planned_moves:
-        # 1. Validation du DOMAINE
-        dom = move["domain"]
-        if dom not in known_domains and not (ASSETS_DIR / dom).exists():
-            print(f"\n--- 🌐 NOUVEAU DOMAINE DÉTECTÉ ---")
-            print(f"Exercice : {move['base']}")
+            # Enrichissement Gemini si champs critiques manquants
+            if ENABLE_GEMINI and (not meta.get("domain") or not meta.get("tags")):
+                gemini = call_gemini(content, meta)
+                for k, v in gemini.items():
+                    if v and k not in meta:
+                        meta[k] = v
+
+            # Calculate destination path slugs
+            prefix_domain = base_name.split('_')[0] if '_' in base_name else "divers"
+            domain_val = meta.get("domain", prefix_domain)
+            domain_slug = slugify(domain_val)
+            sub_val = meta.get("subdomain", "").strip()
+            subdomain_slug = slugify(sub_val) if sub_val else ""
+
+            # Collect all files in CONTRIB_DIR that are related to this base_name
+            related_files = [f for f in CONTRIB_DIR.iterdir() if f.is_file() and (f.stem == base_name or (f.name.startswith(f"{base_name}") and f.suffix in ['.pdf', '.log', '.aux', '.out', '.toc', '.m', '.png', '.jpg', '.jpeg']))]
+            
+            exercises_to_process[base_name] = {
+                "tex_file": tex_file, "related_files": related_files, "meta": meta,
+                "domain_slug": domain_slug, "subdomain_slug": subdomain_slug
+            }
+
+        # Log any files in CONTRIB_DIR that were not part of any identified exercise
+        all_processed_files = set()
+        for ex_data in exercises_to_process.values():
+            for f in ex_data['related_files']:
+                all_processed_files.add(f)
+            
+        unassociated_files = [f for f in CONTRIB_DIR.iterdir() if f.is_file() and f not in all_processed_files]
+        for f in unassociated_files:
+            logging.warning(f"⚠️ Fichier non associé à un exercice (.tex) et ignoré dans 'contributions/': {f.name}")
+
+        ASSETS_DIR.mkdir(parents=True, exist_ok=True)
+        logging.info(f"📦 Phase 2 : Analyse de {len(exercises_to_process)} exercices détectés...")
+        
+        # Convert exercises_to_process dict to a list for the validation phase
+        planned_moves = []
+        for base_name, ex_data in exercises_to_process.items():
+            planned_moves.append({
+                "base": base_name,
+                "files": ex_data['related_files'],
+                "domain": ex_data['domain_slug'],
+                "subdomain": ex_data['subdomain_slug'],
+                "meta": ex_data['meta'],
+                "tex": ex_data['tex_file']
+            })
+
+        # Validation interactive des nouveaux répertoires
+        existing_domains, existing_struct = get_existing_structure()
+        known_domains = set(existing_domains)
+        known_subdirs = set()  # Format: "domaine/sous_domaine"
+
+        for move in planned_moves:
+            # 1. Validation du DOMAINE
+            dom = move["domain"]
+            if dom not in known_domains and not (ASSETS_DIR / dom).exists():
+                print(f"\n--- 🌐 NOUVEAU DOMAINE DÉTECTÉ ---")
+                print(f"Exercice : {move['base']}")
             print(f"Domaine proposé : {dom}")
             if existing_domains:
                 print(f"Domaines existants : {', '.join(sorted(existing_domains))}")
@@ -337,37 +337,37 @@ def process_exercises():
                 if new_dom:
                     move["domain"] = slugify(new_dom)
                     dom = move["domain"]
-            known_domains.add(dom)
+                known_domains.add(dom)
 
-        # 2. Validation du SOUS-DOMAINE (si défini)
-        sub = move["subdomain"]
-        if not sub:
-            continue
-
-        target_str = f"{move['domain']}/{sub}"
-        # On vérifie si ce chemin complet est nouveau pour cette session ou sur le disque
-        if target_str not in known_subdirs and not (ASSETS_DIR / move['domain'] / sub).exists():
-            print(f"\n--- 🌿 NOUVEAU SOUS-DOMAINE DÉTECTÉ ---")
-            print(f"Domaine : {move['domain']}")
-            print(f"Sous-domaine proposé : {sub}")
-            
-            # Récupérer les sous-domaines existants pour le domaine (potentiellement renommé)
-            existing_subs = existing_struct.get(move["domain"], [])
-            if existing_subs:
-                print(f"Sous-domaines existants dans '{move['domain']}' : {', '.join(sorted(existing_subs))}")
-            
-            ans = input(f"Le sous-domaine est-il OK ? [Y]es / [r]ename / [s]kip : ").lower()
-            if ans == 's':
-                move["skip"] = True
+            # 2. Validation du SOUS-DOMAINE (si défini)
+            sub = move["subdomain"]
+            if not sub:
                 continue
-            elif ans == 'r':
-                new_sub = input(f"Entrez le nouveau nom de sous-domaine : ").strip()
-                if new_sub:
-                    move["subdomain"] = slugify(new_sub)
-                    sub = move["subdomain"]
-                    target_str = f"{move['domain']}/{sub}"
-            
-            known_subdirs.add(target_str)
+
+            target_str = f"{move['domain']}/{sub}"
+            # On vérifie si ce chemin complet est nouveau pour cette session ou sur le disque
+            if target_str not in known_subdirs and not (ASSETS_DIR / move['domain'] / sub).exists():
+                print(f"\n--- 🌿 NOUVEAU SOUS-DOMAINE DÉTECTÉ ---")
+                print(f"Domaine : {move['domain']}")
+                print(f"Sous-domaine proposé : {sub}")
+                
+                # Récupérer les sous-domaines existants pour le domaine (potentiellement renommé)
+                existing_subs = existing_struct.get(move["domain"], [])
+                if existing_subs:
+                    print(f"Sous-domaines existants dans '{move['domain']}' : {', '.join(sorted(existing_subs))}")
+                
+                ans = input(f"Le sous-domaine est-il OK ? [Y]es / [r]ename / [s]kip : ").lower()
+                if ans == 's':
+                    move["skip"] = True
+                    continue
+                elif ans == 'r':
+                    new_sub = input(f"Entrez le nouveau nom de sous-domaine : ").strip()
+                    if new_sub:
+                        move["subdomain"] = slugify(new_sub)
+                        sub = move["subdomain"]
+                        target_str = f"{move['domain']}/{sub}"
+                
+                known_subdirs.add(target_str)
 
     # Exécution des déplacements
     for move in planned_moves:
@@ -397,6 +397,14 @@ def process_exercises():
         meta.setdefault("subdomain", meta.get("subdomain", tex_path.parent.name))
         meta["id"] = slugify(meta.get("id", base))
         
+        # Extraction de la date pour le tri/affichage (format YYYY-MM-DD)
+        date_match = re.search(r'(\d{8})', meta["id"])
+        if date_match:
+            d_str = date_match.group(1)
+            meta["date"] = f"{d_str[:4]}-{d_str[4:6]}-{d_str[6:8]}"
+        else:
+            meta["date"] = None
+
         if "time_solve" not in meta:
             meta["time_solve"] = int(meta.get("difficulty", 2)) * (max(1, num_questions) * 2)
 
