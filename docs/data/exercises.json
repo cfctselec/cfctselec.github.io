@@ -402,6 +402,35 @@
   },
   {
     "filename": [
+      "electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.tex"
+    ],
+    "id": "electrotechnique_puissance_20260429_842",
+    "title": "Intensité, disjoncteur et résistance d'un appareil",
+    "domain": "Électrotechnique",
+    "subdomain": "Puissance",
+    "tags": [
+      "énergie_électrique",
+      "intensité",
+      "disjoncteur",
+      "résistance",
+      "loi_ohm",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 6,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.m"
+    ],
+    "author": "om",
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.tex",
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.m",
+    "search_text": "intensité, disjoncteur et résistance d'un appareil électrotechnique puissance énergie_électrique intensité disjoncteur résistance loi_ohm ts intensite disjoncteur et resistance dun appareil electrotechnique puissance energie electrique intensite disjoncteur resistance loi ohm ts"
+  },
+  {
+    "filename": [
       "electrotechnique_puissance_20260429_901_consommation_chauffe_eau.tex"
     ],
     "id": "electrotechnique_puissance_20260429_901",
