@@ -140,6 +140,18 @@
           filter: false,
           cellStyle: { color: 'var(--gray)', fontWeight: 'bold', textAlign: 'center' }
         },
+        { 
+          field: "date", 
+          headerName: "Déposé le", 
+          sortable: true, 
+          filter: true, 
+          width: 110,
+          valueFormatter: params => {
+            if (!params.value) return "";
+            const parts = params.value.split("-");
+            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+          }
+        },
         { field: "domain", headerName: "Domaine", sortable: true, filter: true, width: 120, hide: isMobile, cellStyle: { fontWeight: 'bold' } },
         { field: "subdomain", headerName: "Sous-Domaine", sortable: true, filter: true, width: 120, hide: isMobile },
         { field: "title", headerName: "Sujet de l'exercice", sortable: true, flex: 1, 
@@ -290,13 +302,21 @@
       saveAs(content, `Pack_Exercices_${new Date().toISOString().slice(0,10)}.zip`);
     }
 
+    // Fonction slugify améliorée pour gérer les accents
     function slugify(text) {
-      return text.toString().toLowerCase()
-        .replace(/\s+/g, '_')
-        .replace(/[^\w\-]+/g, '')
-        .replace(/\-\-+/g, '_')
-        .replace(/^-+/, '')
-        .replace(/-+$/, '');
+      if (!text) return "";
+      // 1. Convertir en chaîne et normaliser (gérer les accents)
+      text = String(text).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      // 2. Convertir en minuscules
+      text = text.toLowerCase();
+      // 3. Remplacer les espaces et les caractères non alphanumériques par des underscores
+      text = text.replace(/\s+/g, '_'); // Remplacer les espaces par _
+      text = text.replace(/[^\w-]+/g, ''); // Supprimer tous les caractères non-mots (sauf -)
+      // 4. Remplacer les underscores multiples par un seul
+      text = text.replace(/__+/g, '_');
+      // 5. Supprimer les underscores en début et fin
+      text = text.replace(/^-+/, '').replace(/-+$/, '');
+      return text;
     }
 
     function toggleTag(tag, el) {
