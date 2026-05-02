@@ -1,0 +1,203 @@
+% ---
+% filename : ["nibt_protection_20260502_452_dispositifs_surcharge.tex"]
+% id : "nibt_protection_20260502_452"
+% title : "Protection contre les surcharges"
+% domain : "NIBT"
+% subdomain : "Protection"
+% tags : ["nibt", "surcharge", "dispositif_de_protection", "fusible", "relais_thermique", "rcd", "DDR", "DT"]
+% difficulty : 2
+% time_solve : 16
+% has_octave : false
+% octave_files : [""]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+%\usepackage{a4wide}
+\usepackage{microtype}      % Meilleure répartition du texte
+\usepackage{float}          % Positionnement [H]
+\usepackage{needspace}      % Saut conditionnel intelligent
+
+% Éviter les veuves/orphelines (optionnel, à décommenter si besoin)
+% \widowpenalty=10000
+% \clubpenalty=10000
+
+% Espacement vertical flexible
+%\raggedbottom
+%\setlength{\parskip}{0.5em plus 0.2em minus 0.1em}
+%\setlength{\parindent}{0pt}
+
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+% Vecteurs
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ + PGFPlots
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+
+\usepackage{tkz-fct}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+
+\usepackage{sankey}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfdeclarelayer{sankeydebug}
+\pgfsetlayers{background,main,foreground,sankeydebug}
+
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{02.05.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{(\dateTe) \thepage/\numpages}
+
+% Compteur en bas de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}
+}
+
+\firstpagefooter{\totalpointtts}{}{}
+\runningfooter{\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+\usepackage{enumitem}
+% Réglage global : toutes les listes enumerate (niveau 1) en a), b), c), ...
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+
+
+%\renewcommand{\thepartno}{\arabic{partno}}
+%\renewcommand{\partlabel}{\thepartno)}
+\begin{document}
+\unframedsolutions
+\pointsinmargin
+\bracketedpoints
+	
+\section*{Préparation DT PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question
+Indiquez pour chaque affirmation concernant les dispositifs de protection s'il s'agit d'un matériel assurant la fonction de protection contre les surcharges.
+
+\begin{parts}
+	\part[1] Le dispositif de protection à courant différentiel-résiduel (RCD) assure la protection uniquement contre les surcharges.
+	\part[1] Le fusible HPC assure la protection contre les surcharges.
+	\part[1] Le relais de protection moteur assure la protection contre les surcharges.
+	\part[1] Le fusible miniaturisé assure la protection contre les surcharges.
+\end{parts}
+
+\begin{solution}
+	NIBT 4.3.2.2 Les dispositifs de protection contre les surcharges doivent être capables d'interrompre tout courant de surcharge dans les conducteurs avant qu'un tel courant ne puisse provoquer un échauffement nuisible aux isolations, aux connexions, aux canalisations ou à l'environnement.
+	
+	\begin{itemize}
+		\item \textbf{RCD (DDR) :} Ce matériel est conçu pour la protection contre les courants de défaut (protection des personnes) et ne remplit pas la fonction de protection contre les surcharges.\\ L'affirmation est donc \textbf{Fausse}.
+		\item \textbf{Fusible HPC :} Les fusibles à Haut Pouvoir de Coupure assurent la protection contre les surintensités, ce qui inclut les courants de surcharge et de court-circuit.\\
+		L'affirmation est \textbf{Juste}.
+		\item \textbf{Relais de protection moteur :} Il s'agit d'un dispositif thermique spécifiquement utilisé pour la protection des récepteurs contre les surcharges prolongées.\\
+		L'affirmation est \textbf{Juste}.
+		\item \textbf{Fusible miniaturisé :} Ce type de coupe-surintensité assure la protection contre les surcharges dans les circuits de faible puissance.\\
+		L'affirmation est \textbf{Juste}.
+	\end{itemize}
+\end{solution}
+\end{questions}
+\end{document}

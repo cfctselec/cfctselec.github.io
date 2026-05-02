@@ -1,6 +1,37 @@
 [
   {
     "filename": [
+      "nibt_protection_20260502_452_dispositifs_surcharge.tex"
+    ],
+    "id": "nibt_protection_20260502_452",
+    "title": "Protection contre les surcharges",
+    "domain": "NIBT",
+    "subdomain": "Protection",
+    "tags": [
+      "nibt",
+      "surcharge",
+      "dispositif_de_protection",
+      "fusible",
+      "relais_thermique",
+      "rcd",
+      "DDR",
+      "DT"
+    ],
+    "difficulty": 2,
+    "time_solve": 16,
+    "has_octave": false,
+    "octave_files": [
+      ""
+    ],
+    "author": "om",
+    "date": "2026-05-02",
+    "tex_url": "assets/nibt/protection/nibt_protection_20260502_452_dispositifs_surcharge.tex",
+    "donnee_url": "assets/nibt/protection/nibt_protection_20260502_452_dispositifs_surcharge_donnee.pdf",
+    "solution_url": "assets/nibt/protection/nibt_protection_20260502_452_dispositifs_surcharge_solution.pdf",
+    "search_text": "protection contre les surcharges nibt protection nibt surcharge dispositif_de_protection fusible relais_thermique rcd ddr dt protection contre les surcharges nibt protection nibt surcharge dispositif de protection fusible relais thermique rcd ddr dt"
+  },
+  {
+    "filename": [
       "electrotechnique_circuits_ac_20260428_251_circuit_rc_parallele.tex"
     ],
     "id": "electrotechnique_circuits_ac_20260428_251",
