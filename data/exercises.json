@@ -1,5 +1,612 @@
 [
   {
+    "filename": "oibt_autorisations_20260517_628_autorisations_limitees_oibt.tex",
+    "id": "oibt_autorisations_20260517_628",
+    "title": "Types d'autorisations d'installer limitées selon l'OIBT",
+    "domain": "OIBT",
+    "subdomain": "Autorisations",
+    "tags": [
+      "oibt",
+      "autorisations_limitées",
+      "inspection",
+      "dt"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/oibt/autorisations/oibt_autorisations_20260517_628_autorisations_limitees_oibt.tex",
+    "images": [],
+    "donnee_url": "assets/oibt/autorisations/oibt_autorisations_20260517_628_autorisations_limitees_oibt_donnee.pdf",
+    "solution_url": "assets/oibt/autorisations/oibt_autorisations_20260517_628_autorisations_limitees_oibt_solution.pdf",
+    "search_text": "types d'autorisations d'installer limitées selon l'oibt oibt autorisations oibt autorisations_limitées inspection dt types dautorisations dinstaller limitees selon loibt oibt autorisations oibt autorisations limitees inspection dt"
+  },
+  {
+    "filename": "oibt_controles_20260517_000_organes_controle.tex",
+    "id": "oibt_controles_20260517_000",
+    "title": "Organes de contrôle selon l'OIBT",
+    "domain": "OIBT",
+    "subdomain": "Contrôles",
+    "tags": [
+      "oibt",
+      "organes_contrôle",
+      "inspection",
+      "dt"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": true,
+    "octave_files": [
+      "oibt_controles_20260517_000_organes_controle.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/oibt/controles/oibt_controles_20260517_000_organes_controle.tex",
+    "images": [],
+    "donnee_url": "assets/oibt/controles/oibt_controles_20260517_000_organes_controle_donnee.pdf",
+    "solution_url": "assets/oibt/controles/oibt_controles_20260517_000_organes_controle_solution.pdf",
+    "search_text": "organes de contrôle selon l'oibt oibt contrôles oibt organes_contrôle inspection dt organes de controle selon loibt oibt controles oibt organes controle inspection dt"
+  },
+  {
+    "filename": [
+      "electrotechnique_puissance_20260429_312_mesure_puissance_compteur.tex"
+    ],
+    "id": "electrotechnique_puissance_20260429_312",
+    "title": "Mesure de puissance triphasée par compteur à disque",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "compteur d'énergie",
+      "puissance active",
+      "puissance apparente",
+      "facteur de puissance",
+      "triphasé",
+      "énergie électrique",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 12,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_puissance_20260429_312_mesure_puissance_compteur.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur.m",
+    "search_text": "mesure de puissance triphasée par compteur à disque électrotechnique puissance compteur d'énergie puissance active puissance apparente facteur de puissance triphasé énergie électrique ts mesure de puissance triphasee par compteur adisque electrotechnique puissance compteur denergie puissance active puissance apparente facteur de puissance triphase energie electrique ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_puissance_20260429_123_energie_batterie_smartphone.tex"
+    ],
+    "id": "electrotechnique_puissance_20260429_123",
+    "title": "Énergie stockée dans une batterie de smartphone",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "batterie",
+      "capacité",
+      "énergie électrique",
+      "conversion d'unité",
+      "kWh",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 4,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_puissance_20260429_123_energie_batterie_smartphone.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone.m",
+    "search_text": "énergie stockée dans une batterie de smartphone électrotechnique puissance batterie capacité énergie électrique conversion d'unité kwh ts energie stockee dans une batterie de smartphone electrotechnique puissance batterie capacite energie electrique conversion dunite kwh ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_puissance_20260429_322_energie_potentielle_levage.tex"
+    ],
+    "id": "electrotechnique_puissance_20260429_322",
+    "title": "Énergie potentielle de levage",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "énergie potentielle",
+      "travail",
+      "mécanique",
+      "levage",
+      "gravité",
+      "joule",
+      "masse",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 2,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_puissance_20260429_322_energie_potentielle_levage.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage.m",
+    "search_text": "énergie potentielle de levage électrotechnique puissance énergie potentielle travail mécanique levage gravité joule masse ts energie potentielle de levage electrotechnique puissance energie potentielle travail mecanique levage gravite joule masse ts"
+  },
+  {
+    "id": "electrotechnique_puissance_20260429_598",
+    "title": "Calculs moteur triphasé et pompe",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "moteur",
+      "triphasé",
+      "rendement",
+      "facteur de puissance",
+      "énergie",
+      "puissance active",
+      "puissance réactive",
+      "ts"
+    ],
+    "difficulty": 2,
+    "date": "2026-05-17T21:24:05",
+    "time_solve": 20,
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe.m",
+    "search_text": "calculs moteur triphasé et pompe électrotechnique puissance moteur triphasé rendement facteur de puissance énergie puissance active puissance réactive ts calculs moteur triphase et pompe electrotechnique puissance moteur triphase rendement facteur de puissance energie puissance active puissance reactive ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_puissance_20260429_901_consommation_chauffe_eau.tex"
+    ],
+    "id": "electrotechnique_puissance_20260429_901",
+    "title": "Consommation énergétique d'un chauffe-eau",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "énergie électrique",
+      "puissance",
+      "chauffe-eau",
+      "temps",
+      "kWh",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 2,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_puissance_20260429_901_consommation_chauffe_eau.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau.m",
+    "search_text": "consommation énergétique d'un chauffe-eau électrotechnique puissance énergie électrique puissance chauffe-eau temps kwh ts consommation energetique dun chauffe eau electrotechnique puissance energie electrique puissance chauffe eau temps kwh ts"
+  },
+  {
+    "id": "electrotechnique_puissance_20260429_513",
+    "title": "Chauffage de l'eau et quantité de chaleur",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "énergie thermique",
+      "chaleur massique",
+      "chauffage eau",
+      "ts"
+    ],
+    "difficulty": 1,
+    "date": "2026-05-17T21:24:05",
+    "time_solve": 2,
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur.m",
+    "search_text": "chauffage de l'eau et quantité de chaleur électrotechnique puissance énergie thermique chaleur massique chauffage eau ts chauffage de leau et quantite de chaleur electrotechnique puissance energie thermique chaleur massique chauffage eau ts"
+  },
+  {
+    "id": "electrotechnique_puissance_20260429_224",
+    "title": "Rendement et diagramme de Sankey",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "rendement",
+      "sankey",
+      "moteur",
+      "transformateur",
+      "triphasé",
+      "puissance",
+      "ts"
+    ],
+    "difficulty": 2,
+    "date": "2026-05-17T21:24:05",
+    "time_solve": 20,
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey.m",
+    "search_text": "rendement et diagramme de sankey électrotechnique puissance rendement sankey moteur transformateur triphasé puissance ts rendement et diagramme de sankey electrotechnique puissance rendement sankey moteur transformateur triphase puissance ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.tex"
+    ],
+    "id": "electrotechnique_puissance_20260429_842",
+    "title": "Intensité, disjoncteur et résistance d'un appareil",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "énergie_électrique",
+      "intensité",
+      "disjoncteur",
+      "résistance",
+      "loi_ohm",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 6,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.m",
+    "search_text": "intensité, disjoncteur et résistance d'un appareil électrotechnique puissance énergie_électrique intensité disjoncteur résistance loi_ohm ts intensite disjoncteur et resistance dun appareil electrotechnique puissance energie electrique intensite disjoncteur resistance loi ohm ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_circuits_ac_20260428_251_circuit_rc_parallele.tex"
+    ],
+    "id": "electrotechnique_circuits_ac_20260428_251",
+    "title": "Circuit RC parallèle : grandeurs physiques",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Circuits AC",
+    "tags": [
+      "circuit rc",
+      "parallèle",
+      "impédance",
+      "puissance active",
+      "puissance réactive",
+      "facteur de puissance",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 16,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_circuits_ac_20260428_251_circuit_rc_parallele.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele_donnee.pdf",
+    "solution_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele_solution.pdf",
+    "octave_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele.m",
+    "search_text": "circuit rc parallèle : grandeurs physiques électrotechnique circuits ac circuit rc parallèle impédance puissance active puissance réactive facteur de puissance ts circuit rc parallele grandeurs physiques electrotechnique circuits ac circuit rc parallele impedance puissance active puissance reactive facteur de puissance ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.tex"
+    ],
+    "id": "electrotechnique_circuits_ac_20260428_445",
+    "title": "Bobine, impédance et inductance",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Circuits AC",
+    "tags": [
+      "bobine",
+      "résistance",
+      "impédance",
+      "inductance",
+      "réactance",
+      "courant alternatif",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 12,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance_donnee.pdf",
+    "solution_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance_solution.pdf",
+    "octave_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.m",
+    "search_text": "bobine, impédance et inductance électrotechnique circuits ac bobine résistance impédance inductance réactance courant alternatif ts bobine impedance et inductance electrotechnique circuits ac bobine resistance impedance inductance reactance courant alternatif ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.tex"
+    ],
+    "id": "electrotechnique_circuits_dc_20260429_420",
+    "title": "Pente et interprétation physique de la loi d'Ohm",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Circuits DC",
+    "tags": [
+      "loi d'Ohm",
+      "résistance",
+      "pente",
+      "tangente",
+      "caractéristique",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 16,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm_donnee.pdf",
+    "solution_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm_solution.pdf",
+    "octave_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.m",
+    "search_text": "pente et interprétation physique de la loi d'ohm électrotechnique circuits dc loi d'ohm résistance pente tangente caractéristique ts pente et interpretation physique de la loi dohm electrotechnique circuits dc loi dohm resistance pente tangente caracteristique ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.tex"
+    ],
+    "id": "electrotechnique_circuits_dc_20260429_986",
+    "title": "Résistance interne d'une pile",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Circuits DC",
+    "tags": [
+      "pile",
+      "résistance interne",
+      "loi d'Ohm",
+      "circuit série",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 2,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile_donnee.pdf",
+    "solution_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile_solution.pdf",
+    "octave_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.m",
+    "search_text": "résistance interne d'une pile électrotechnique circuits dc pile résistance interne loi d'ohm circuit série ts resistance interne dune pile electrotechnique circuits dc pile resistance interne loi dohm circuit serie ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.tex"
+    ],
+    "id": "electrotechnique_circuits_dc_20260429_154",
+    "title": "Courant dans un circuit mixte de résistances",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Circuits DC",
+    "tags": [
+      "circuits dc",
+      "résistance",
+      "loi d'Ohm",
+      "circuit mixte",
+      "groupement parallèle",
+      "groupement série",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 4,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances_donnee.pdf",
+    "solution_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances_solution.pdf",
+    "octave_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.m",
+    "search_text": "courant dans un circuit mixte de résistances électrotechnique circuits dc circuits dc résistance loi d'ohm circuit mixte groupement parallèle groupement série ts courant dans un circuit mixte de resistances electrotechnique circuits dc circuits dc resistance loi dohm circuit mixte groupement parallele groupement serie ts"
+  },
+  {
+    "id": "electrotechnique_knx_20260428_612",
+    "title": "Affirmations sur la technologie KNX",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "KNX",
+    "tags": [
+      "knx",
+      "bus",
+      "topologie",
+      "adresse physique",
+      "tension bus",
+      "ts"
+    ],
+    "difficulty": 1,
+    "date": "2026-05-17T21:24:05",
+    "time_solve": 8,
+    "tex_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx_donnee.pdf",
+    "solution_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx_solution.pdf",
+    "octave_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx.m",
+    "search_text": "affirmations sur la technologie knx électrotechnique knx knx bus topologie adresse physique tension bus ts affirmations sur la technologie knx electrotechnique knx knx bus topologie adresse physique tension bus ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.tex"
+    ],
+    "id": "electrotechnique_triphase_20260429_410",
+    "title": "Calcul du courant de neutre en régime triphasé déséquilibré",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Triphasé",
+    "tags": [
+      "triphasé",
+      "courant de neutre",
+      "addition vectorielle",
+      "loi des nœuds",
+      "déséquilibre",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 20,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie_donnee.pdf",
+    "solution_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie_solution.pdf",
+    "octave_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.m",
+    "search_text": "calcul du courant de neutre en régime triphasé déséquilibré électrotechnique triphasé triphasé courant de neutre addition vectorielle loi des nœuds déséquilibre ts calcul du courant de neutre en regime triphase desequilibre electrotechnique triphase triphase courant de neutre addition vectorielle loi des nuds desequilibre ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_triphase_20260426_117_couplage_resistances_triphase.tex"
+    ],
+    "id": "electrotechnique_triphase_20260426_117",
+    "title": "Couplage de résistances en régime triphasé",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Triphasé",
+    "tags": [
+      "triphasé",
+      "étoile",
+      "triangle",
+      "puissance active",
+      "résistance",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 12,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_triphase_20260426_117_couplage_resistances_triphase.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase_donnee.pdf",
+    "solution_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase_solution.pdf",
+    "octave_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase.m",
+    "search_text": "couplage de résistances en régime triphasé électrotechnique triphasé triphasé étoile triangle puissance active résistance ts couplage de resistances en regime triphase electrotechnique triphase triphase etoile triangle puissance active resistance ts"
+  },
+  {
+    "id": "electrotechnique_eclairage_20260429_522",
+    "title": "Calcul du nombre de luminaires LED pour un laboratoire",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Éclairage",
+    "tags": [
+      "éclairage",
+      "flux lumineux",
+      "éclairement",
+      "rendement",
+      "surface",
+      "led",
+      "ts"
+    ],
+    "difficulty": 1,
+    "date": "2026-05-17T21:24:05",
+    "time_solve": 2,
+    "tex_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire_donnee.pdf",
+    "solution_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire_solution.pdf",
+    "octave_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire.m",
+    "search_text": "calcul du nombre de luminaires led pour un laboratoire électrotechnique éclairage éclairage flux lumineux éclairement rendement surface led ts calcul du nombre de luminaires led pour un laboratoire electrotechnique eclairage eclairage flux lumineux eclairement rendement surface led ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_electronique_20260429_548_stabilisation_zener_charge.tex"
+    ],
+    "id": "electrotechnique_electronique_20260429_548",
+    "title": "Stabilisation de tension par diode Zener",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Électronique",
+    "tags": [
+      "diode zener",
+      "stabilisation",
+      "résistance",
+      "puissance",
+      "loi d'Ohm",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 20,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_electronique_20260429_548_stabilisation_zener_charge.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge_donnee.pdf",
+    "solution_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge_solution.pdf",
+    "octave_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge.m",
+    "search_text": "stabilisation de tension par diode zener électrotechnique électronique diode zener stabilisation résistance puissance loi d'ohm ts stabilisation de tension par diode zener electrotechnique electronique diode zener stabilisation resistance puissance loi dohm ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_electromagnetisme_20260428_421_electroaimant_u.tex"
+    ],
+    "id": "electrotechnique_electromagnetisme_20260428_421",
+    "title": "Électroaimant en U et polarité",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Électromagnétisme",
+    "tags": [
+      "électroaimant",
+      "champ magnétique",
+      "ferromagnétisme",
+      "bobine",
+      "polarité",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 20,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_electromagnetisme_20260428_421_electroaimant_u.m"
+    ],
+    "author": "om",
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260428_421_electroaimant_u.tex",
+    "images": [
+      "electroaimant_u_inverse_1.png",
+      "electroaimant_u_inverse_N_S_reponse.png"
+    ],
+    "donnee_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260428_421_electroaimant_u_donnee.pdf",
+    "solution_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260428_421_electroaimant_u_solution.pdf",
+    "search_text": "électroaimant en u et polarité électrotechnique électromagnétisme électroaimant champ magnétique ferromagnétisme bobine polarité ts electroaimant en uet polarite electrotechnique electromagnetisme electroaimant champ magnetique ferromagnetisme bobine polarite ts"
+  },
+  {
     "filename": [
       "nibt_protection_20260502_452_dispositifs_surcharge.tex"
     ],
@@ -24,546 +631,187 @@
       ""
     ],
     "author": "om",
-    "date": "2026-05-02",
+    "date": "2026-05-17T21:24:05",
     "tex_url": "assets/nibt/protection/nibt_protection_20260502_452_dispositifs_surcharge.tex",
+    "images": [],
     "donnee_url": "assets/nibt/protection/nibt_protection_20260502_452_dispositifs_surcharge_donnee.pdf",
     "solution_url": "assets/nibt/protection/nibt_protection_20260502_452_dispositifs_surcharge_solution.pdf",
     "search_text": "protection contre les surcharges nibt protection nibt surcharge dispositif_de_protection fusible relais_thermique rcd ddr dt protection contre les surcharges nibt protection nibt surcharge dispositif de protection fusible relais thermique rcd ddr dt"
   },
   {
-    "id": "electrotechnique_eclairage_20260429_522",
-    "title": "Calcul du nombre de luminaires LED pour un laboratoire",
-    "domain": "Électrotechnique",
-    "subdomain": "Éclairage",
+    "filename": "nibt_installations_20260517_180_protection_neutre_reduit.tex",
+    "id": "nibt_installations_20260517_180",
+    "title": "Protection du conducteur neutre de section réduite",
+    "domain": "NIBT",
+    "subdomain": "Neutre",
     "tags": [
-      "éclairage",
-      "flux lumineux",
-      "éclairement",
-      "rendement",
-      "surface",
-      "led",
-      "ts"
-    ],
-    "difficulty": 1,
-    "date": "2026-04-29",
-    "time_solve": 2,
-    "tex_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire.tex",
-    "donnee_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire_donnee.pdf",
-    "solution_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire_solution.pdf",
-    "octave_url": "assets/electrotechnique/eclairage/electrotechnique_eclairage_20260429_522_nombre_luminaires_laboratoire.m",
-    "search_text": "calcul du nombre de luminaires led pour un laboratoire électrotechnique éclairage éclairage flux lumineux éclairement rendement surface led ts calcul du nombre de luminaires led pour un laboratoire electrotechnique eclairage eclairage flux lumineux eclairement rendement surface led ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_triphase_20260426_117_couplage_resistances_triphase.tex"
-    ],
-    "id": "electrotechnique_triphase_20260426_117",
-    "title": "Couplage de résistances en régime triphasé",
-    "domain": "Électrotechnique",
-    "subdomain": "Triphasé",
-    "tags": [
-      "triphasé",
-      "étoile",
-      "triangle",
-      "puissance active",
-      "résistance",
-      "ts"
+      "nibt",
+      "neutre",
+      "section",
+      "surcharge",
+      "dimensionnement",
+      "dt"
     ],
     "difficulty": 2,
-    "time_solve": 12,
+    "time_solve": 15,
     "has_octave": true,
     "octave_files": [
-      "electrotechnique_triphase_20260426_117_couplage_resistances_triphase.m"
+      "nibt_installations_20260517_180_protection_neutre_reduit.m"
     ],
     "author": "om",
-    "date": "2026-04-26",
-    "tex_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase.tex",
-    "donnee_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase_donnee.pdf",
-    "solution_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase_solution.pdf",
-    "octave_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260426_117_couplage_resistances_triphase.m",
-    "search_text": "couplage de résistances en régime triphasé électrotechnique triphasé triphasé étoile triangle puissance active résistance ts couplage de resistances en regime triphase electrotechnique triphase triphase etoile triangle puissance active resistance ts"
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/nibt/neutre/nibt_installations_20260517_180_protection_neutre_reduit.tex",
+    "images": [],
+    "donnee_url": "assets/nibt/neutre/nibt_installations_20260517_180_protection_neutre_reduit_donnee.pdf",
+    "solution_url": "assets/nibt/neutre/nibt_installations_20260517_180_protection_neutre_reduit_solution.pdf",
+    "search_text": "protection du conducteur neutre de section réduite nibt neutre nibt neutre section surcharge dimensionnement dt protection du conducteur neutre de section reduite nibt neutre nibt neutre section surcharge dimensionnement dt"
   },
   {
-    "filename": [
-      "electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.tex"
-    ],
-    "id": "electrotechnique_triphase_20260429_410",
-    "title": "Calcul du courant de neutre en régime triphasé déséquilibré",
-    "domain": "Électrotechnique",
-    "subdomain": "Triphasé",
+    "filename": "nibt_installations_20260517_629_eclairage_securite.tex",
+    "id": "nibt_installations_20260517_629",
+    "title": "Exigences pour l'éclairage de sécurité et de secours",
+    "domain": "NIBT",
+    "subdomain": "Services de sécurité",
     "tags": [
-      "triphasé",
-      "courant de neutre",
-      "addition vectorielle",
-      "loi des nœuds",
-      "déséquilibre",
-      "ts"
+      "nibt",
+      "éclairage_sécurité",
+      "lux",
+      "sécurité",
+      "dt"
     ],
     "difficulty": 2,
-    "time_solve": 20,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.m"
-    ],
+    "time_solve": 15,
+    "has_octave": false,
     "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.tex",
-    "donnee_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie_donnee.pdf",
-    "solution_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie_solution.pdf",
-    "octave_url": "assets/electrotechnique/triphase/electrotechnique_triphase_20260429_410_courant_neutre_boulangerie.m",
-    "search_text": "calcul du courant de neutre en régime triphasé déséquilibré électrotechnique triphasé triphasé courant de neutre addition vectorielle loi des nœuds déséquilibre ts calcul du courant de neutre en regime triphase desequilibre electrotechnique triphase triphase courant de neutre addition vectorielle loi des nuds desequilibre ts"
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/nibt/services_de_securite/nibt_installations_20260517_629_eclairage_securite_.tex",
+    "images": [],
+    "donnee_url": "assets/nibt/services_de_securite/nibt_installations_20260517_629_eclairage_securite__donnee.pdf",
+    "solution_url": "assets/nibt/services_de_securite/nibt_installations_20260517_629_eclairage_securite__solution.pdf",
+    "search_text": "exigences pour l'éclairage de sécurité et de secours nibt services de sécurité nibt éclairage_sécurité lux sécurité dt exigences pour leclairage de securite et de secours nibt services de securite nibt eclairage securite lux securite dt"
   },
   {
-    "filename": [
-      "electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.tex"
-    ],
-    "id": "electrotechnique_circuits_dc_20260429_986",
-    "title": "Résistance interne d'une pile",
-    "domain": "Électrotechnique",
-    "subdomain": "Circuits DC",
+    "filename": "nibt_installations_20260517_666_modes_pose_canalisations.tex",
+    "id": "nibt_installations_20260517_666",
+    "title": "Identification des modes de pose des canalisations",
+    "domain": "NIBT",
+    "subdomain": "Canalisations",
     "tags": [
-      "pile",
-      "résistance interne",
-      "loi d'Ohm",
-      "circuit série",
-      "ts"
-    ],
-    "difficulty": 1,
-    "time_solve": 2,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.m"
-    ],
-    "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.tex",
-    "donnee_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile_donnee.pdf",
-    "solution_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile_solution.pdf",
-    "octave_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_986_resistance_interne_pile.m",
-    "search_text": "résistance interne d'une pile électrotechnique circuits dc pile résistance interne loi d'ohm circuit série ts resistance interne dune pile electrotechnique circuits dc pile resistance interne loi dohm circuit serie ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.tex"
-    ],
-    "id": "electrotechnique_circuits_dc_20260429_420",
-    "title": "Pente et interprétation physique de la loi d'Ohm",
-    "domain": "Électrotechnique",
-    "subdomain": "Circuits DC",
-    "tags": [
-      "loi d'Ohm",
-      "résistance",
-      "pente",
-      "tangente",
-      "caractéristique",
-      "ts"
+      "nibt",
+      "mode de pose",
+      "canalisation",
+      "dt"
     ],
     "difficulty": 2,
-    "time_solve": 16,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.m"
-    ],
+    "time_solve": 15,
+    "has_octave": false,
     "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.tex",
-    "donnee_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm_donnee.pdf",
-    "solution_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm_solution.pdf",
-    "octave_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_420_pente_loi_ohm.m",
-    "search_text": "pente et interprétation physique de la loi d'ohm électrotechnique circuits dc loi d'ohm résistance pente tangente caractéristique ts pente et interpretation physique de la loi dohm electrotechnique circuits dc loi dohm resistance pente tangente caracteristique ts"
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/nibt/canalisations/nibt_installations_20260517_666_modes_pose_canalisations.tex",
+    "images": [],
+    "donnee_url": "assets/nibt/canalisations/nibt_installations_20260517_666_modes_pose_canalisations_donnee.pdf",
+    "solution_url": "assets/nibt/canalisations/nibt_installations_20260517_666_modes_pose_canalisations_solution.pdf",
+    "search_text": "identification des modes de pose des canalisations nibt canalisations nibt mode de pose canalisation dt identification des modes de pose des canalisations nibt canalisations nibt mode de pose canalisation dt"
   },
   {
-    "filename": [
-      "electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.tex"
-    ],
-    "id": "electrotechnique_circuits_dc_20260429_154",
-    "title": "Courant dans un circuit mixte de résistances",
-    "domain": "Électrotechnique",
-    "subdomain": "Circuits DC",
+    "filename": "nibt_installations_20260517_900_sectionnement_abonne.tex",
+    "id": "nibt_installations_20260517_900",
+    "title": "Sectionnement et disjoncteurs d'abonné",
+    "domain": "NIBT",
+    "subdomain": "Canalisations",
     "tags": [
-      "circuits dc",
-      "résistance",
-      "loi d'Ohm",
-      "circuit mixte",
-      "groupement parallèle",
-      "groupement série",
-      "ts"
-    ],
-    "difficulty": 2,
-    "time_solve": 4,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.m"
-    ],
-    "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.tex",
-    "donnee_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances_donnee.pdf",
-    "solution_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances_solution.pdf",
-    "octave_url": "assets/electrotechnique/circuits_dc/electrotechnique_circuits_dc_20260429_154_courant_circuit_mixte_resistances.m",
-    "search_text": "courant dans un circuit mixte de résistances électrotechnique circuits dc circuits dc résistance loi d'ohm circuit mixte groupement parallèle groupement série ts courant dans un circuit mixte de resistances electrotechnique circuits dc circuits dc resistance loi dohm circuit mixte groupement parallele groupement serie ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_puissance_20260429_901_consommation_chauffe_eau.tex"
-    ],
-    "id": "electrotechnique_puissance_20260429_901",
-    "title": "Consommation énergétique d'un chauffe-eau",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "énergie électrique",
-      "puissance",
-      "chauffe-eau",
-      "temps",
-      "kWh",
-      "ts"
-    ],
-    "difficulty": 1,
-    "time_solve": 2,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_puissance_20260429_901_consommation_chauffe_eau.m"
-    ],
-    "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_901_consommation_chauffe_eau.m",
-    "search_text": "consommation énergétique d'un chauffe-eau électrotechnique puissance énergie électrique puissance chauffe-eau temps kwh ts consommation energetique dun chauffe eau electrotechnique puissance energie electrique puissance chauffe eau temps kwh ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_puissance_20260429_312_mesure_puissance_compteur.tex"
-    ],
-    "id": "electrotechnique_puissance_20260429_312",
-    "title": "Mesure de puissance triphasée par compteur à disque",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "compteur d'énergie",
-      "puissance active",
-      "puissance apparente",
-      "facteur de puissance",
-      "triphasé",
-      "énergie électrique",
-      "ts"
-    ],
-    "difficulty": 2,
-    "time_solve": 12,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_puissance_20260429_312_mesure_puissance_compteur.m"
-    ],
-    "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_312_mesure_puissance_compteur.m",
-    "search_text": "mesure de puissance triphasée par compteur à disque électrotechnique puissance compteur d'énergie puissance active puissance apparente facteur de puissance triphasé énergie électrique ts mesure de puissance triphasee par compteur adisque electrotechnique puissance compteur denergie puissance active puissance apparente facteur de puissance triphase energie electrique ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_puissance_20260429_322_energie_potentielle_levage.tex"
-    ],
-    "id": "electrotechnique_puissance_20260429_322",
-    "title": "Énergie potentielle de levage",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "énergie potentielle",
-      "travail",
-      "mécanique",
-      "levage",
-      "gravité",
-      "joule",
-      "masse",
-      "ts"
-    ],
-    "difficulty": 1,
-    "time_solve": 2,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_puissance_20260429_322_energie_potentielle_levage.m"
-    ],
-    "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_322_energie_potentielle_levage.m",
-    "search_text": "énergie potentielle de levage électrotechnique puissance énergie potentielle travail mécanique levage gravité joule masse ts energie potentielle de levage electrotechnique puissance energie potentielle travail mecanique levage gravite joule masse ts"
-  },
-  {
-    "id": "electrotechnique_puissance_20260429_224",
-    "title": "Rendement et diagramme de Sankey",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "rendement",
-      "sankey",
-      "moteur",
-      "transformateur",
-      "triphasé",
-      "puissance",
-      "ts"
-    ],
-    "difficulty": 2,
-    "date": "2026-04-29",
-    "time_solve": 20,
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_224_rendement_moteurs_sankey.m",
-    "search_text": "rendement et diagramme de sankey électrotechnique puissance rendement sankey moteur transformateur triphasé puissance ts rendement et diagramme de sankey electrotechnique puissance rendement sankey moteur transformateur triphase puissance ts"
-  },
-  {
-    "id": "electrotechnique_puissance_20260429_513",
-    "title": "Chauffage de l'eau et quantité de chaleur",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "énergie thermique",
-      "chaleur massique",
-      "chauffage eau",
-      "ts"
-    ],
-    "difficulty": 1,
-    "date": "2026-04-29",
-    "time_solve": 2,
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_513_chauffage_eau_quantite_chaleur.m",
-    "search_text": "chauffage de l'eau et quantité de chaleur électrotechnique puissance énergie thermique chaleur massique chauffage eau ts chauffage de leau et quantite de chaleur electrotechnique puissance energie thermique chaleur massique chauffage eau ts"
-  },
-  {
-    "id": "electrotechnique_puissance_20260429_598",
-    "title": "Calculs moteur triphasé et pompe",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "moteur",
-      "triphasé",
-      "rendement",
-      "facteur de puissance",
-      "énergie",
-      "puissance active",
-      "puissance réactive",
-      "ts"
-    ],
-    "difficulty": 2,
-    "date": "2026-04-29",
-    "time_solve": 20,
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_598_calculs_moteur_pompe.m",
-    "search_text": "calculs moteur triphasé et pompe électrotechnique puissance moteur triphasé rendement facteur de puissance énergie puissance active puissance réactive ts calculs moteur triphase et pompe electrotechnique puissance moteur triphase rendement facteur de puissance energie puissance active puissance reactive ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_puissance_20260429_123_energie_batterie_smartphone.tex"
-    ],
-    "id": "electrotechnique_puissance_20260429_123",
-    "title": "Énergie stockée dans une batterie de smartphone",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "batterie",
-      "capacité",
-      "énergie électrique",
-      "conversion d'unité",
-      "kWh",
-      "ts"
-    ],
-    "difficulty": 1,
-    "time_solve": 4,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_puissance_20260429_123_energie_batterie_smartphone.m"
-    ],
-    "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_123_energie_batterie_smartphone.m",
-    "search_text": "énergie stockée dans une batterie de smartphone électrotechnique puissance batterie capacité énergie électrique conversion d'unité kwh ts energie stockee dans une batterie de smartphone electrotechnique puissance batterie capacite energie electrique conversion dunite kwh ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.tex"
-    ],
-    "id": "electrotechnique_puissance_20260429_842",
-    "title": "Intensité, disjoncteur et résistance d'un appareil",
-    "domain": "Électrotechnique",
-    "subdomain": "Puissance",
-    "tags": [
-      "énergie_électrique",
-      "intensité",
+      "nibt",
+      "sectionnement",
       "disjoncteur",
-      "résistance",
-      "loi_ohm",
-      "ts"
-    ],
-    "difficulty": 1,
-    "time_solve": 6,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.m"
-    ],
-    "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.tex",
-    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance_donnee.pdf",
-    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance_solution.pdf",
-    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260429_842_intensite_disjoncteur_resistance.m",
-    "search_text": "intensité, disjoncteur et résistance d'un appareil électrotechnique puissance énergie_électrique intensité disjoncteur résistance loi_ohm ts intensite disjoncteur et resistance dun appareil electrotechnique puissance energie electrique intensite disjoncteur resistance loi ohm ts"
-  },
-  {
-    "id": "electrotechnique_knx_20260428_612",
-    "title": "Affirmations sur la technologie KNX",
-    "domain": "Électrotechnique",
-    "subdomain": "KNX",
-    "tags": [
-      "knx",
-      "bus",
-      "topologie",
-      "adresse physique",
-      "tension bus",
-      "ts"
-    ],
-    "difficulty": 1,
-    "date": "2026-04-28",
-    "time_solve": 8,
-    "tex_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx.tex",
-    "donnee_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx_donnee.pdf",
-    "solution_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx_solution.pdf",
-    "octave_url": "assets/electrotechnique/knx/electrotechnique_knx_20260428_612_affirmations_technologie_knx.m",
-    "search_text": "affirmations sur la technologie knx électrotechnique knx knx bus topologie adresse physique tension bus ts affirmations sur la technologie knx electrotechnique knx knx bus topologie adresse physique tension bus ts"
-  },
-  {
-    "filename": [
-      "electrotechnique_electromagnetisme_20260428_421_electroaimant_u.tex"
-    ],
-    "id": "electrotechnique_electromagnetisme_20260428_421",
-    "title": "Électroaimant en U et polarité",
-    "domain": "Électrotechnique",
-    "subdomain": "Électromagnétisme",
-    "tags": [
-      "électroaimant",
-      "champ magnétique",
-      "ferromagnétisme",
-      "bobine",
-      "polarité",
-      "ts"
+      "sécurité",
+      "dt"
     ],
     "difficulty": 2,
-    "time_solve": 20,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_electromagnetisme_20260428_421_electroaimant_u.m"
-    ],
+    "time_solve": 15,
+    "has_octave": false,
     "author": "om",
-    "date": "2026-04-28",
-    "tex_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260428_421_electroaimant_u.tex",
-    "donnee_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260428_421_electroaimant_u_donnee.pdf",
-    "solution_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260428_421_electroaimant_u_solution.pdf",
-    "search_text": "électroaimant en u et polarité électrotechnique électromagnétisme électroaimant champ magnétique ferromagnétisme bobine polarité ts electroaimant en uet polarite electrotechnique electromagnetisme electroaimant champ magnetique ferromagnetisme bobine polarite ts"
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/nibt/canalisations/nibt_installations_20260517_900_sectionnement_abonne.tex",
+    "images": [],
+    "donnee_url": "assets/nibt/canalisations/nibt_installations_20260517_900_sectionnement_abonne_donnee.pdf",
+    "solution_url": "assets/nibt/canalisations/nibt_installations_20260517_900_sectionnement_abonne_solution.pdf",
+    "search_text": "sectionnement et disjoncteurs d'abonné nibt canalisations nibt sectionnement disjoncteur sécurité dt sectionnement et disjoncteurs dabonne nibt canalisations nibt sectionnement disjoncteur securite dt"
   },
   {
-    "filename": [
-      "electrotechnique_circuits_ac_20260428_251_circuit_rc_parallele.tex"
-    ],
-    "id": "electrotechnique_circuits_ac_20260428_251",
-    "title": "Circuit RC parallèle : grandeurs physiques",
-    "domain": "Électrotechnique",
-    "subdomain": "Circuits AC",
+    "filename": "nibt_emplacements_speciaux_20260517_100_camping_materiel.tex",
+    "id": "nibt_emplacements_speciaux_20260517_100",
+    "title": "Matériel d'installation pour places de camping et caravanes",
+    "domain": "NIBT",
+    "subdomain": "Emplacements spéciaux",
     "tags": [
-      "circuit rc",
-      "parallèle",
-      "impédance",
-      "puissance active",
-      "puissance réactive",
-      "facteur de puissance",
-      "ts"
+      "nibt",
+      "camping",
+      "prise",
+      "ip",
+      "sécurité",
+      "dt"
     ],
     "difficulty": 2,
-    "time_solve": 16,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_circuits_ac_20260428_251_circuit_rc_parallele.m"
-    ],
+    "time_solve": 15,
+    "has_octave": false,
     "author": "om",
-    "date": "2026-04-28",
-    "tex_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele.tex",
-    "donnee_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele_donnee.pdf",
-    "solution_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele_solution.pdf",
-    "octave_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260423_251_circuit_rc_parallele.m",
-    "search_text": "circuit rc parallèle : grandeurs physiques électrotechnique circuits ac circuit rc parallèle impédance puissance active puissance réactive facteur de puissance ts circuit rc parallele grandeurs physiques electrotechnique circuits ac circuit rc parallele impedance puissance active puissance reactive facteur de puissance ts"
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/nibt/emplacements_speciaux/nibt_emplacements_speciaux_20260517_100_camping_materiel.tex",
+    "images": [],
+    "donnee_url": "assets/nibt/emplacements_speciaux/nibt_emplacements_speciaux_20260517_100_camping_materiel_donnee.pdf",
+    "solution_url": "assets/nibt/emplacements_speciaux/nibt_emplacements_speciaux_20260517_100_camping_materiel_solution.pdf",
+    "search_text": "matériel d'installation pour places de camping et caravanes nibt emplacements spéciaux nibt camping prise ip sécurité dt materiel dinstallation pour places de camping et caravanes nibt emplacements speciaux nibt camping prise ip securite dt"
   },
   {
-    "filename": [
-      "electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.tex"
-    ],
-    "id": "electrotechnique_circuits_ac_20260428_445",
-    "title": "Bobine, impédance et inductance",
-    "domain": "Électrotechnique",
-    "subdomain": "Circuits AC",
+    "filename": "nibt_installations_20260517_000_dimensionnement_pe.tex",
+    "id": "nibt_installations_20260517_000",
+    "title": "Dimensionnement des conducteurs de protection PE",
+    "domain": "NIBT",
+    "subdomain": "Installations",
     "tags": [
-      "bobine",
-      "résistance",
-      "impédance",
-      "inductance",
-      "réactance",
-      "courant alternatif",
-      "ts"
+      "nibt",
+      "pe",
+      "section",
+      "sécurité",
+      "dt"
     ],
     "difficulty": 2,
-    "time_solve": 12,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.m"
-    ],
+    "time_solve": 15,
+    "has_octave": false,
     "author": "om",
-    "date": "2026-04-28",
-    "tex_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.tex",
-    "donnee_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance_donnee.pdf",
-    "solution_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance_solution.pdf",
-    "octave_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260428_445_bobine_impedance_inductance.m",
-    "search_text": "bobine, impédance et inductance électrotechnique circuits ac bobine résistance impédance inductance réactance courant alternatif ts bobine impedance et inductance electrotechnique circuits ac bobine resistance impedance inductance reactance courant alternatif ts"
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/nibt/installations/nibt_installations_20260517_000_dimensionnement_pe.tex",
+    "images": [],
+    "donnee_url": "assets/nibt/installations/nibt_installations_20260517_000_dimensionnement_pe_donnee.pdf",
+    "solution_url": "assets/nibt/installations/nibt_installations_20260517_000_dimensionnement_pe_solution.pdf",
+    "search_text": "dimensionnement des conducteurs de protection pe nibt installations nibt pe section sécurité dt dimensionnement des conducteurs de protection pe nibt installations nibt pe section securite dt"
   },
   {
-    "filename": [
-      "electrotechnique_electronique_20260429_548_stabilisation_zener_charge.tex"
-    ],
-    "id": "electrotechnique_electronique_20260429_548",
-    "title": "Stabilisation de tension par diode Zener",
-    "domain": "Électrotechnique",
-    "subdomain": "Électronique",
+    "filename": "nibt_installations_20260517_543_protection_salle_bains.tex",
+    "id": "nibt_installations_20260517_543",
+    "title": "Degré de protection et installation en salle de bains",
+    "domain": "NIBT",
+    "subdomain": "Installations",
     "tags": [
-      "diode zener",
-      "stabilisation",
-      "résistance",
-      "puissance",
-      "loi d'Ohm",
-      "ts"
+      "nibt",
+      "salle_de_bains",
+      "ip",
+      "volume",
+      "sécurité",
+      "dt"
     ],
     "difficulty": 2,
-    "time_solve": 20,
-    "has_octave": true,
-    "octave_files": [
-      "electrotechnique_electronique_20260429_548_stabilisation_zener_charge.m"
-    ],
+    "time_solve": 15,
+    "has_octave": false,
     "author": "om",
-    "date": "2026-04-29",
-    "tex_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge.tex",
-    "donnee_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge_donnee.pdf",
-    "solution_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge_solution.pdf",
-    "octave_url": "assets/electrotechnique/electronique/electrotechnique_electronique_20260429_548_stabilisation_zener_charge.m",
-    "search_text": "stabilisation de tension par diode zener électrotechnique électronique diode zener stabilisation résistance puissance loi d'ohm ts stabilisation de tension par diode zener electrotechnique electronique diode zener stabilisation resistance puissance loi dohm ts"
+    "date": "2026-05-17T21:24:05",
+    "tex_url": "assets/nibt/installations/nibt_installations_20260517_543_protection_salle_bains.tex",
+    "images": [
+      "volumes_0_1_2_Q.jpg",
+      "volumes_0_1_2_rep.jpg"
+    ],
+    "donnee_url": "assets/nibt/installations/nibt_installations_20260517_543_protection_salle_bains_donnee.pdf",
+    "solution_url": "assets/nibt/installations/nibt_installations_20260517_543_protection_salle_bains_solution.pdf",
+    "search_text": "degré de protection et installation en salle de bains nibt installations nibt salle_de_bains ip volume sécurité dt degre de protection et installation en salle de bains nibt installations nibt salle de bains ip volume securite dt"
   }
 ]

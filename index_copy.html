@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200">
+  <title>Exercices Électrotechnique / Électronique / Mécanique / Physique /</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+  <!-- AG Grid Scripts & Styles -->
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+  <!-- ZIP & FileSaver Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <!-- PDF-LIB for merging -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; object-src 'self' blob:; frame-src 'self' blob:; connect-src 'self' blob: https://cdn.jsdelivr.net;">
+  <style>
+    :root { --bg: #f1f5f9; --card: #fff; --primary: #2563eb; --success: #059669; --gray: #64748b; --border: #e2e8f0; --slate: #1e293b; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--slate); height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+    header { 
+      padding: 0.75rem 1.5rem; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; 
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    h1 { font-size: 1.2rem; font-weight: 800; }
+    .subtitle { color: var(--gray); font-size: 0.85rem; }
+    
+    .controls { padding: 0.75rem 1.5rem; background: #fff; border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .search-bar-container { display: flex; gap: 1rem; align-items: center; }
+    #search { flex: 1; padding: 0.5rem 0.75rem; font-size: 0.9rem; border: 1px solid var(--border); border-radius: 6px; outline: none; }
+    #search:focus { border-color: var(--primary); }
+    
+    .filters-bar { display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .filter-group { display: flex; gap: 0.5rem; flex: 1; }
+    select { flex: 1; padding: 0.4rem; border-radius: 6px; border: 1px solid var(--border); background: #f1f5f9; font-size: 0.85rem; cursor: pointer; }
+
+    .actions-toolbar { 
+      display: flex; align-items: center; gap: 1rem; padding: 0.5rem 1rem; 
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+      visibility: hidden; opacity: 0; transition: all 0.3s ease;
+    }
+    .actions-toolbar.visible { visibility: visible; opacity: 1; }
+    
+    .btn-export { 
+      padding: 0.4rem 0.8rem; background: var(--primary); color: white; border: none; border-radius: 6px; 
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-export:hover { background: #1d4ed8; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+    .btn-export.secondary { background: var(--gray); }
+    .btn-export.secondary:hover { background: var(--slate); }
+    .btn-export.success { background: var(--success); }
+    .btn-export.success:hover { background: #047857; }
+
+    .selection-info { font-size: 0.85rem; font-weight: 600; color: #1e40af; }
+    
+    #tag-cloud { display: flex; gap: 0.4rem; flex-wrap: wrap; max-height: 80px; overflow-y: auto; padding: 2px; }
+    .tag-pill { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 6px; border: 1px solid var(--border); background: #f8fafc; cursor: pointer; color: var(--gray); transition: all 0.2s; user-select: none; }
+    .tag-pill:hover { border-color: var(--primary); color: var(--primary); }
+    .tag-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .tag-reset { font-size: 0.7rem; color: var(--primary); cursor: pointer; font-weight: 700; display: none; align-items: center; gap: 0.2rem; }
+    
+    #myGrid { flex: 1; width: 100%; }
+
+    /* Rendu custom pour AG Grid */
+    /* Visual Difficulty */
+    .diff-bar { display: flex; gap: 2px; }
+    .diff-dot { width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; }
+    .diff-dot.fill { background: var(--primary); }
+    
+    .ex-actions { display: flex; gap: 0.5rem; height: 100%; align-items: center; }
+    .ex-btn { padding: 4px; border-radius: 4px; border: 1px solid var(--border); text-decoration: none; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 1rem; width: 28px; height: 28px; }
+    .ex-btn:hover { background: #f1f5f9; border-color: var(--gray); }
+
+    /* Boutons de révision dans l'en-tête */
+    .header-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .button {
+      display: inline-block;
+      width: max-content;
+      padding: 0.45rem 1rem;
+      color: white !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+    .button-blue { background: var(--primary); }
+    .button-blue:hover { background: #1d4ed8; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+    .button-green { background: var(--success); }
+    .button-green:hover { background: #047857; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2); }
+    .button-amber { background: #d97706; }
+    .button-amber:hover { background: #b45309; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2); }
+  </style>
+</head>
+<body class="ag-theme-alpine">
+  <header>
+    <h1>Préparation aux CFC en électricité (ELMO,IELE,PELE) <span class="subtitle">Exercices corrigés PQ CFC</span> <span id="total-count" class="subtitle" style="margin-left: 10px; color: var(--primary); font-weight: bold;"></span></h1>
+    <div class="header-buttons">
+      <a href="https://cfctselec.github.io/cfcflashcards/" class="button button-blue" target="_blank">Révisions CFC ELMO/IELE/PELE/TELE</a>
+      <a href="https://qrhd1.github.io/oldcfc/  " class="button button-green" target="_blank">CFC TS;DT;TC</a>
+      <a href="https://leitexper1.github.io/cfcflashcards/" class="button button-amber" target="_blank">Flashcards CFC LEITNER</a>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="search-bar-container">
+      <input type="text" id="search" placeholder="Filtrage instantané (Sujet, Domaine, Tags...)" oninput="onFilterTextBoxChanged()">
+    </div>
+    <div class="filters-bar">
+      <div class="filter-group">
+        <select id="filter-domain" onchange="onFilterChanged()"><option value="">🌐 Tous domaines</option></select>
+        <select id="filter-subdomain" onchange="onFilterChanged()"><option value="">🌿 Tous sous-domaines</option></select>
+      </div>
+      <div id="selection-toolbar" class="actions-toolbar">
+        <span class="selection-info">
+          <span id="selected-count">0</span> exercice(s) sélectionné(s)
+        </span>
+        <button onclick="exportSelected('donnee')" class="btn-export success">
+          📄 PDF Énoncés
+        </button>
+        <button onclick="exportSelected('solution')" class="btn-export secondary">
+          💡 PDF Corrigés
+        </button>
+        <button onclick="exportSelected('zip')" class="btn-export">
+          ⚡ Pack Complet (.zip)
+        </button>
+        <button onclick="exportSelectionForMerge()" class="btn-export secondary" title="Génère un JSON pour le script de fusion Python">
+          🧪 JSON pour Fusion
+        </button>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div id="tag-cloud"></div>
+      <span id="tag-reset-btn" class="tag-reset" onclick="resetTags()">✕ Effacer les tags</span>
+    </div>
+  </div>
+
+  <div id="myGrid"></div>
+
+  <script>
+    let gridApi;
+    let selectedTags = new Set();
+
+    const isMobile = false; // Désactive la détection mobile pour garder le layout PC
+
+    const gridOptions = {
+      columnDefs: [
+        { width: 50, pinned: isMobile ? null : 'left' },
+        { 
+          headerName: "N°", 
+          valueGetter: "node.rowIndex + 1", 
+          width: 70, 
+          pinned: isMobile ? null : 'left',
+          sortable: false,
+          filter: false,
+          cellStyle: { color: 'var(--gray)', fontWeight: 'bold', textAlign: 'center' }
+        },
+        { 
+          field: "date", 
+          headerName: "Déposé le", 
+          sortable: true, 
+          filter: true, 
+          width: 110,
+          valueFormatter: params => {
+            if (!params.value) return "";
+            const parts = params.value.split("-");
+            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+          }
+        },
+        { field: "domain", headerName: "Domaine", sortable: true, filter: true, width: 120, hide: isMobile, cellStyle: { fontWeight: 'bold' } },
+        { field: "subdomain", headerName: "Sous-Domaine", sortable: true, filter: true, width: 120, hide: isMobile },
+        { field: "title", headerName: "Sujet de l'exercice", sortable: true, flex: 1, 
+          valueFormatter: params => params.value ? params.value.replace(/_/g, ' ') : '' },
+        { field: "difficulty", headerName: "Niveau", width: 100, sortable: true,
+          cellRenderer: params => {
+            const dots = Array.from({length: 5}, (_, i) => `<div class="diff-dot ${i < params.value ? 'fill' : ''}" style="${i < params.value ? 'background:#f59e0b' : ''}"></div>`).join('');
+            return `<div class="diff-bar">${dots}</div>`;
+          }
+        },
+        { headerName: "Ressources", width: isMobile ? 180 : 230, 
+          cellRenderer: params => {
+            const ex = params.data;
+            return `
+              <div class="ex-actions">
+                <a href="${ex.donnee_url}" target="_blank" class="btn-res btn-donnee" title="Ouvrir l'énoncé (PDF)">
+                  <span>📄</span> Énoncé
+                </a>
+                <a href="${ex.solution_url}" target="_blank" class="btn-res btn-solution" title="Ouvrir le corrigé (PDF)">
+                  <span>💡</span> Corrigé
+                </a>
+                ${ex.octave_url ? `<a href="${ex.octave_url}" download class="btn-res btn-source" title="Télécharger Octave (.m)">💻</a>` : ''}
+                ${ex.tex_url ? `<a href="${ex.tex_url}" download class="btn-res btn-source" title="Télécharger LaTeX (.tex)">📝</a>` : ''}
+              </div>`;
+          }
+        }
+      ],
+
+      localeText: {
+        contains: 'Contient',
+        notContains: 'Ne contient pas',
+        equals: 'Égal à',
+        notEqual: 'Différent de',
+        startsWith: 'Commence par',
+        endsWith: 'Se termine par',
+        blank: 'Vide',
+        notBlank: 'Non vide',
+        lessThan: 'Inférieur à',
+        lessThanOrEqual: 'Inférieur ou égal à',
+        greaterThan: 'Supérieur à',
+        greaterThanOrEqual: 'Supérieur ou égal à',
+        inRange: 'Entre',
+        filterOoo: 'Filtrer...',
+        applyFilter: 'Appliquer',
+        clearFilter: 'Effacer',
+        resetFilter: 'Réinitialiser'
+      },
+
+      defaultColDef: {
+        resizable: true,
+        suppressMovable: true,
+      },
+      rowHeight: 45,
+      rowSelection: {
+        mode: 'multiRow',
+        headerCheckbox: true,
+        checkboxes: true,
+        enableClickSelection: false
+      },
+      animateRows: true,
+      onSelectionChanged: onSelectionChanged,
+      getRowId: params => params.data.id,
+      onGridReady: (params) => {
+        if (isMobile) params.api.sizeColumnsToFit();
+      },
+      isExternalFilterPresent: () => {
+        const domain = document.getElementById('filter-domain').value;
+        const subdomain = document.getElementById('filter-subdomain').value;
+        return selectedTags.size > 0 || domain !== "" || subdomain !== "";
+      },
+      doesExternalFilterPass: (node) => {
+        const domain = document.getElementById('filter-domain').value;
+        const subdomain = document.getElementById('filter-subdomain').value;
+        
+        let pass = true;
+        if (domain !== "" && node.data.domain !== domain) pass = false;
+        if (subdomain !== "" && node.data.subdomain !== subdomain) pass = false;
+        if (selectedTags.size > 0) {
+          if (!(node.data.tags && Array.isArray(node.data.tags) && node.data.tags.some(tag => selectedTags.has(tag)))) {
+            pass = false;
+          }
+        }
+        return pass;
+      }
+    };
+
+    function onSelectionChanged() {
+      const selectedRows = gridApi.getSelectedRows();
+      const count = selectedRows.length;
+      document.getElementById('selected-count').textContent = count;
+      const toolbar = document.getElementById('selection-toolbar');
+      if (count > 0) toolbar.classList.add('visible');
+      else toolbar.classList.remove('visible');
+    }
+
+    // Fonction générique de fusion PDF
+    async function mergePDFs(rows, type) {
+      const { PDFDocument } = PDFLib;
+      const targetDoc = await PDFDocument.create();
+      
+      const urlKey = type === 'donnee' ? 'donnee_url' : 'solution_url';
+      
+      const tasks = rows.map(async (ex) => {
+        const url = ex[urlKey];
+        if (!url) return;
+        try {
+          const bytes = await fetch(url).then(res => res.arrayBuffer());
+          const srcDoc = await PDFDocument.load(bytes);
+          const copiedPages = await targetDoc.copyPages(srcDoc, srcDoc.getPageIndices());
+          copiedPages.forEach(page => targetDoc.addPage(page));
+        } catch (e) { console.error(`Erreur fusion ${type}:`, url, e); }
+      });
+      
+      await Promise.all(tasks);
+      return await targetDoc.save();
+    }
+
+    async function exportSelected(mode) {
+      const selectedRows = gridApi.getSelectedRows();
+      if (selectedRows.length === 0) {
+        alert("Veuillez sélectionner au moins un exercice dans la liste.");
+        return;
+      }
+
+      const dateStr = new Date().toISOString().slice(0,10);
+
+      if (mode === 'donnee') {
+        const bytes = await mergePDFs(selectedRows, 'donnee');
+        saveAs(new Blob([bytes]), `Pack_Enonces_${dateStr}.pdf`);
+      } 
+      else if (mode === 'solution') {
+        const bytes = await mergePDFs(selectedRows, 'solution');
+        saveAs(new Blob([bytes]), `Pack_Corriges_${dateStr}.pdf`);
+      } 
+      else if (mode === 'zip') {
+        const zip = new JSZip();
+        const mainPdfBytes = await mergePDFs(selectedRows, 'donnee');
+        const solPdfBytes = await mergePDFs(selectedRows, 'solution');
+        
+        zip.file("00_ENONCES_GROUPES.pdf", mainPdfBytes);
+        zip.file("00_SOLUTIONS_GROUPES.pdf", solPdfBytes);
+
+        const fetchSources = selectedRows.map(async (ex) => {
+          const folder = zip.folder(slugify(ex.title));
+          const addFile = async (url) => {
+            if (!url) return;
+            try {
+              const blob = await fetch(url).then(res => res.blob());
+              folder.file(url.split('/').pop(), blob);
+            } catch (e) { console.error("Erreur Source:", url, e); }
+          };
+          return Promise.all([addFile(ex.tex_url), addFile(ex.octave_url)]);
+        });
+
+        await Promise.all(fetchSources);
+        const content = await zip.generateAsync({ type: "blob" });
+        saveAs(content, `Pack_Complet_${dateStr}.zip`);
+      }
+    }
+
+    function exportSelectionForMerge() {
+      const selectedRows = gridApi.getSelectedRows();
+      if (selectedRows.length === 0) {
+        alert("Sélectionnez d'abord des exercices.");
+        return;
+      }
+      // On récupère uniquement les URLs des fichiers .tex
+      const paths = selectedRows.map(ex => ex.tex_url).filter(Boolean);
+      const blob = new Blob([JSON.stringify(paths, null, 2)], {type: "application/json"});
+      saveAs(blob, "selection_merge.json");
+      alert("Fichier 'selection_merge.json' généré. Placez-le à la racine du projet et lancez le script python.");
+    }
+
+    // Fonction slugify améliorée pour gérer les accents
+    function slugify(text) {
+      if (!text) return "";
+      // 1. Convertir en chaîne et normaliser (gérer les accents)
+      text = String(text).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      // 2. Convertir en minuscules
+      text = text.toLowerCase();
+      // 3. Remplacer les espaces et les caractères non alphanumériques par des underscores
+      text = text.replace(/\s+/g, '_'); // Remplacer les espaces par _
+      text = text.replace(/[^\w-]+/g, ''); // Supprimer tous les caractères non-mots (sauf -)
+      // 4. Remplacer les underscores multiples par un seul
+      text = text.replace(/__+/g, '_');
+      // 5. Supprimer les underscores en début et fin
+      text = text.replace(/^-+/, '').replace(/-+$/, '');
+      return text;
+    }
+
+    function toggleTag(tag, el) {
+      if (selectedTags.has(tag)) {
+        selectedTags.delete(tag);
+        el.classList.remove('active');
+      } else {
+        selectedTags.add(tag);
+        el.classList.add('active');
+      }
+      updateTagResetVisibility();
+      gridApi.onFilterChanged();
+    }
+
+    function resetTags() {
+      selectedTags.clear();
+      document.querySelectorAll('.tag-pill').forEach(el => el.classList.remove('active'));
+      updateTagResetVisibility();
+      gridApi.onFilterChanged();
+    }
+
+    function updateTagResetVisibility() {
+      const btn = document.getElementById('tag-reset-btn');
+      btn.style.display = selectedTags.size > 0 ? 'flex' : 'none';
+    }
+
+    function onFilterChanged() {
+      gridApi.onFilterChanged();
+    }
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+      const gridDiv = document.querySelector('#myGrid');
+      gridApi = agGrid.createGrid(gridDiv, gridOptions);
+
+      fetch('data/exercises.json')
+        .then(response => response.json())
+        .then(data => {
+          gridApi.setGridOption('rowData', data);
+          
+          // Afficher le nombre total d'exercices
+          document.getElementById('total-count').textContent = `— ${data.length} exercices au total`;
+          
+          // Peupler les selects de filtrage
+          const populateSelect = (id, key) => {
+            const select = document.getElementById(id);
+            const values = [...new Set(data.map(d => d[key]).filter(Boolean))].sort();
+            values.forEach(v => {
+              const opt = document.createElement('option');
+              opt.value = v;
+              opt.textContent = v;
+              select.appendChild(opt);
+            });
+          };
+          populateSelect('filter-domain', 'domain');
+          populateSelect('filter-subdomain', 'subdomain');
+
+          // Peupler les tags
+          const tags = [...new Set(data.flatMap(d => d.tags || []))].sort();
+          const tagCloud = document.getElementById('tag-cloud');
+          tagCloud.innerHTML = tags.map(t => {
+            const escapedTag = t.replace(/'/g, "\\'");
+            return `<span class="tag-pill" onclick="toggleTag('${escapedTag}', this)">#${t}</span>`;
+          }).join('');
+        });
+    });
+
+    function onFilterTextBoxChanged() {
+      gridApi.setGridOption('quickFilterText', document.getElementById('search').value);
+    }
+  </script>
+</body>
+</html>
