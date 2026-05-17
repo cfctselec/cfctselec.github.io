@@ -144,10 +144,10 @@
         { width: 50, pinned: isMobile ? null : 'left' },
         { 
           headerName: "N°", 
-          valueGetter: "node.rowIndex + 1", 
+          field: "originalIndex", 
           width: 70, 
           pinned: isMobile ? null : 'left',
-          sortable: false,
+          sortable: true,
           filter: false,
           cellStyle: { color: 'var(--gray)', fontWeight: 'bold', textAlign: 'center' }
         },
@@ -156,11 +156,22 @@
           headerName: "Déposé le", 
           sortable: true, 
           filter: true, 
-          width: 110,
+          width: 170,
+          sort: 'desc',
           valueFormatter: params => {
             if (!params.value) return "";
-            const parts = params.value.split("-");
-            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+            // On parse manuellement la chaîne "YYYY-MM-DDTHH:mm:ss" pour éviter 
+            // que le navigateur n'applique un décalage UTC (le bug du "02:00")
+            const [datePart, timePart] = params.value.split('T');
+            const d = datePart.split('-');
+            if (d.length !== 3) return params.value;
+            
+            const dateDisplay = `${d[2]}.${d[1]}.${d[0]}`;
+            if (timePart) {
+              const t = timePart.split(':');
+              return `${dateDisplay} ${t[0]}:${t[1]}:${t[2] || '00'}`;
+            }
+            return dateDisplay;
           }
         },
         { field: "domain", headerName: "Domaine", sortable: true, filter: true, width: 120, hide: isMobile, cellStyle: { fontWeight: 'bold' } },
@@ -176,6 +187,7 @@
         { headerName: "Ressources", width: isMobile ? 180 : 230, 
           cellRenderer: params => {
             const ex = params.data;
+            const hasImages = ex.images && Array.isArray(ex.images) && ex.images.length > 0;
             return `
               <div class="ex-actions">
                 <a href="${ex.donnee_url}" target="_blank" class="btn-res btn-donnee" title="Ouvrir l'énoncé (PDF)">
@@ -185,7 +197,10 @@
                   <span>💡</span> Corrigé
                 </a>
                 ${ex.octave_url ? `<a href="${ex.octave_url}" download class="btn-res btn-source" title="Télécharger Octave (.m)">💻</a>` : ''}
-                ${ex.tex_url ? `<a href="${ex.tex_url}" download class="btn-res btn-source" title="Télécharger LaTeX (.tex)">📝</a>` : ''}
+                ${ex.tex_url ? (hasImages ? 
+                  `<a href="javascript:void(0)" onclick="downloadExercisePack('${ex.id}')" class="btn-res btn-source" title="Télécharger le Pack LaTeX (ZIP avec images)">📦</a>` : 
+                  `<a href="${ex.tex_url}" download class="btn-res btn-source" title="Télécharger LaTeX (.tex)">📝</a>`
+                ) : ''}
               </div>`;
           }
         }
@@ -280,6 +295,40 @@
       return await targetDoc.save();
     }
 
+    async function downloadExercisePack(id) {
+      const rowNode = gridApi.getRowNode(id);
+      if (!rowNode) return;
+      const ex = rowNode.data;
+
+      const msg = `Cet exercice ("${ex.title}") contient des images.\n\nUn pack ZIP va être généré incluant le fichier .tex et ses images associées pour permettre la compilation locale.`;
+      if (confirm(msg)) {
+        const zip = new JSZip();
+        const dateStr = new Date().toISOString().slice(0,10);
+        const exSlug = slugify(ex.title);
+        const folder = zip.folder(exSlug);
+        
+        // Détermine l'URL de base pour les ressources (images) situées dans le même dossier que le .tex
+        const baseUrl = ex.tex_url.substring(0, ex.tex_url.lastIndexOf('/') + 1);
+
+        const addFile = async (url) => {
+          if (!url) return;
+          try {
+            const blob = await fetch(url).then(res => res.blob());
+            folder.file(url.split('/').pop(), blob);
+          } catch (e) { console.error("Erreur téléchargement ressource:", url, e); }
+        };
+
+        const tasks = [addFile(ex.tex_url), addFile(ex.octave_url)];
+        if (ex.images && Array.isArray(ex.images)) {
+          ex.images.forEach(imgName => tasks.push(addFile(baseUrl + imgName)));
+        }
+
+        await Promise.all(tasks);
+        const content = await zip.generateAsync({ type: "blob" });
+        saveAs(content, `Pack_${exSlug}_${dateStr}.zip`);
+      }
+    }
+
     async function exportSelected(mode) {
       const selectedRows = gridApi.getSelectedRows();
       if (selectedRows.length === 0) {
@@ -307,6 +356,9 @@
 
         const fetchSources = selectedRows.map(async (ex) => {
           const folder = zip.folder(slugify(ex.title));
+          // Détermine l'URL de base pour les ressources (images) situées dans le même dossier que le .tex
+          const baseUrl = ex.tex_url.substring(0, ex.tex_url.lastIndexOf('/') + 1);
+
           const addFile = async (url) => {
             if (!url) return;
             try {
@@ -314,7 +366,15 @@
               folder.file(url.split('/').pop(), blob);
             } catch (e) { console.error("Erreur Source:", url, e); }
           };
-          return Promise.all([addFile(ex.tex_url), addFile(ex.octave_url)]);
+
+          const tasks = [addFile(ex.tex_url), addFile(ex.octave_url)];
+          // On ajoute les images déclarées dans le manifeste JSON pour cet exercice
+          if (ex.images && Array.isArray(ex.images)) {
+            ex.images.forEach(imgName => {
+              tasks.push(addFile(baseUrl + imgName));
+            });
+          }
+          return Promise.all(tasks);
         });
 
         await Promise.all(fetchSources);
@@ -376,7 +436,8 @@
       fetch('data/exercises.json')
         .then(response => response.json())
         .then(data => {
-          gridApi.setGridOption('rowData', data);
+          const rowData = data.map((item, index) => ({ ...item, originalIndex: index + 1 }));
+          gridApi.setGridOption('rowData', rowData);
           
           // Afficher le nombre total d'exercices
           document.getElementById('total-count').textContent = `— ${data.length} exercices au total`;

@@ -1,0 +1,173 @@
+% ---
+% filename : oibt_controles_20260517_000_organes_controle.tex
+% id : oibt_controles_20260517_000
+% title : "Organes de contrôle selon l'OIBT"
+% domain : "OIBT"
+% subdomain : "Contrôles"
+% tags : ["oibt", "organes_contrôle", "inspection", "dt"]
+% difficulty : 1
+% time_solve : 8
+% has_octave : true
+% octave_files : ["oibt_controles_20260517_000_organes_controle.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{18.05.2026}
+\newcommand\brancheTe{DT}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation DT PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question
+En tant que conseiller en sécurité électrique, vous devez informer un propriétaire d'ouvrage sur les entités légalement habilitées à effectuer les contrôles de son installation. Selon l'Ordonnance sur les installations à basse tension (OIBT), plusieurs organes possèdent cette compétence.
+
+\begin{parts}
+	\part[3] Quels sont les quatre types d'organes de contrôle reconnus en Suisse~?
+	\part[3] Qui délivre l'autorisation nécessaire pour les organes de contrôle indépendants et les organismes d'inspection accrédités~?
+	\part[3] Une personne ayant participé à l'exécution d'une installation peut-elle en effectuer le contrôle de réception~?
+	\part[3] Quel organe de contrôle est spécifiquement chargé de superviser les autres organes ainsi que les titulaires d'autorisations d'installer~?
+\end{parts}
+
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{Organes de contrôle} : Selon l'OIBT Art. 26.1, les quatre entités sont les organes de contrôle indépendants, les organismes d'inspection accrédités, les exploitants de réseaux et l'Inspection fédérale (ESTI).
+		\item \textbf{Autorisation} :  OIBT Art. 26.2. C'est l'Inspection (ESTI) qui délivre les autorisations de contrôler pour les organes indépendants et les organismes accrédités.
+		\item \textbf{Indépendance} : Non, la règle d'indépendance de l'OIBT Art. 31 interdit formellement à quiconque ayant participé à la conception ou à l'exécution d'une installation d'effectuer le contrôle de réception ou le contrôle périodique de cette même installation.
+		\item \textbf{Supervision} : OIBT Art. 34.  L'Inspection supervise l'ensemble des acteurs de la branche et décide en cas de litige de la conformité d'une installation.
+	\end{itemize}
+\end{solution}
+\end{questions}
+\end{document}

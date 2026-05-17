@@ -1,0 +1,180 @@
+
+% ---
+% filename : nibt_emplacements_speciaux_20260517_100_camping_materiel.tex
+% id : nibt_emplacements_speciaux_20260517_100
+% title : "Matériel d'installation pour places de camping et caravanes"
+% domain : "NIBT"
+% subdomain : "Emplacements spéciaux"
+% tags : ["nibt", "camping", "prise", "ip", "sécurité", "dt"]
+% difficulty : 2
+% time_solve : 15
+% has_octave : false
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{18.05.2026}
+\newcommand\brancheTe{DT}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation DT PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question
+Soit l'infrastructure électrique d'un nouveau camping. Vous devez sélectionner le matériel de raccordement pour les emplacements de caravanes.
+\begin{parts}
+	\part[3] Quel type de socle de prise est impérativement requis pour l'alimentation des véhicules de loisir~?
+	\part[3] Quel est le degré de protection IP minimal que doivent présenter ces socles de prises lorsqu'ils sont installés à l'air libre~?
+	\part[3] Quelles sont les limites de hauteur (minimale et maximale) à respecter pour la pose des socles de prises par rapport au sol fini~?
+	\part[3] Quel est le nombre maximal de socles de prises autorisé par point d'alimentation (distributeur)~?
+\end{parts}
+
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{Type de prise} : Le socle doit être de type EN 60309-2 (modèle CEE 16 A LNPE bleu). Les prises domestiques de type 13 ou 23 sont interdites pour cet usage (NIBT 7.08.5.5.1.6).
+		\item \textbf{Indice de protection} : Le matériel doit être adapté aux projections d'eau (AD4), soit un degré IP 44 au minimum (NIBT 7.08.5.1.2.1).
+		\item \textbf{Hauteur de pose} : Les prises doivent se situer à une hauteur comprise entre \qty{0.5}{[m]} et \qty{1.5}{[m]} du sol (NIBT 7.08.5.5.1.6).
+		\item \textbf{Distribution} : Un distributeur ne peut pas alimenter plus de 4 emplacements (maximum 4 prises par point d'alimentation) (NIBT 7.08.5.5.1.3).
+	\end{itemize}
+	
+	\begin{align*}
+		L_{\text{type\_conforme}} &= \text{EN 60309-2 (CEE)} \\[6pt]
+		IP_{\text{min}} &= \text{IP 44} \\[6pt]
+		H_{\text{pose}} &\in [\qty{0.5}{[m]} ; \qty{1.5}{[m]}] \\[6pt]
+		N_{\text{prises\_max}} &= 4 \\[6pt]
+		I_{\Delta n} &\leq \qty{30}{[mA]} \text{ (Protection individuelle par socle)}
+	\end{align*}
+\end{solution}
+\end{questions}
+\end{document}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Pipeline complet : validation, extraction YAML, enrichissement Gemini, build statique."""
 import yaml
-import re, json, shutil, hashlib, os, sys, logging, unicodedata, subprocess
+import re, json, shutil, hashlib, os, sys, logging, unicodedata, subprocess, datetime
 import time # Importation de 'time' pour les délais
 from pathlib import Path
 from collections import defaultdict
@@ -109,6 +109,52 @@ def parse_yaml(content: str) -> dict:
         return {}
     # Nettoyage des chaînes (supprime les guillemets résiduels du LaTeX)
     return {k: (v.strip('"\'') if isinstance(v, str) else v) for k, v in data.items()}
+
+def update_tex_metadata(tex_path: Path, updates: dict):
+    """Met à jour chirurgicalement le YAML dans le fichier .tex."""
+    if not tex_path.exists(): return
+    content = tex_path.read_text(encoding="utf-8")
+    match = re.search(r'(%\s*---\s*\n)(.*?)(%\s*---)', content, re.DOTALL)
+    if not match:
+        # Si pas de bloc YAML, on n'en crée pas ici pour ne pas corrompre le LaTeX
+        return
+
+    header, yaml_part, footer = match.groups()
+    lines = yaml_part.splitlines()
+    new_lines = []
+    keys_found = set()
+    
+    for line in lines:
+        new_line = line
+        for key, val in updates.items():
+            if re.match(fr'^\s*%\s*{key}\s*:', line):
+                val_str = json.dumps(val, ensure_ascii=False) if isinstance(val, (list, dict)) else (f'"{val}"' if isinstance(val, str) else str(val))
+                new_line = re.sub(fr'^(\s*%\s*)({key})(\s*:\s*)(.*)$', fr'\1\2\3{val_str}', line)
+                keys_found.add(key)
+                break
+        new_lines.append(new_line)
+
+    # Ajouter les clés manquantes à la fin du bloc YAML
+    updated = len(keys_found) > 0
+    for key, val in updates.items():
+        if key not in keys_found:
+            val_str = json.dumps(val, ensure_ascii=False) if isinstance(val, (list, dict)) else (f'"{val}"' if isinstance(val, str) else str(val))
+            new_lines.append(f"% {key} : {val_str}")
+            updated = True
+    
+    if updated:
+        new_content = content[:match.start()] + header + "\n".join(new_lines) + "\n" + footer + content[match.end():]
+        tex_path.write_text(new_content, encoding="utf-8")
+
+def format_for_display(text: str) -> str:
+    """Assure que le texte commence par une majuscule (gère les accents) pour l'affichage HTML."""
+    if not text: return ""
+    return text[0].upper() + text[1:]
+
+def find_referenced_images(tex_content: str) -> list:
+    r"""Recherche les noms de fichiers images dans les commandes \includegraphics."""
+    # Capture le contenu entre les accolades de \includegraphics{...}
+    return re.findall(r'\\includegraphics(?:\[.*?\])?\{([^{}]+)\}', tex_content)
 
 def extract_octave_code(tex_content: str) -> str:
     """Extrait le code Octave/Matlab d'un bloc verbatim ou lstlisting dans le LaTeX."""
@@ -280,8 +326,22 @@ def process_exercises():
             sub_val = meta.get("subdomain", "").strip()
             subdomain_slug = slugify(sub_val) if sub_val else ""
 
-            # Collect all files in CONTRIB_DIR that are related to this base_name
-            related_files = [f for f in CONTRIB_DIR.iterdir() if f.is_file() and (f.stem == base_name or (f.name.startswith(f"{base_name}") and f.suffix in ['.pdf', '.log', '.aux', '.out', '.toc', '.m', '.png', '.jpg', '.jpeg']))]
+            # Identification des fichiers liés (par nom de base)
+            related_files = [f for f in CONTRIB_DIR.iterdir() if f.is_file() and (f.stem == base_name or f.name.startswith(f"{base_name}"))]
+            
+            # Identification des images explicitement nommées dans le code LaTeX (Smart Detection)
+            img_names = find_referenced_images(content)
+            for img_name in img_names:
+                # On teste le chemin tel quel, puis avec des extensions courantes si besoin
+                candidates = [img_name]
+                if not Path(img_name).suffix:
+                    candidates += [f"{img_name}{ext}" for ext in ['.png', '.jpg', '.jpeg', '.pdf', '.eps']]
+                
+                for candidate in candidates:
+                    img_path = CONTRIB_DIR / candidate
+                    if img_path.exists() and img_path not in related_files:
+                        related_files.append(img_path)
+                        break # On prend la première correspondance trouvée
             
             exercises_to_process[base_name] = {
                 "tex_file": tex_file, "related_files": related_files, "meta": meta,
@@ -316,58 +376,77 @@ def process_exercises():
         # Validation interactive des nouveaux répertoires
         existing_domains, existing_struct = get_existing_structure()
         known_domains = set(existing_domains)
-        known_subdirs = set()  # Format: "domaine/sous_domaine"
+        
+        # Session-wide maps to simplify repeated renames/skips
+        domain_decisions = {} # orig_slug -> {'action': 'keep'|'rename'|'skip', 'slug': str, 'display': str}
+        sub_decisions = {}    # (dom_slug, orig_sub_slug) -> {'action': 'keep'|'rename'|'skip', 'slug': str, 'display': str}
 
         for move in planned_moves:
-            # 1. Validation du DOMAINE
-            dom = move["domain"]
-            if dom not in known_domains and not (ASSETS_DIR / dom).exists():
-                print(f"\n--- 🌐 NOUVEAU DOMAINE DÉTECTÉ ---")
-                print(f"Exercice : {move['base']}")
-            print(f"Domaine proposé : {dom}")
-            if existing_domains:
-                print(f"Domaines existants : {', '.join(sorted(existing_domains))}")
+            orig_dom_slug = move["domain"]
             
-            ans = input(f"Le domaine est-il OK ? [Y]es / [r]ename / [s]kip : ").lower()
-            if ans == 's':
+            # 1. Validation du DOMAINE
+            if orig_dom_slug in domain_decisions:
+                decision = domain_decisions[orig_dom_slug]
+            else:
+                dom = move["domain"]
+                if dom not in known_domains and not (ASSETS_DIR / dom).exists() and dom != "divers":
+                    print(f"\n--- 🌐 NOUVEAU DOMAINE ---")
+                    print(f"Dossier suggéré : {dom}")
+                    if existing_domains:
+                        print(f"Existants : {', '.join(sorted(existing_domains))}")
+                    
+                    ans = input(f"Domaine '{dom}' OK ? [Y]es / [r]ename / [s]kip : ").lower()
+                    if ans == 's': decision = {'action': 'skip'}
+                    elif ans == 'r':
+                        new_dom = input(f"Nouveau nom : ").strip()
+                        if new_dom:
+                            new_slug = slugify(new_dom)
+                            decision = {'action': 'rename', 'slug': new_slug, 'display': new_dom}
+                            known_domains.add(new_slug)
+                        else: decision = {'action': 'keep', 'slug': dom}
+                    else: decision = {'action': 'keep', 'slug': dom}
+                else: decision = {'action': 'keep', 'slug': dom}
+                domain_decisions[orig_dom_slug] = decision
+
+            if decision['action'] == 'skip':
                 move["skip"] = True
                 continue
-            elif ans == 'r':
-                new_dom = input(f"Entrez le nouveau nom de domaine : ").strip()
-                if new_dom:
-                    move["domain"] = slugify(new_dom)
-                    dom = move["domain"]
-                known_domains.add(dom)
+            
+            move["domain"] = decision['slug']
+            if decision['action'] == 'rename':
+                update_tex_metadata(move["tex"], {"domain": decision['display']})
 
             # 2. Validation du SOUS-DOMAINE (si défini)
-            sub = move["subdomain"]
-            if not sub:
-                continue
+            orig_sub_slug = move["subdomain"]
+            if not orig_sub_slug: continue
 
-            target_str = f"{move['domain']}/{sub}"
-            # On vérifie si ce chemin complet est nouveau pour cette session ou sur le disque
-            if target_str not in known_subdirs and not (ASSETS_DIR / move['domain'] / sub).exists():
-                print(f"\n--- 🌿 NOUVEAU SOUS-DOMAINE DÉTECTÉ ---")
-                print(f"Domaine : {move['domain']}")
-                print(f"Sous-domaine proposé : {sub}")
-                
-                # Récupérer les sous-domaines existants pour le domaine (potentiellement renommé)
-                existing_subs = existing_struct.get(move["domain"], [])
-                if existing_subs:
-                    print(f"Sous-domaines existants dans '{move['domain']}' : {', '.join(sorted(existing_subs))}")
-                
-                ans = input(f"Le sous-domaine est-il OK ? [Y]es / [r]ename / [s]kip : ").lower()
-                if ans == 's':
-                    move["skip"] = True
-                    continue
-                elif ans == 'r':
-                    new_sub = input(f"Entrez le nouveau nom de sous-domaine : ").strip()
-                    if new_sub:
-                        move["subdomain"] = slugify(new_sub)
-                        sub = move["subdomain"]
-                        target_str = f"{move['domain']}/{sub}"
-                
-                known_subdirs.add(target_str)
+            sub_key = (move["domain"], orig_sub_slug)
+            if sub_key in sub_decisions:
+                s_decision = sub_decisions[sub_key]
+            else:
+                sub = move["subdomain"]
+                if not (ASSETS_DIR / move['domain'] / sub).exists():
+                    print(f"\n--- 🌿 NOUVEAU SOUS-DOMAINE ---\nDomaine : {move['domain']} | Sous-domaine : {sub}")
+                    existing_subs = existing_struct.get(move["domain"], [])
+                    if existing_subs:
+                        print(f"Existants : {', '.join(sorted(existing_subs))}")
+                    
+                    ans = input(f"Sous-domaine '{sub}' OK ? [Y]es / [r]ename / [s]kip : ").lower()
+                    if ans == 's': s_decision = {'action': 'skip'}
+                    elif ans == 'r':
+                        new_sub = input(f"Nouveau nom : ").strip()
+                        s_decision = {'action': 'rename', 'slug': slugify(new_sub), 'display': new_sub} if new_sub else {'action': 'keep', 'slug': sub}
+                    else: s_decision = {'action': 'keep', 'slug': sub}
+                else: s_decision = {'action': 'keep', 'slug': sub}
+                sub_decisions[sub_key] = s_decision
+
+            if s_decision['action'] == 'skip':
+                move["skip"] = True
+                continue
+            
+            move["subdomain"] = s_decision['slug']
+            if s_decision['action'] == 'rename':
+                update_tex_metadata(move["tex"], {"subdomain": s_decision['display']})
 
     # Exécution des déplacements
     for move in planned_moves:
@@ -392,18 +471,16 @@ def process_exercises():
         
         # URLs
         rel_folder = tex_path.parent.relative_to(DOCS_DIR)
-        meta["domain"] = meta.get("domain", tex_path.parent.parent.name)
+        # Le domaine est forcé en TOUTES MAJUSCULES (avec accents)
+        meta["domain"] = str(meta.get("domain", tex_path.parent.parent.name)).upper()
         meta.setdefault("title", base.replace("_", " ").title())
-        meta.setdefault("subdomain", meta.get("subdomain", tex_path.parent.name))
+        # Le sous-domaine garde la majuscule initiale (via format_for_display)
+        meta["subdomain"] = format_for_display(meta.get("subdomain", tex_path.parent.name))
         meta["id"] = slugify(meta.get("id", base))
         
-        # Extraction de la date pour le tri/affichage (format YYYY-MM-DD)
-        date_match = re.search(r'(\d{8})', meta["id"])
-        if date_match:
-            d_str = date_match.group(1)
-            meta["date"] = f"{d_str[:4]}-{d_str[4:6]}-{d_str[6:8]}"
-        else:
-            meta["date"] = None
+        # Utilisation du timestamp de création (Windows: st_ctime) pour la date originale
+        ctime = tex_path.stat().st_ctime
+        meta["date"] = datetime.datetime.fromtimestamp(ctime).strftime('%Y-%m-%dT%H:%M:%S')
 
         if "time_solve" not in meta:
             meta["time_solve"] = int(meta.get("difficulty", 2)) * (max(1, num_questions) * 2)
@@ -411,6 +488,23 @@ def process_exercises():
         meta["tex_url"] = (rel_folder / tex_path.name).as_posix()
         
         # Fichiers compagnons
+        # Uniquement ceux référencés dans le LaTeX pour garantir une association exacte
+        meta["images"] = []
+        referenced_imgs = find_referenced_images(content)
+        for img_ref in referenced_imgs:
+            # On extrait le nom de fichier seul (le pipeline aplatit les structures)
+            img_name_only = Path(img_ref).name
+            # On vérifie l'existence physique pour confirmer l'association
+            candidates = [img_name_only]
+            if not Path(img_name_only).suffix:
+                candidates += [f"{img_name_only}{ext}" for ext in ['.png', '.jpg', '.jpeg', '.pdf', '.eps', '.PNG', '.JPG']]
+            
+            for cand in candidates:
+                if (tex_path.parent / cand).exists():
+                    meta["images"].append(Path(cand).name)
+                    break
+        meta["images"] = sorted(list(set(meta["images"]))) # Déduplication et tri
+
         for suffix, key in [("_donnee.pdf", "donnee_url"), ("_solution.pdf", "solution_url"), (".m", "octave_url")]:
             f_path = tex_path.parent / (base + suffix)
             if f_path.exists():
@@ -433,6 +527,10 @@ def process_exercises():
         meta["search_text"] = " ".join(filter(None, search_parts)).lower()
 
         exercises.append(meta)
+
+    # Tri des exercices par date de création (du plus ancien au plus récent)
+    # Cela permet à la colonne "N°" dans l'interface de suivre l'ordre chronologique réel
+    exercises.sort(key=lambda x: x.get("date", ""))
 
     # Génération index
     DATA_DIR.mkdir(parents=True, exist_ok=True)
