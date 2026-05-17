@@ -813,5 +813,29 @@
     "donnee_url": "assets/oibt/controles/oibt_controles_20260517_000_organes_controle_donnee.pdf",
     "solution_url": "assets/oibt/controles/oibt_controles_20260517_000_organes_controle_solution.pdf",
     "search_text": "organes de contrôle selon l'oibt oibt contrôles oibt organes_contrôle inspection dt organes de controle selon loibt oibt controles oibt organes controle inspection dt"
+  },
+  {
+    "filename": "oibt_securite_20260517_000_cinq_regles_securite.tex",
+    "id": "oibt_securite_20260517_000",
+    "title": "Les cinq règles de sécurité pour les travaux hors tension",
+    "domain": "OIBT",
+    "subdomain": "Sécurité",
+    "tags": [
+      "oibt",
+      "sécurité",
+      "mise_hors_tension",
+      "travaux_électriques",
+      "dt"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-05-18T00:48:22",
+    "tex_url": "assets/oibt/securite/oibt_securite_20260517_000_cinq_regles_securite.tex",
+    "images": [],
+    "donnee_url": "assets/oibt/securite/oibt_securite_20260517_000_cinq_regles_securite_donnee.pdf",
+    "solution_url": "assets/oibt/securite/oibt_securite_20260517_000_cinq_regles_securite_solution.pdf",
+    "search_text": "les cinq règles de sécurité pour les travaux hors tension oibt sécurité oibt sécurité mise_hors_tension travaux_électriques dt les cinq regles de securite pour les travaux hors tension oibt securite oibt securite mise hors tension travaux electriques dt"
   }
 ]
