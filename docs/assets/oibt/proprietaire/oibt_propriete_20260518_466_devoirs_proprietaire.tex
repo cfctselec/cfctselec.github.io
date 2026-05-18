@@ -1,0 +1,172 @@
+% ---
+% filename : oibt_propriete_20260518_466_devoirs_proprietaire.tex
+% id : oibt_propriete_20260518_466
+% title : "Devoirs du propriétaire d'une installation électrique selon l'OIBT"
+% domain : "OIBT"
+% subdomain : "proprietaire"
+% tags : ["oibt", "propriétaire", "sécurité", "maintenance", "dt"]
+% difficulty : 2
+% time_solve : 8
+% has_octave : false
+% author : "om"
+% ---
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{18.05.2026}
+\newcommand\brancheTe{DT}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation DT PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question
+Lors d'un contrôle périodique dans un immeuble administratif. Le propriétaire s'interroge sur l'étendue de ses responsabilités légales concernant le maintien de la sécurité de ses installations.
+\begin{parts}
+	\part[3] Qui est la personne légalement responsable de veiller à ce que l'installation électrique réponde en tout temps aux exigences de sécurité et de lutte contre les perturbations~?
+	\part[3] Quel document officiel le propriétaire doit-il impérativement être en mesure de présenter sur demande de l'Inspection ou de l'exploitant de réseau~?
+	\part[3] Pendant combien de temps le propriétaire est-il tenu de conserver la documentation technique (schémas, plans) remise par le constructeur de l'installation électrique~?
+	\part[3] Quelle est l'obligation immédiate du propriétaire lorsqu'un organe de contrôle constate des défauts sur son installation électrique~?
+	\part[3] Un locataire constate qu’une installation électrique est défectueuse dans son logement. Quelles sont ses obligations légales pour en informer le propriétaire~?
+\end{parts}
+
+\begin{solution}
+\begin{itemize}
+	\item \textbf{Responsabilité} : Selon l'OIBT Art. 5 al. 1, le propriétaire ou un représentant désigné par lui porte la responsabilité de la conformité permanente de l'installation.
+	\item \textbf{Rapport de sécurité} : Le propriétaire doit pouvoir présenter un rapport de sécurité valide attestant du contrôle de l'installation.
+	\item \textbf{Conservation des documents} : Selon l'OIBT Art. 5 al. 2, les plans et schémas doivent être conservés pendant toute la durée de vie de l'installation, tandis que les rapports de sécurité doivent être gardés pendant au moins une période de contrôle complète.
+	\item \textbf{Maintenance} : Selon l’OIBT (art. 5, al. 4), celui qui exploite et utilise directement une installation électrique propriété d’un tiers est tenu de signaler sans délai au propriétaire ou à son représentant, dans les limites de son droit d’utilisation, les défauts éventuels et de veiller à ce qu’il y soit remédié..
+\end{itemize}
+\end{solution}
+\end{questions}
+\end{document}

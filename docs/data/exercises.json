@@ -837,5 +837,29 @@
     "donnee_url": "assets/oibt/securite/oibt_securite_20260517_000_cinq_regles_securite_donnee.pdf",
     "solution_url": "assets/oibt/securite/oibt_securite_20260517_000_cinq_regles_securite_solution.pdf",
     "search_text": "les cinq règles de sécurité pour les travaux hors tension oibt sécurité oibt sécurité mise_hors_tension travaux_électriques dt les cinq regles de securite pour les travaux hors tension oibt securite oibt securite mise hors tension travaux electriques dt"
+  },
+  {
+    "filename": "oibt_propriete_20260518_466_devoirs_proprietaire.tex",
+    "id": "oibt_propriete_20260518_466",
+    "title": "Devoirs du propriétaire d'une installation électrique selon l'OIBT",
+    "domain": "OIBT",
+    "subdomain": "Proprietaire",
+    "tags": [
+      "oibt",
+      "propriétaire",
+      "sécurité",
+      "maintenance",
+      "dt"
+    ],
+    "difficulty": 2,
+    "time_solve": 8,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-05-18T11:05:49",
+    "tex_url": "assets/oibt/proprietaire/oibt_propriete_20260518_466_devoirs_proprietaire.tex",
+    "images": [],
+    "donnee_url": "assets/oibt/proprietaire/oibt_propriete_20260518_466_devoirs_proprietaire_donnee.pdf",
+    "solution_url": "assets/oibt/proprietaire/oibt_propriete_20260518_466_devoirs_proprietaire_solution.pdf",
+    "search_text": "devoirs du propriétaire d'une installation électrique selon l'oibt oibt proprietaire oibt propriétaire sécurité maintenance dt devoirs du proprietaire dune installation electrique selon loibt oibt proprietaire oibt proprietaire securite maintenance dt"
   }
 ]
