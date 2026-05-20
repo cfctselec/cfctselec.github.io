@@ -861,5 +861,30 @@
     "donnee_url": "assets/oibt/proprietaire/oibt_propriete_20260518_466_devoirs_proprietaire_donnee.pdf",
     "solution_url": "assets/oibt/proprietaire/oibt_propriete_20260518_466_devoirs_proprietaire_solution.pdf",
     "search_text": "devoirs du propriétaire d'une installation électrique selon l'oibt oibt proprietaire oibt propriétaire sécurité maintenance dt devoirs du proprietaire dune installation electrique selon loibt oibt proprietaire oibt proprietaire securite maintenance dt"
+  },
+  {
+    "filename": "telecom_transmission_20260520_001_classification_interfaces.tex",
+    "id": "telecom_transmission_20260520_001",
+    "title": "Classification_des_supports_de_transmission_multimédia",
+    "domain": "TELECOM",
+    "subdomain": "Transmission",
+    "tags": [
+      "TC",
+      "DIT",
+      "CUC",
+      "sans_fil",
+      "optique",
+      "cuivre"
+    ],
+    "difficulty": 1,
+    "time_solve": 10,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-05-20T12:02:37",
+    "tex_url": "assets/telecom/transmission/telecom_transmission_20260520_001_classification_interfaces.tex",
+    "images": [],
+    "donnee_url": "assets/telecom/transmission/telecom_transmission_20260520_001_classification_interfaces_donnee.pdf",
+    "solution_url": "assets/telecom/transmission/telecom_transmission_20260520_001_classification_interfaces_solution.pdf",
+    "search_text": "classification_des_supports_de_transmission_multimédia telecom transmission tc dit cuc sans_fil optique cuivre classification des supports de transmission multimedia telecom transmission tc dit cuc sans fil optique cuivre"
   }
 ]
