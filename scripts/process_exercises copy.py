@@ -18,7 +18,6 @@ ENABLE_GEMINI = os.getenv("ENABLE_GEMINI", "true").lower() != "false"
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-PREAMBULE_PATH = Path(__file__).resolve().parent / "preambule.tex"
 
 # ──────────────────────────────────────────────────────────────
 # GEMINI 2.5 FLASH
@@ -272,115 +271,6 @@ def get_existing_structure():
         else:
             structure[d] = []
     return domains, structure
-
-# Helper to extract questions block from user's input
-def extract_body_content(content: str) -> str:
-    """Extrait le corps de l'exercice en retirant le bloc YAML."""
-    # On cherche la fin du bloc YAML
-    match_yaml = re.search(r'%\s*---\s*\n.*?%\s*---', content, re.DOTALL)
-    if match_yaml:
-        body = content[match_yaml.end():].strip()
-    else:
-        body = content.strip()
-    
-    # Si l'utilisateur a déjà mis \begin{questions}, on extrait l'intérieur, sinon on prend tout
-    match_q = re.search(r'\\begin\{questions\}(.*?)\\end\{questions\}', body, re.DOTALL)
-    if match_q:
-        return match_q.group(1).strip()
-    return body
-
-def extract_yaml_block_from_input(content: str) -> str:
-    match = re.search(r'(%\s*---\s*\n.*?%\s*---)', content, re.DOTALL)
-    return match.group(1).strip() if match else ""
-
-def prompt_with_default(prompt_text, default_value):
-    """Pose une question à l'utilisateur avec une valeur par défaut."""
-    try:
-        res = input(f"{prompt_text} [{default_value}] : ").strip()
-        return res if res else default_value
-    except EOFError:
-        return default_value
-
-def create_new_exercise_from_input():
-    print("\n--- 📝 MODE CRÉATION D'EXERCICE ---")
-    print("1. Collez votre contenu LaTeX (YAML + Corps).")
-    print("2. Validez avec Ctrl+Z puis ENTREE (Windows) ou Ctrl+D (Unix).")
-    print("-" * 40)
-    
-    user_latex_content = sys.stdin.read()
-    
-    # Réouverture du terminal pour les questions interactives après le pipe/EOF
-    sys.stdin = open('CON' if os.name == 'nt' else '/dev/tty')
-
-    if not user_latex_content.strip():
-        logging.info("Aucun contenu fourni. Annulation de la création d'exercice.")
-        return
-
-    # 1. Parse user's input
-    user_yaml_block = extract_yaml_block_from_input(user_latex_content)
-    user_meta = parse_yaml(user_latex_content)
-    user_questions_body = extract_body_content(user_latex_content)
-
-    # Extraction du nom de fichier
-    filename_from_meta = user_meta.get("filename")
-    if isinstance(filename_from_meta, list):
-        filename_from_meta = filename_from_meta[0]
-    
-    if not filename_from_meta:
-        logging.error("❌ 'filename' manquant dans le bloc YAML. Impossible de créer l'exercice.")
-        return
-    
-    if not filename_from_meta.endswith(".tex"):
-        filename_from_meta += ".tex"
-
-    output_tex_path = CONTRIB_DIR / filename_from_meta
-
-    # 2. Load preambule.tex content
-    if not PREAMBULE_PATH.exists():
-        logging.error(f"❌ Le fichier de préambule {PREAMBULE_PATH} est introuvable.")
-        return
-    template = PREAMBULE_PATH.read_text(encoding="utf-8")
-
-    # 3. Modify preambule.tex content
-    print("\n--- 🛠️ CONFIGURATION DES MÉTADONNÉES ---")
-    print("Appuyez sur ENTREE pour conserver la valeur par défaut.\n")
-
-    nomauteur_val = prompt_with_default("E-mail de l'auteur", 
-                                        user_meta.get("author", "bdminasmorgul@protonmail.com"))
-    dateTe_val = prompt_with_default("Date de l'épreuve", 
-                                     user_meta.get("dateTe", datetime.date.today().strftime("%d.%m.%Y")))
-    brancheTe_val = prompt_with_default("Branche (ex: TS, DT)", 
-                                        user_meta.get("brancheTe", "TS"))
-    section_title_val = prompt_with_default("Titre de la section", 
-                                            user_meta.get("section_title", "Préparation TS PQ CFC ELMO,IELE,PELE"))
-
-    # Remplacement des variables LaTeX
-    # On utilise des lambdas pour éviter l'interprétation des backslashes dans les chaînes de remplacement
-    template = re.sub(r'(\\newcommand\\nomauteur\{)(.*?)(\})', lambda m: m.group(1) + nomauteur_val + m.group(3), template)
-    template = re.sub(r'(\\newcommand\\dateTe\{)(.*?)(\})', lambda m: m.group(1) + dateTe_val + m.group(3), template)
-    template = re.sub(r'(\\newcommand\\brancheTe\{)(.*?)(\})', lambda m: m.group(1) + brancheTe_val + m.group(3), template)
-    
-    # Remplacement de la section
-    template = re.sub(r'(\\section\*\{)(.*?)(\})', lambda m: m.group(1) + section_title_val + m.group(3), template)
-
-    # Insertion du corps dans l'environnement questions
-    # On cherche le bloc \begin{questions} ... \end{questions} du template pour le remplir
-    if r"\begin{questions}" in template:
-        final_tex = re.sub(r'(\\begin\{questions\})(.*?)(\\end\{questions\})', 
-                           lambda m: m.group(1) + '\n' + user_questions_body + '\n' + m.group(3), 
-                           template, flags=re.DOTALL)
-    else:
-        # Sécurité au cas où le template n'a pas le bloc
-        final_tex = template.replace(r"\end{document}", r"\begin{questions}" + "\n" + user_questions_body + "\n" + r"\end{questions}" + "\n" + r"\end{document}")
-    
-    # Reconstruction finale avec le YAML original au sommet
-    final_output = (user_yaml_block if user_yaml_block else "% --- \n% filename : " + filename_from_meta + "\n% ---") + "\n" + final_tex
-
-    try:
-        output_tex_path.write_text(final_output, encoding="utf-8")
-        logging.info(f"✅ Fichier créé : {output_tex_path}")
-    except Exception as e:
-        logging.error(f"❌ Erreur lors de l'écriture du fichier {output_tex_path}: {e}")
 
 def process_exercises():
     # S'assurer que le dossier existe sans arrêter le script
@@ -649,19 +539,4 @@ def process_exercises():
     logging.info(f"✅ {len(exercises)} exercices indexés → {DATA_DIR / 'exercises.json'}")
 
 if __name__ == "__main__":
-    print("\n--- Menu principal ---")
-    print("1. Traiter les exercices existants (compilation, indexation)")
-    print("2. Créer un nouvel exercice à partir d'un copier-coller LaTeX")
-    print("3. Quitter")
-    
-    choice = input("Votre choix : ").strip()
-
-    if choice == '1':
-        process_exercises()
-    elif choice == '2':
-        create_new_exercise_from_input()
-    elif choice == '3':
-        logging.info("Exiting.")
-        sys.exit(0)
-    else:
-        logging.warning("Choix invalide.")
+    process_exercises()

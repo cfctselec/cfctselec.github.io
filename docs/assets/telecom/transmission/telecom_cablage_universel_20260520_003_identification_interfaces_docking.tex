@@ -1,14 +1,13 @@
 % ---
-% filename : ["electrotechnique_puissance_20260429_312_mesure_puissance_compteur.tex"]
-% id : "electrotechnique_puissance_20260429_312"
-% title : "Mesure de puissance triphasée par compteur à disque"
-% domain : "Électrotechnique"
-% subdomain : "Puissance"
-% tags : ["compteur d'énergie", "puissance active", "puissance apparente", "facteur de puissance", "triphasé", "énergie électrique", "ts"]
-% difficulty : 2
-% time_solve : 12  # Calcul : 2 (difficulte) * (3 questions * 2)
-% has_octave : true
-% octave_files : ["electrotechnique_puissance_20260429_312_mesure_puissance_compteur.m"]
+% filename : "telecom_cablage_universel_20260520_003_identification_interfaces_docking.tex"
+% id : "telecom_cablage_20260520_003"
+% title : "Identification_des_interfaces_sur_une_station_d_accueil_multimedia"
+% domain : "TELECOM"
+% subdomain : "transmission"
+% tags : ["TC", "DIT", "suisse", "CUC", "rj45", "usb_c", "interfaces"]
+% difficulty : 1
+% time_solve : 8
+% has_octave : false
 % author : "om"
 % ---
 \documentclass[12pt,answers,addpoints]{exam}
@@ -152,63 +151,35 @@ linkcolor=blue]{hyperref}
 	\pointsinmargin
 	\bracketedpoints
 	
-\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+\section*{Préparation TC PQ CFC IELE,PELE}
 \begin{questions}
+\question[4]
+Sur cet équipement, vous devez identifier précisément les différentes interfaces (connecteurs) pour le transfert des données~:
+
+\begin{center}
+	\includegraphics[width=0.7\linewidth]{DUB_M520_A1_Side.png}
+\end{center}
 
 
+\begin{solution}\\
+\includegraphics[width=0.4\linewidth]{DUB_M520_A1_For_GB.jpg}
 
-\question On souhaite vérifier la puissance absorbée par une machine triphasée à l'aide d'un compteur d'énergie électromécanique. La constante du compteur est de $c = \qty{200}{[tr/kWh]}$. Lors d'une mesure, le disque du compteur effectue $n = 15$ tours en un temps $t = \qty{60}{[s]}$. 
-Les mesures électriques sur la ligne indiquent une tension composée $U = \qty{400}{[V]}$ et un courant de ligne $I = \qty{8,5}{[A]}$.
-
-\begin{parts}
-	\part[3] Déterminez l'énergie électrique $W$ consommée par la machine durant cette mesure (en \qty{}{[kWh]}).
-	\part[3] Calculez la puissance active $P$ absorbée par la machine.
-	\part[3] Calculez la puissance apparente $S$ de l'installation et déduisez-en le facteur de puissance $\cos \phi$ de la machine.
-\end{parts}
-
-\begin{solution}
-	\begin{parts}
-		\part L'énergie est déterminée par le nombre de rotations du disque et la constante du compteur.
-		\begin{align*}
-			W &= \dfrac{n}{c} = \dfrac{15}{\qty{200}{[tr/kWh]}} = \qty{0,075}{[kWh]}
-		\end{align*}
-		
-		\part La puissance active est le rapport entre l'énergie consommée et la durée de la mesure. Il faut convertir le temps en heures : $t = \qty{60}{[s]} = \dfrac{60}{3600} = \qty{0,01667}{[h]}$.
-		\begin{align*}
-			P &= \dfrac{W}{t} = \dfrac{\qty{0,075}{[kWh]}}{\qty{0,01667}{[h]}} = \qty{4,5}{[kW]} = \qty{4500}{[W]}
-		\end{align*}
-		
-		\part La puissance apparente en triphasé se calcule avec la tension composée et le courant de ligne.
-		\begin{align*}
-			S &= \sqrt{3} \cdot U \cdot I = \sqrt{3} \cdot \qty{400}{[V]} \cdot \qty{8,5}{[A]} = \qty{5889}{[VA]} \\[6pt]
-			\cos \phi &= \dfrac{P}{S} = \dfrac{\qty{4500}{[W]}}{\qty{5889}{[VA]}} = \qty{0,764}{}
-		\end{align*}
-	\end{parts}
-	
-	\begin{verbatim}
-		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
-		% Puis copier-coller le code dans OCTAVE
-		c = 200;      % Constante du compteur [tr/kWh]
-		n = 15;       % Nombre de tours
-		t_sec = 60;   % Temps en secondes
-		U = 400;      % Tension composée [V]
-		I = 8.5;      % Courant de ligne [A]
-		% Calcul de l'énergie
-		W_kwh = n / c;
-		printf('Énergie mesurée W = %.4f kWh\n', W_kwh);
-		% Calcul de la puissance active
-		t_h = t_sec / 3600;
-		P_watt = (W_kwh / t_h) * 1000;
-		printf('Puissance active P = %.2f W\n', P_watt);
-		% Calcul de la puissance apparente
-		S_va = sqrt(3) * U * I;
-		printf('Puissance apparente S = %.2f VA\n', S_va);
-		% Facteur de puissance
-		cos_phi = P_watt / S_va;
-		printf('Facteur de puissance cos(phi) = %.3f\n', cos_phi);
-	\end{verbatim}
+\textbf{Identification des connecteurs :}
+\begin{itemize}
+    \item 2 ports USB 3.0 SuperSpeed
+    \item 1 port HDMI, prend en charge les résolutions 4K
+    \item 1 port USB-C avec alimentation jusqu’à 60 W
+    \item 1 port Gigabit Ethernet RJ-45
+\end{itemize}
 \end{solution}
-
-
 \end{questions}
 \end{document}
+
+https://www.dlink.com/fr/fr/products/dub-m520-5-in-1-usb-c-hub-with-hdmi_ethernet-and-power-delivery
+2 ports USB 3.0 SuperSpeed
+1 port HDMI, prend en charge les résolutions 4K
+1 port USB-C avec alimentation jusqu’à 60 W
+1 port Gigabit Ethernet RJ-45
+
+DUB_M520_A1_Side.png
+DUB_M520_A1_For_GB.jpg

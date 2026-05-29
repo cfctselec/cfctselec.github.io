@@ -886,5 +886,34 @@
     "donnee_url": "assets/telecom/transmission/telecom_transmission_20260520_001_classification_interfaces_donnee.pdf",
     "solution_url": "assets/telecom/transmission/telecom_transmission_20260520_001_classification_interfaces_solution.pdf",
     "search_text": "classification_des_supports_de_transmission_multimédia telecom transmission tc dit cuc sans_fil optique cuivre classification des supports de transmission multimedia telecom transmission tc dit cuc sans fil optique cuivre"
+  },
+  {
+    "filename": "telecom_cablage_universel_20260520_003_identification_interfaces_docking.tex",
+    "id": "telecom_cablage_20260520_003",
+    "title": "Identification_des_interfaces_sur_une_station_d_accueil_multimedia",
+    "domain": "TELECOM",
+    "subdomain": "Transmission",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "CUC",
+      "rj45",
+      "usb_c",
+      "interfaces"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-05-23T23:27:03",
+    "tex_url": "assets/telecom/transmission/telecom_cablage_universel_20260520_003_identification_interfaces_docking.tex",
+    "images": [
+      "DUB_M520_A1_For_GB.jpg",
+      "DUB_M520_A1_Side.png"
+    ],
+    "donnee_url": "assets/telecom/transmission/telecom_cablage_universel_20260520_003_identification_interfaces_docking_donnee.pdf",
+    "solution_url": "assets/telecom/transmission/telecom_cablage_universel_20260520_003_identification_interfaces_docking_solution.pdf",
+    "search_text": "identification_des_interfaces_sur_une_station_d_accueil_multimedia telecom transmission tc dit suisse cuc rj45 usb_c interfaces identification des interfaces sur une station daccueil multimedia telecom transmission tc dit suisse cuc rj45 usb cinterfaces"
   }
 ]

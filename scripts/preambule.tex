@@ -1,17 +1,4 @@
-% ---
-% filename : ["electrotechnique_puissance_20260429_312_mesure_puissance_compteur.tex"]
-% id : "electrotechnique_puissance_20260429_312"
-% title : "Mesure de puissance triphasée par compteur à disque"
-% domain : "Électrotechnique"
-% subdomain : "Puissance"
-% tags : ["compteur d'énergie", "puissance active", "puissance apparente", "facteur de puissance", "triphasé", "énergie électrique", "ts"]
-% difficulty : 2
-% time_solve : 12  # Calcul : 2 (difficulte) * (3 questions * 2)
-% has_octave : true
-% octave_files : ["electrotechnique_puissance_20260429_312_mesure_puissance_compteur.m"]
-% author : "om"
-% ---
-\documentclass[12pt,answers,addpoints]{exam}
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
 
 % ---------------------------------------------------------
 % LANGUE, ENCODAGE, FONTS
@@ -90,8 +77,8 @@ linkcolor=blue]{hyperref}
 % COMMANDES PERSONNELLES
 % ---------------------------------------------------------
 \newcommand\nomauteur{bdminasmorgul@protonmail.com}
-\newcommand\dateTe{28.05.2026}
-\newcommand\brancheTe{TC}
+\newcommand\dateTe{20.05.2026}
+\newcommand\brancheTe{DT}
 
 % ---------------------------------------------------------
 % STYLE DE L'EXERCICE
@@ -152,62 +139,8 @@ linkcolor=blue]{hyperref}
 	\pointsinmargin
 	\bracketedpoints
 	
-\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+\section*{Préparation TC PQ CFC IELE,PELE}
 \begin{questions}
-
-
-
-\question On souhaite vérifier la puissance absorbée par une machine triphasée à l'aide d'un compteur d'énergie électromécanique. La constante du compteur est de $c = \qty{200}{[tr/kWh]}$. Lors d'une mesure, le disque du compteur effectue $n = 15$ tours en un temps $t = \qty{60}{[s]}$. 
-Les mesures électriques sur la ligne indiquent une tension composée $U = \qty{400}{[V]}$ et un courant de ligne $I = \qty{8,5}{[A]}$.
-
-\begin{parts}
-	\part[3] Déterminez l'énergie électrique $W$ consommée par la machine durant cette mesure (en \qty{}{[kWh]}).
-	\part[3] Calculez la puissance active $P$ absorbée par la machine.
-	\part[3] Calculez la puissance apparente $S$ de l'installation et déduisez-en le facteur de puissance $\cos \phi$ de la machine.
-\end{parts}
-
-\begin{solution}
-	\begin{parts}
-		\part L'énergie est déterminée par le nombre de rotations du disque et la constante du compteur.
-		\begin{align*}
-			W &= \dfrac{n}{c} = \dfrac{15}{\qty{200}{[tr/kWh]}} = \qty{0,075}{[kWh]}
-		\end{align*}
-		
-		\part La puissance active est le rapport entre l'énergie consommée et la durée de la mesure. Il faut convertir le temps en heures : $t = \qty{60}{[s]} = \dfrac{60}{3600} = \qty{0,01667}{[h]}$.
-		\begin{align*}
-			P &= \dfrac{W}{t} = \dfrac{\qty{0,075}{[kWh]}}{\qty{0,01667}{[h]}} = \qty{4,5}{[kW]} = \qty{4500}{[W]}
-		\end{align*}
-		
-		\part La puissance apparente en triphasé se calcule avec la tension composée et le courant de ligne.
-		\begin{align*}
-			S &= \sqrt{3} \cdot U \cdot I = \sqrt{3} \cdot \qty{400}{[V]} \cdot \qty{8,5}{[A]} = \qty{5889}{[VA]} \\[6pt]
-			\cos \phi &= \dfrac{P}{S} = \dfrac{\qty{4500}{[W]}}{\qty{5889}{[VA]}} = \qty{0,764}{}
-		\end{align*}
-	\end{parts}
-	
-	\begin{verbatim}
-		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
-		% Puis copier-coller le code dans OCTAVE
-		c = 200;      % Constante du compteur [tr/kWh]
-		n = 15;       % Nombre de tours
-		t_sec = 60;   % Temps en secondes
-		U = 400;      % Tension composée [V]
-		I = 8.5;      % Courant de ligne [A]
-		% Calcul de l'énergie
-		W_kwh = n / c;
-		printf('Énergie mesurée W = %.4f kWh\n', W_kwh);
-		% Calcul de la puissance active
-		t_h = t_sec / 3600;
-		P_watt = (W_kwh / t_h) * 1000;
-		printf('Puissance active P = %.2f W\n', P_watt);
-		% Calcul de la puissance apparente
-		S_va = sqrt(3) * U * I;
-		printf('Puissance apparente S = %.2f VA\n', S_va);
-		% Facteur de puissance
-		cos_phi = P_watt / S_va;
-		printf('Facteur de puissance cos(phi) = %.3f\n', cos_phi);
-	\end{verbatim}
-\end{solution}
 
 
 \end{questions}
