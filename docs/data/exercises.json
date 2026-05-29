@@ -921,7 +921,7 @@
     "id": "telecom_fibre_20260520_004",
     "title": "Identification_des_composants_introduction_fibre_optique",
     "domain": "TELECOM",
-    "subdomain": "Fibre_Optique",
+    "subdomain": "FO",
     "tags": [
       "TC",
       "DIT",
@@ -936,13 +936,13 @@
     "has_octave": false,
     "author": "om",
     "date": "2026-05-24T00:55:51",
-    "tex_url": "assets/telecom/fibre_optique/telecom_fibre_optique_20260520_004_architecture_ftth.tex",
+    "tex_url": "assets/telecom/fo/telecom_fibre_optique_20260520_004_architecture_ftth.tex",
     "images": [
       "OFCOM_MODEL_REF_question.png",
       "OFCOM_MODEL_REF_reponse.png"
     ],
-    "donnee_url": "assets/telecom/fibre_optique/telecom_fibre_optique_20260520_004_architecture_ftth_donnee.pdf",
-    "solution_url": "assets/telecom/fibre_optique/telecom_fibre_optique_20260520_004_architecture_ftth_solution.pdf",
-    "search_text": "identification_des_composants_introduction_fibre_optique telecom fibre_optique tc dit suisse ftth bep oto limite_propriete identification des composants introduction fibre optique telecom fibre optique tc dit suisse ftth bep oto limite propriete"
+    "donnee_url": "assets/telecom/fo/telecom_fibre_optique_20260520_004_architecture_ftth_donnee.pdf",
+    "solution_url": "assets/telecom/fo/telecom_fibre_optique_20260520_004_architecture_ftth_solution.pdf",
+    "search_text": "identification_des_composants_introduction_fibre_optique telecom fo tc dit suisse ftth bep oto limite_propriete identification des composants introduction fibre optique telecom fo tc dit suisse ftth bep oto limite propriete"
   }
 ]
