@@ -915,5 +915,34 @@
     "donnee_url": "assets/telecom/transmission/telecom_cablage_universel_20260520_003_identification_interfaces_docking_donnee.pdf",
     "solution_url": "assets/telecom/transmission/telecom_cablage_universel_20260520_003_identification_interfaces_docking_solution.pdf",
     "search_text": "identification_des_interfaces_sur_une_station_d_accueil_multimedia telecom transmission tc dit suisse cuc rj45 usb_c interfaces identification des interfaces sur une station daccueil multimedia telecom transmission tc dit suisse cuc rj45 usb cinterfaces"
+  },
+  {
+    "filename": "telecom_fibre_optique_20260520_004_architecture_ftth.tex",
+    "id": "telecom_fibre_20260520_004",
+    "title": "Identification_des_composants_introduction_fibre_optique",
+    "domain": "TELECOM",
+    "subdomain": "Fibre_Optique",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "FTTH",
+      "BEP",
+      "OTO",
+      "limite_propriete"
+    ],
+    "difficulty": 1,
+    "time_solve": 10,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-05-24T00:55:51",
+    "tex_url": "assets/telecom/fibre_optique/telecom_fibre_optique_20260520_004_architecture_ftth.tex",
+    "images": [
+      "OFCOM_MODEL_REF_question.png",
+      "OFCOM_MODEL_REF_reponse.png"
+    ],
+    "donnee_url": "assets/telecom/fibre_optique/telecom_fibre_optique_20260520_004_architecture_ftth_donnee.pdf",
+    "solution_url": "assets/telecom/fibre_optique/telecom_fibre_optique_20260520_004_architecture_ftth_solution.pdf",
+    "search_text": "identification_des_composants_introduction_fibre_optique telecom fibre_optique tc dit suisse ftth bep oto limite_propriete identification des composants introduction fibre optique telecom fibre optique tc dit suisse ftth bep oto limite propriete"
   }
 ]
