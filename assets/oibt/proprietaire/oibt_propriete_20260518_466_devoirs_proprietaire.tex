@@ -1,23 +1,20 @@
 % ---
-% filename : ["electrotechnique_puissance_20260429_312_mesure_puissance_compteur.tex"]
-% id : "electrotechnique_puissance_20260429_312"
-% title : "Mesure de puissance triphasée par compteur à disque"
-% domain : "Électrotechnique"
-% subdomain : "Puissance"
-% tags : ["compteur d'énergie", "puissance active", "puissance apparente", "facteur de puissance", "triphasé", "énergie électrique", "ts"]
+% filename : oibt_propriete_20260518_466_devoirs_proprietaire.tex
+% id : oibt_propriete_20260518_466
+% title : "Devoirs du propriétaire d'une installation électrique selon l'OIBT"
+% domain : "OIBT"
+% subdomain : "proprietaire"
+% tags : ["oibt", "propriétaire", "sécurité", "maintenance", "dt"]
 % difficulty : 2
-% time_solve : 12  # Calcul : 2 (difficulte) * (3 questions * 2)
-% has_octave : true
-% octave_files : ["electrotechnique_puissance_20260429_312_mesure_puissance_compteur.m"]
+% time_solve : 8
+% has_octave : false
 % author : "om"
 % ---
-\documentclass[12pt,answers,addpoints]{exam}
-
+\documentclass[a4paper,11pt,answers,addpoints]{exam}
 % ---------------------------------------------------------
 % LANGUE, ENCODAGE, FONTS
 % ---------------------------------------------------------
 \usepackage[utf8]{inputenc}
-
 % ---------------------------------------------------------
 % GÉOMÉTRIE ET MISE EN PAGE
 % ---------------------------------------------------------
@@ -56,7 +53,6 @@
 	arrows.meta,
 	intersections,
 	decorations.pathreplacing,
-	%	calligraphy,
 	positioning
 }
 
@@ -90,8 +86,8 @@ linkcolor=blue]{hyperref}
 % COMMANDES PERSONNELLES
 % ---------------------------------------------------------
 \newcommand\nomauteur{bdminasmorgul@protonmail.com}
-\newcommand\dateTe{28.05.2026}
-\newcommand\brancheTe{TC}
+\newcommand\dateTe{18.05.2026}
+\newcommand\brancheTe{DT}
 
 % ---------------------------------------------------------
 % STYLE DE L'EXERCICE
@@ -146,69 +142,31 @@ linkcolor=blue]{hyperref}
 \newenvironment{explication}{%
 	\par\noindent\textbf{Explication. }\itshape
 }{\par\normalfont}
-\renewcommand\partlabel{\arabic{partno}.}
+
 \begin{document}
 	\unframedsolutions
 	\pointsinmargin
 	\bracketedpoints
 	
-\section*{Préparation TS PQ CFC ELMO, IELE, PELE}
+\section*{Préparation DT PQ CFC ELMO,IELE,PELE}
 \begin{questions}
-
-
-
-\question On souhaite vérifier la puissance absorbée par une machine triphasée à l'aide d'un compteur d'énergie électromécanique. La constante du compteur est de $c = \qty{200}{[tr/kWh]}$. Lors d'une mesure, le disque du compteur effectue $n = 15$ tours en un temps $t = \qty{60}{[s]}$. 
-Les mesures électriques sur la ligne indiquent une tension composée $U = \qty{400}{[V]}$ et un courant de ligne $I = \qty{8,5}{[A]}$.
-
+\question
+Lors d'un contrôle périodique dans un immeuble administratif. Le propriétaire s'interroge sur l'étendue de ses responsabilités légales concernant le maintien de la sécurité de ses installations.
 \begin{parts}
-	\part[3] Déterminez l'énergie électrique $W$ consommée par la machine durant cette mesure (en \qty{}{[kWh]}).
-	\part[3] Calculez la puissance active $P$ absorbée par la machine.
-	\part[3] Calculez la puissance apparente $S$ de l'installation et déduisez-en le facteur de puissance $\cos \phi$ de la machine.
+	\part[3] Qui est la personne légalement responsable de veiller à ce que l'installation électrique réponde en tout temps aux exigences de sécurité et de lutte contre les perturbations~?
+	\part[3] Quel document officiel le propriétaire doit-il impérativement être en mesure de présenter sur demande de l'Inspection ou de l'exploitant de réseau~?
+	\part[3] Pendant combien de temps le propriétaire est-il tenu de conserver la documentation technique (schémas, plans) remise par le constructeur de l'installation électrique~?
+	\part[3] Quelle est l'obligation immédiate du propriétaire lorsqu'un organe de contrôle constate des défauts sur son installation électrique~?
+	\part[3] Un locataire constate qu’une installation électrique est défectueuse dans son logement. Quelles sont ses obligations légales pour en informer le propriétaire~?
 \end{parts}
 
 \begin{solution}
-	\begin{parts}
-		\part L'énergie est déterminée par le nombre de rotations du disque et la constante du compteur.
-		\begin{align*}
-			W &= \dfrac{n}{c} = \dfrac{15}{\qty{200}{[tr/kWh]}} = \qty{0,075}{[kWh]}
-		\end{align*}
-		
-		\part La puissance active est le rapport entre l'énergie consommée et la durée de la mesure. Il faut convertir le temps en heures : $t = \qty{60}{[s]} = \dfrac{60}{3600} = \qty{0,01667}{[h]}$.
-		\begin{align*}
-			P &= \dfrac{W}{t} = \dfrac{\qty{0,075}{[kWh]}}{\qty{0,01667}{[h]}} = \qty{4,5}{[kW]} = \qty{4500}{[W]}
-		\end{align*}
-		
-		\part La puissance apparente en triphasé se calcule avec la tension composée et le courant de ligne.
-		\begin{align*}
-			S &= \sqrt{3} \cdot U \cdot I = \sqrt{3} \cdot \qty{400}{[V]} \cdot \qty{8,5}{[A]} = \qty{5889}{[VA]} \\[6pt]
-			\cos \phi &= \dfrac{P}{S} = \dfrac{\qty{4500}{[W]}}{\qty{5889}{[VA]}} = \qty{0,764}{}
-		\end{align*}
-	\end{parts}
-	
-	\begin{verbatim}
-		% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
-		% Puis copier-coller le code dans OCTAVE
-		c = 200;      % Constante du compteur [tr/kWh]
-		n = 15;       % Nombre de tours
-		t_sec = 60;   % Temps en secondes
-		U = 400;      % Tension composée [V]
-		I = 8.5;      % Courant de ligne [A]
-		% Calcul de l'énergie
-		W_kwh = n / c;
-		printf('Énergie mesurée W = %.4f kWh\n', W_kwh);
-		% Calcul de la puissance active
-		t_h = t_sec / 3600;
-		P_watt = (W_kwh / t_h) * 1000;
-		printf('Puissance active P = %.2f W\n', P_watt);
-		% Calcul de la puissance apparente
-		S_va = sqrt(3) * U * I;
-		printf('Puissance apparente S = %.2f VA\n', S_va);
-		% Facteur de puissance
-		cos_phi = P_watt / S_va;
-		printf('Facteur de puissance cos(phi) = %.3f\n', cos_phi);
-	\end{verbatim}
+\begin{itemize}
+	\item \textbf{Responsabilité} : Selon l'OIBT Art. 5 al. 1, le propriétaire ou un représentant désigné par lui porte la responsabilité de la conformité permanente de l'installation.
+	\item \textbf{Rapport de sécurité} : Le propriétaire doit pouvoir présenter un rapport de sécurité valide attestant du contrôle de l'installation.
+	\item \textbf{Conservation des documents} : Selon l'OIBT Art. 5 al. 2, les plans et schémas doivent être conservés pendant toute la durée de vie de l'installation, tandis que les rapports de sécurité doivent être gardés pendant au moins une période de contrôle complète.
+	\item \textbf{Maintenance} : Selon l’OIBT (art. 5, al. 4), celui qui exploite et utilise directement une installation électrique propriété d’un tiers est tenu de signaler sans délai au propriétaire ou à son représentant, dans les limites de son droit d’utilisation, les défauts éventuels et de veiller à ce qu’il y soit remédié..
+\end{itemize}
 \end{solution}
-
-
 \end{questions}
 \end{document}
