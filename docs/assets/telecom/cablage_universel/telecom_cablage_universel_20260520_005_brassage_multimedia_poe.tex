@@ -1,0 +1,189 @@
+% ---
+% filename : "telecom_cablage_universel_20260520_005_brassage_multimedia_poe.tex"
+% id : "telecom_cablage_20260520_005"
+% title : "Optimisation_du_brassage_multimedia_dans_un_rack_domestique"
+% domain : "TELECOM"
+% subdomain : "Câblage_Universel"
+% tags : ["TC", "DIT", "suisse", "CUC", "PoE", "FTTH", "brassage", "rj45"]
+% difficulty : 2
+% time_solve : 15
+% has_octave : false
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{07.06.2026}
+\newcommand\brancheTe{TC}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TC PQ CFC IELE,PELE}
+\begin{questions}
+\question 
+En tant que planificateur-électricien à Montreux, vous intervenez pour la mise en service multimédia d'une villa de luxe raccordée en fibre optique (FTTH). Le client se plaint que certains équipements ne fonctionnent pas. En ouvrant le rack de communication, vous constatez que le brassage (patching) est incomplet ou erroné. L'installation comprend~: 
+\begin{parts}
+    Une prise optique \textbf{OTO}.\\
+    Un routeur fibre avec ports LAN et ports \textbf{Phone}.\\
+    Un switch 4 ports \textbf{PoE}.\\
+    Des périphériques : 1 PC, 1 Smart TV, 1 Point d'accès WiFi (\textbf{PoE}), 1 Caméra de surveillance (\textbf{PoE}) et 1 téléphone analogique.
+    \part[9] Dessiner les raccordements entre les éléments ci-dessus.
+    \part[3] Expliquez sur quel port du routeur le téléphone analogique doit être raccordé pour bénéficier des services \textbf{VoIP} du fournisseur.
+    \part[3] Chercher sur l'Internet (et dans votre cours de télécommunications) la signification des acronymes et des concepts associés.
+    \part[3] Avec la technique \textbf{PoE} quelle est la puissance maximale d'alimentation que l'on peut obtenir~?
+\end{parts}
+
+\begin{solution}
+
+\begin{itemize}
+	\item \textbf{Optical Telecommunications Outlet} : Utilisé dans le domaine de la fibre optique, OTO désigne une prise murale qui connecte le réseau fibre à d'autres équipements.
+    \item Les normes PoE \textbf{(Power over Ethernet)} définissent la puissance que les appareils peuvent recevoir via un câble Ethernet. Voici les principales normes et leurs puissances :
+    IEEE 802.3af (PoE standard) : Fournit une puissance maximale de 15,4 Watts à un appareil, avec une puissance minimale garantie de 12,95 Watts.\\
+    IEEE 802.3at (PoE+) : Permet une puissance maximale de 30 Watts sur chaque port, avec une puissance minimale garantie de 25,5 Watts.\\
+    IEEE 802.3bt (PoE++) : Introduit des puissances allant jusqu'à 90 Watts, adaptées aux appareils nécessitant une alimentation robuste, comme les écrans d'affichage numérique.
+
+    \item \textbf{Alimentation PoE} : Le point d'accès WiFi et la caméra de surveillance doivent impérativement être raccordés sur les ports du \textbf{switch PoE}. Ce dernier doit lui-même être relié à l'un des ports LAN du routeur par un cordon de brassage (patch) pour intégrer ces appareils au réseau local.
+        
+    \item \textbf{Téléphonie} : Le téléphone analogique doit être raccordé sur le port marqué \textbf{Phone} (souvent RJ11 ou RJ45) situé directement sur le routeur. C'est le routeur qui assure la conversion analogique/numérique (ATA) pour la téléphonie IP (All-IP).
+    \item La \textbf{VoIP}, ou Voice over Internet Protocol, est une technique qui permet de transmettre la voix via Internet. La VoIP convertit la voix en paquets numériques, qui sont ensuite transmis sur un réseau IP.    
+    \item \textbf{Données standard} : Le PC et la Smart TV peuvent être raccordés indifféremment sur les ports LAN libres du routeur ou du switch.
+    \item \textbf{Lien WAN} : Le routeur doit être relié à la prise \textbf{OTO} via un cordon optique adapté.
+\end{itemize}
+
+
+\end{solution}
+\end{questions}
+\end{document}
