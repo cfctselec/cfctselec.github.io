@@ -1081,5 +1081,62 @@
     "donnee_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_009_next_paradiaphonie_donnee.pdf",
     "solution_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_009_next_paradiaphonie_solution.pdf",
     "search_text": "analyse_de_la_paradiaphonie_next_en_cablage_cuc telecom câblage_universel tc dit suisse cuc next diaphonie mesure rj45 analyse de la paradiaphonie next en cablage cuc telecom cablage universel tc dit suisse cuc next diaphonie mesure rj45"
+  },
+  {
+    "filename": "telecom_catv_20260520_010_caracteristiques_prise_coaxiale.tex",
+    "id": "telecom_catv_20260520_010",
+    "title": "Analyse_technique_d_une_prise_de_passage_coaxiale_multimedia",
+    "domain": "TELECOM",
+    "subdomain": "Coaxial",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "CATV",
+      "coaxial",
+      "attenuation",
+      "frequence",
+      "SAT"
+    ],
+    "difficulty": 2,
+    "time_solve": 10,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-06-07T17:37:03",
+    "tex_url": "assets/telecom/coaxial/telecom_catv_20260520_010_caracteristiques_prise_coaxiale.tex",
+    "images": [
+      "2022_TC_IEL_EXTRAIT.png",
+      "ESD33.jpg"
+    ],
+    "donnee_url": "assets/telecom/coaxial/telecom_catv_20260520_010_caracteristiques_prise_coaxiale_donnee.pdf",
+    "solution_url": "assets/telecom/coaxial/telecom_catv_20260520_010_caracteristiques_prise_coaxiale_solution.pdf",
+    "search_text": "analyse_technique_d_une_prise_de_passage_coaxiale_multimedia telecom coaxial tc dit suisse catv coaxial attenuation frequence sat analyse technique dune prise de passage coaxiale multimedia telecom coaxial tc dit suisse catv coaxial attenuation frequence sat"
+  },
+  {
+    "filename": "telecom_sans_fil_20260520_815_analyse_portee_wifi.tex",
+    "id": "telecom_sans_fil_20260520_815",
+    "title": "Optimisation_de_la_portee_WLAN_en_milieu_obstrue",
+    "domain": "TELECOM",
+    "subdomain": "Wireless",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "WLAN",
+      "WiFi",
+      "portée",
+      "atténuation",
+      "fréquence"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-06-07T18:10:33",
+    "tex_url": "assets/telecom/wireless/telecom_sans_fil_20260520_815_analyse_portee_wifi.tex",
+    "images": [],
+    "donnee_url": "assets/telecom/wireless/telecom_sans_fil_20260520_815_analyse_portee_wifi_donnee.pdf",
+    "solution_url": "assets/telecom/wireless/telecom_sans_fil_20260520_815_analyse_portee_wifi_solution.pdf",
+    "search_text": "optimisation_de_la_portee_wlan_en_milieu_obstrue telecom wireless tc dit suisse wlan wifi portée atténuation fréquence optimisation de la portee wlan en milieu obstrue telecom wireless tc dit suisse wlan wifi portee attenuation frequence"
   }
 ]

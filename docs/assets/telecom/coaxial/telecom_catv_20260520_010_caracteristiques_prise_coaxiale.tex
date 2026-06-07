@@ -1,0 +1,183 @@
+% ---
+% filename : "telecom_catv_20260520_010_caracteristiques_prise_coaxiale.tex"
+% id : "telecom_catv_20260520_010"
+% title : "Analyse_technique_d_une_prise_de_passage_coaxiale_multimedia"
+% domain : "TELECOM"
+% subdomain : "coaxial"
+% tags : ["TC", "DIT", "suisse", "CATV", "coaxial", "attenuation", "frequence", "SAT"]
+% difficulty : 2
+% time_solve : 10
+% has_octave : false
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{07.06.2026}
+\newcommand\brancheTe{TC}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC IELE,PELE}
+\begin{questions}
+\question[9]
+En analysant le marquage technique présent sur le châssis de la prise de référence (type Kathrein ESD 33), déterminez les trois caractéristiques essentielles suivantes nécessaires pour les calculs
+\begin{center}
+ 	\includegraphics[scale=0.13]{ESD33.jpg}
+\end{center}
+
+\begin{parts}
+    \part L'atténuation subie par le signal lorsqu'il traverse la prise pour alimenter l'étage inférieur.
+    \part L'atténuation subie par le signal entre l'entrée de la prise et la sortie raccordée au récepteur de l'utilisateur (TV/Radio).
+    \part La plage de fréquence totale supportée par cet équipement pour assurer la compatibilité avec les signaux SAT.
+\end{parts}
+\begin{solution}
+
+\begin{itemize}
+    \item Atténuation de passage : \qty{1.9}{[\decibel]}. (C'est la perte d'insertion entre les bornes "IN" et "OUT" de la prise).
+    \item Atténuation de raccordement (ou connexion) : \qty{14}{[\decibel]}. 
+    \item  Plage de fréquence : \qtyrange{5}{2150}{[\mega\hertz]}.
+    \item Il faut ouvrir tous les pdf des examens de TC \url{https://qrhd1.github.io/oldcfc/}  où il y a le genre de problème ci-dessous \href{https://raw.githubusercontent.com/qrhd1/oldcfc/main/pdf_files/2022_TC_IEL_corrige.pdf}{2022\_TC\_IEL\_corrige.pdf}.
+
+
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.65]{2022_TC_IEL_EXTRAIT.png}
+\end{center}
+
+\end{solution}
+\end{questions}
+\end{document}
