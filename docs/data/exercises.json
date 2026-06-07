@@ -1054,5 +1054,32 @@
     "donnee_url": "assets/telecom/services_telephoniques/telecom_services_20260520_008_tarification_numeros_speciaux_donnee.pdf",
     "solution_url": "assets/telecom/services_telephoniques/telecom_services_20260520_008_tarification_numeros_speciaux_solution.pdf",
     "search_text": "tarification_des_numeros_de_services_speciaux_en_suisse telecom services_telephoniques tc dit suisse tarification 0800 0901 084x ofcom tarification des numeros de services speciaux en suisse telecom services telephoniques tc dit suisse tarification 0800 0901 084x ofcom"
+  },
+  {
+    "filename": "telecom_cablage_universel_20260520_009_next_paradiaphonie.tex",
+    "id": "telecom_cablage_20260520_009",
+    "title": "Analyse_de_la_paradiaphonie_NEXT_en_cablage_CUC",
+    "domain": "TELECOM",
+    "subdomain": "Câblage_Universel",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "CUC",
+      "NEXT",
+      "diaphonie",
+      "mesure",
+      "rj45"
+    ],
+    "difficulty": 2,
+    "time_solve": 10,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-06-07T17:18:42",
+    "tex_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_009_next_paradiaphonie.tex",
+    "images": [],
+    "donnee_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_009_next_paradiaphonie_donnee.pdf",
+    "solution_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_009_next_paradiaphonie_solution.pdf",
+    "search_text": "analyse_de_la_paradiaphonie_next_en_cablage_cuc telecom câblage_universel tc dit suisse cuc next diaphonie mesure rj45 analyse de la paradiaphonie next en cablage cuc telecom cablage universel tc dit suisse cuc next diaphonie mesure rj45"
   }
 ]
