@@ -971,5 +971,35 @@
     "donnee_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_005_brassage_multimedia_poe_donnee.pdf",
     "solution_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_005_brassage_multimedia_poe_solution.pdf",
     "search_text": "optimisation_du_brassage_multimedia_dans_un_rack_domestique telecom câblage_universel tc dit suisse cuc poe ftth brassage rj45 optimisation du brassage multimedia dans un rack domestique telecom cablage universel tc dit suisse cuc poe ftth brassage rj45"
+  },
+  {
+    "filename": "telecom_cablage_universel_20260520_006_classification_blindage_cuc.tex",
+    "id": "telecom_cablage_20260520_006",
+    "title": "Identification_des_blindages_de_cables_CUC_selon_ISO_IEC",
+    "domain": "TELECOM",
+    "subdomain": "Câblage_Universel",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "CUC",
+      "blindage",
+      "rj45",
+      "ISO_IEC_11801",
+      "S_FTP",
+      "U_UTP"
+    ],
+    "difficulty": 2,
+    "time_solve": 10,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-06-07T08:50:41",
+    "tex_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_006_classification_blindage_cuc.tex",
+    "images": [
+      "CABLES_ACRONYMES.png"
+    ],
+    "donnee_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_006_classification_blindage_cuc_donnee.pdf",
+    "solution_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_006_classification_blindage_cuc_solution.pdf",
+    "search_text": "identification_des_blindages_de_cables_cuc_selon_iso_iec telecom câblage_universel tc dit suisse cuc blindage rj45 iso_iec_11801 s_ftp u_utp identification des blindages de cables cuc selon iso iec telecom cablage universel tc dit suisse cuc blindage rj45 iso iec 11801 sftp uutp"
   }
 ]
