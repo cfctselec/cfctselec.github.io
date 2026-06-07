@@ -1001,5 +1001,58 @@
     "donnee_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_006_classification_blindage_cuc_donnee.pdf",
     "solution_url": "assets/telecom/cablage_universel/telecom_cablage_universel_20260520_006_classification_blindage_cuc_solution.pdf",
     "search_text": "identification_des_blindages_de_cables_cuc_selon_iso_iec telecom câblage_universel tc dit suisse cuc blindage rj45 iso_iec_11801 s_ftp u_utp identification des blindages de cables cuc selon iso iec telecom cablage universel tc dit suisse cuc blindage rj45 iso iec 11801 sftp uutp"
+  },
+  {
+    "filename": "telecom_catv_20260520_007_composants_passifs_coaxiaux.tex",
+    "id": "telecom_catv_20260520_007",
+    "title": "Identification_des_composants_passifs_en_telereseau_CATV",
+    "domain": "TELECOM",
+    "subdomain": "Coaxial",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "CATV",
+      "coaxial",
+      "impedance",
+      "75_ohms"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-06-07T09:15:55",
+    "tex_url": "assets/telecom/coaxial/telecom_catv_20260520_007_composants_passifs_coaxiaux.tex",
+    "images": [],
+    "donnee_url": "assets/telecom/coaxial/telecom_catv_20260520_007_composants_passifs_coaxiaux_donnee.pdf",
+    "solution_url": "assets/telecom/coaxial/telecom_catv_20260520_007_composants_passifs_coaxiaux_solution.pdf",
+    "search_text": "identification_des_composants_passifs_en_telereseau_catv telecom coaxial tc dit suisse catv coaxial impedance 75_ohms identification des composants passifs en telereseau catv telecom coaxial tc dit suisse catv coaxial impedance 75 ohms"
+  },
+  {
+    "filename": "telecom_services_20260520_008_tarification_numeros_speciaux.tex",
+    "id": "telecom_services_20260520_008",
+    "title": "Tarification_des_numeros_de_services_speciaux_en_Suisse",
+    "domain": "TELECOM",
+    "subdomain": "Services_Telephoniques",
+    "tags": [
+      "TC",
+      "DIT",
+      "suisse",
+      "tarification",
+      "0800",
+      "0901",
+      "084x",
+      "OFCOM"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": false,
+    "author": "om",
+    "date": "2026-06-07T16:02:36",
+    "tex_url": "assets/telecom/services_telephoniques/telecom_services_20260520_008_tarification_numeros_speciaux.tex",
+    "images": [],
+    "donnee_url": "assets/telecom/services_telephoniques/telecom_services_20260520_008_tarification_numeros_speciaux_donnee.pdf",
+    "solution_url": "assets/telecom/services_telephoniques/telecom_services_20260520_008_tarification_numeros_speciaux_solution.pdf",
+    "search_text": "tarification_des_numeros_de_services_speciaux_en_suisse telecom services_telephoniques tc dit suisse tarification 0800 0901 084x ofcom tarification des numeros de services speciaux en suisse telecom services telephoniques tc dit suisse tarification 0800 0901 084x ofcom"
   }
 ]
