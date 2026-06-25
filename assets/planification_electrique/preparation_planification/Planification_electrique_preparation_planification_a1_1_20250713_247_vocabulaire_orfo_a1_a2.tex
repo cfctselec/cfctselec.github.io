@@ -1,0 +1,480 @@
+% Planification_electrique_preparation_planification_a1_1_20250713_247_vocabulaire_orfo_a1_a2.tex
+% ---
+% filename: ["Planification_electrique_preparation_planification_a1_1_20250713_247_vocabulaire_orfo_a1_a2.tex"]
+% id: "Planification_électrique_préparation_planification_a1_1_20250713_247"
+% title: "a1.1 – Vocabulaire exhaustif du cahier des charges et des normes SIA"
+% domain: "Planification électrique"
+% subdomain: "préparation_planification"
+% tags: ["a1_1", "cahier_des_charges", "normes_SIA", "maître_d_ouvrage", "liste_questions"]
+% difficulty: 2
+% time_solve: 45
+% has_octave: false
+% octave_files: []
+% author: "om"
+% orfo_code: "a1.1"
+% annee: "1ere_annee"
+% semestre: "S1"
+% periodes: 40
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+\usepackage{longtable}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{21.06.2026}
+\newcommand\brancheTe{a1}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+
+
+	
+	\section*{Situation professionnelle}
+	
+	Vous êtes apprenti en 1ère année au sein du bureau de planification ÉlecPro SA à Lausanne. Dans le cadre du jour fixe du 1er semestre, votre formateur vous confie la préparation d'un entretien prévu la semaine prochaine avec le maître d'ouvrage d'un projet de rénovation d'un immeuble administratif. Cet entretien réunira également l'équipe d'architectes et les planificateurs spécialisés. La direction du projet vous demande de maîtriser parfaitement le vocabulaire technique du cahier des charges et des normes SIA qui serviront de base de discussion. Avant la séance, le formateur souhaite vérifier votre niveau de compréhension à l'aide d'un exercice basé sur l'OrFO P-PELE 11.
+	
+	\section*{Tâche}
+	
+	À l'aide des annexes fournies, définissez précisément chacun des termes techniques identifiés ci-dessous afin de démontrer que vous maîtrisez le contenu et le but d'un cahier des charges de projet.
+	
+	\section*{Annexes}
+	
+	\begin{itemize}
+		\item Annexe A~: Extrait de l'OrFO P-PELE 11 -- Objectif évaluateur a1.1 et compétence opérationnelle a1
+		\item Annexe B~: Extrait des normes SIA relatives au règlement intérieur d'un bureau de planification électrique
+	\end{itemize}
+	
+	\begin{questions}
+		
+		\question[26]{Vocabulaire exhaustif du cahier des charges et des normes SIA}
+		
+		Dans le texte fourni en annexe, définissez précisément chacun des termes suivants~:
+		
+		\begin{parts}
+			
+			\part[1]{Compétences opérationnelles}
+			\begin{solution}
+				Capacités globales que l'apprenti doit acquérir et démontrer de manière autonome dans des situations de travail réelles. Elles décrivent ce que le planificateur-électricien CFC est capable de faire concrètement et regroupent plusieurs objectifs évaluateurs.
+			\end{solution}
+			
+			\part[1]{Domaines de compétences opérationnelles}
+			\begin{solution}
+				Regroupements thématiques de compétences opérationnelles au sein de l'OrFO. Pour le profil P-PELE 11, le domaine \textbf{a} correspond à la  Préparation des étapes de la planification électrique.
+			\end{solution}
+			
+			\part[1]{Objectifs évaluateurs}
+			\begin{solution}
+				Énoncés précis et observables qui décrivent une performance attendue de l'apprenti. Chaque objectif évaluateur est associé à un niveau taxonomique (C1 à C6) et sert de base concrète à l'évaluation des compétences opérationnelles.
+			\end{solution}
+			
+			\part[1]{Compétences professionnelles}
+			\begin{solution}
+				Dimension des compétences opérationnelles qui regroupe les savoirs et savoir-faire directement liés à la pratique du métier de planificateur-électricien~: connaissances techniques, application des normes SIA, utilisation des outils de planification.
+			\end{solution}
+			
+			\part[1]{Compétences méthodologiques}
+			\begin{solution}
+				Dimension qui concerne la capacité à organiser son travail, à planifier des tâches, à résoudre des problèmes de manière structurée et à choisir les méthodes appropriées pour atteindre un objectif donné.
+			\end{solution}
+			
+			\part[1]{Compétences personnelles}
+			\begin{solution}
+				Dimension qui englobe l'attitude, l'autonomie, la fiabilité, la capacité à gérer le stress et à évaluer son propre travail de manière critique et responsable.
+			\end{solution}
+			
+			\part[1]{Compétences sociales}
+			\begin{solution}
+				Dimension liée à la communication, à la collaboration en équipe, au respect des relations interpersonnelles et à la capacité à s'intégrer dans un environnement de travail composé de différents acteurs.
+			\end{solution}
+			
+			\part[1]{Niveaux taxonomiques (selon Bloom)}
+			\begin{solution}
+				Échelle de six niveaux (C1 à C6) classant la complexité cognitive d'un objectif évaluateur~: C1 = mémoriser, C2 = comprendre, C3 = appliquer, C4 = analyser, C5 = évaluer, C6 = créer. Plus le niveau est élevé, plus la compétence exigée est complexe.
+			\end{solution}
+			
+			\part[1]{Cahier des charges de projet}
+			\begin{solution}
+				Document contractuel qui définit le contenu, les objectifs, les exigences et les normes applicables à un projet d'installation électrique. Il fixe le cadre de référence pour toutes les étapes de la planification et sert de base de discussion avec le maître d'ouvrage.
+			\end{solution}
+			
+			\part[1]{Règlement intérieur (normes SIA)}
+			\begin{solution}
+				Ensemble de règles et de directives internes à l'entreprise, fondées sur les normes de la Société suisse des ingénieurs et des architectes (SIA). Il définit les processus, les exigences de qualité et les obligations que le planificateur doit respecter dans chaque projet.
+			\end{solution}
+			
+			\part[1]{Objectifs du projet}
+			\begin{solution}
+				Résultats spécifiques et mesurables que le projet d'installation électrique doit atteindre. Ils sont consignés dans le cahier des charges et définissent le périmètre et la finalité de la planification.
+			\end{solution}
+			
+			\part[1]{Exigences}
+			\begin{solution}
+				Conditions préalables et contraintes techniques, normatives ou fonctionnelles que le projet doit satisfaire. Elles sont issues du maître d'ouvrage, des normes SIA et du règlement intérieur de l'entreprise.
+			\end{solution}
+			
+			\part[1]{Normes (SIA)}
+			\begin{solution}
+				Règles techniques édictées par la Société suisse des ingénieurs et des architectes qui régissent la conception, la construction et l'exploitation des bâtiments et de leurs installations. Elles constituent la base de référence du règlement intérieur.
+			\end{solution}
+			
+			\part[1]{Planification du temps}
+			\begin{solution}
+				Démarche consistant à estimer et répartir la durée des différentes tâches d'un projet ou d'une activité d'apprentissage. Elle permet d'assurer le respect des délais et une utilisation efficace des périodes de formation.
+			\end{solution}
+			
+			\part[1]{Planification des ressources}
+			\begin{solution}
+				Identification et allocation des moyens nécessaires (matériels, logiciels, documents, personnel) pour mener à bien une tâche ou un projet dans les délais prévus.
+			\end{solution}
+			
+			\part[1]{Plan de formation}
+			\begin{solution}
+				Document cadre qui structure l'ensemble de la formation d'apprentissage sur quatre ans. Il détaille les objectifs évaluateurs par année et par semestre, les lieux de formation (école, entreprise, cours interentreprises) et le nombre de périodes associées.
+			\end{solution}
+			
+			\part[1]{Déroulement du contenu de la formation}
+			\begin{solution}
+				Planification séquentielle des apprentissages qui indique à quel moment chaque objectif évaluateur est traité. Il permet à l'apprenti de situer sa progression dans le plan de formation.
+			\end{solution}
+			
+			\part[1]{Droits et obligations}
+			\begin{solution}
+				Ensemble des règles définissant ce à quoi l'apprenti a droit (formation, encadrement, temps de formation) et ce qu'il doit accomplir (assiduité, respect des consignes, travail demandé) selon le règlement intérieur et le contrat d'apprentissage.
+			\end{solution}
+			
+			\part[1]{Maître d'ouvrage}
+			\begin{solution}
+				Personne physique ou morale qui commande un projet de construction ou d'installation électrique et qui en assume la responsabilité financière. Il définit les besoins et les exigences du projet.
+			\end{solution}
+			
+			\part[1]{Équipe d'architectes}
+			\begin{solution}
+				Groupe de professionnels chargés de la conception architecturale du bâtiment. Le planificateur-électricien collabore avec cette équipe pour assurer la coordination des installations électriques avec la structure du bâtiment.
+			\end{solution}
+			
+			\part[1]{Planificateurs spécialisés}
+			\begin{solution}
+				Professionnels responsables de la planification d'autres disciplines techniques (sanitaire, chauffage, ventilation, etc.). Ils travaillent en coordination avec le planificateur-électricien pour gérer les interfaces entre les différentes installations.
+			\end{solution}
+			
+			\part[1]{Liste de questions}
+			\begin{solution}
+				Document préparé par le planificateur-électricien avant l'entretien avec le maître d'ouvrage. Elle recense les points à clarifier concernant les besoins, les exigences et les contraintes du projet, afin d'alimenter le cahier des charges.
+			\end{solution}
+			
+			\part[1]{Direction du projet}
+			\begin{solution}
+				Instance ou personne responsable de la coordination globale du projet. Dans les projets complexes, la direction du projet supervise les différents planificateurs spécialisés et assure la cohérence entre toutes les disciplines.
+			\end{solution}
+			
+			\part[1]{Mandat relatif au projet électrique}
+			\begin{solution}
+				Mission confiée au planificateur-électricien pour la conception et la planification d'une installation électrique. Il découle du cahier des charges et définit le périmètre d'intervention du planificateur.
+			\end{solution}
+			
+			\part[1]{Installations électriques}
+			\begin{solution}
+				Ensemble des équipements, circuits et appareils électriques installés dans un bâtiment pour assurer la distribution d'énergie, l'éclairage, la communication et le contrôle-commande.
+			\end{solution}
+			
+			\part[1]{Préparation des étapes de la planification électrique}
+			\begin{solution}
+				Phase initiale du processus de planification qui comprend l'examen du mandat, l'obtention des plans et données de projet, et la préparation des documents nécessaires avant la conception proprement dite des installations.
+			\end{solution}
+			
+		\end{parts}
+		
+		\question[4]{Compréhension transversale}
+		
+		\begin{parts}
+			
+			\part[2]{Quelle différence existe-t-il entre une compétence opérationnelle et un objectif évaluateur~?}
+			\begin{solution}
+				Une compétence opérationnelle est une capacité globale qui décrit un ensemble de tâches professionnelles que le planificateur maîtrise de manière autonome (ex.~: examiner le mandat relatif au projet électrique). Un objectif évaluateur est un sous-ensemble précis et observable de cette compétence, évalué selon un niveau taxonomique (ex.~: a1.1, expliquer le contenu et le but d'un cahier des charges, niveau C2). La compétence regroupe donc plusieurs objectifs évaluateurs.
+			\end{solution}
+			
+			\part[2]{En quoi le règlement intérieur (normes SIA) et le cahier des charges de projet sont-ils liés dans la pratique du planificateur-électricien~?}
+			\begin{solution}
+				Le règlement intérieur de l'entreprise, fondé sur les normes SIA, constitue la base interne à partir de laquelle le planificateur élabore le cahier des charges d'un projet spécifique. Les exigences, les objectifs et les normes référencées dans le cahier des charges découlent directement des règles définies par le règlement intérieur. L'apprenti doit savoir transposer les droits et obligations du règlement intérieur dans le cahier des charges concret du projet.
+			\end{solution}
+			
+		\end{parts}
+		
+		\question[2]{Application chiffrée}
+		
+		\begin{parts}
+			
+			\part[2]{Le jour fixe de 1ère année comprend 200 leçons réparties ainsi~: domaine a = 80 leçons, domaine b = 80 leçons, domaine e = 40 leçons. Calculez la proportion en pourcentage des leçons du domaine a par rapport au total du jour fixe, puis la part de l'objectif a1.1 (40 périodes) en pourcentage du domaine a (80 périodes).}
+			\begin{solution}
+				Proportion du domaine a par rapport au total du jour fixe~:
+				$$\dfrac{80}{200} = 0{,}4 = 40\,\%$$
+				
+				Part de l'objectif a1.1 dans le domaine a~:
+				$$\dfrac{40}{80} = 0{,}5 = 50\,\%$$
+			\end{solution}
+			
+		\end{parts}
+		
+	\end{questions}
+	
+	\newpage
+	
+	\section*{Grille d'évaluation -- a1.1 }
+	
+	\small
+	\begin{longtable}{|p{4,6cm}|p{2,8cm}|p{2,8cm}|p{2,8cm}|p{3,5cm}|}
+		\hline
+		\textbf{Critère et question principale} & \textbf{3 pts} & \textbf{2 pts} & \textbf{1 pt} & \textbf{0 pt} \\
+		\hline
+		Critère 1~: \textcolor{red}{EXACTITUDE} -- Fidélité des définitions aux prescriptions de l'OrFO et des normes SIA
+		
+		\smallskip
+		Question principale~: Les définitions fournies sont-elles conformes au contenu de l'OrFO P-PELE 11 et aux normes SIA~?
+		&
+		Toutes les définitions sont conformes aux prescriptions. Aucune erreur factuelle n'est constatée.
+		&
+		La grande majorité des définitions sont conformes. Une à deux imprécisions mineures sans impact sur le sens global.
+		&
+		Plusieurs définitions comportent des erreurs factuelles ou des contresens partielles.
+		&
+		Les définitions sont incorrectes, absentes ou ne correspondent pas aux prescriptions. \\
+		\hline
+		Critère 2~: \textcolor{red}{PRÉCISION} -- Emploi du vocabulaire technique propre à la planification électrique
+		
+		\smallskip
+		Question principale~: L'apprenti utilise-t-il les termes techniques exacts dans chaque définition~?
+		&
+		Le vocabulaire technique est exact et utilisé à bon escient dans toutes les définitions.
+		&
+		Le vocabulaire technique est généralement correct. Quelques termes imprécis ou approximatifs.
+		&
+		Le vocabulaire technique est partiellement correct. Plusieurs termes inappropriés ou manquants.
+		&
+		Le vocabulaire technique est absent ou inapproprié. Les définitions utilisent un langage courant non professionnel. \\
+		\hline
+		Critère 3~: \textcolor{red}{EXHAUSTIVITÉ} -- Complétude des éléments constitutifs de chaque définition
+		
+		\smallskip
+		Question principale~: Chaque définition contient-elle tous les éléments essentiels requis~?
+		&
+		Toutes les définitions contiennent l'ensemble des éléments constitutifs attendus.
+		&
+		La plupart des définitions sont complètes. Quelques omissions mineures d'éléments secondaires.
+		&
+		Plusieurs définitions sont incomplètes et omettent des éléments importants.
+		&
+		Les définitions sont superficielles ou réduites à un seul élément. Les éléments essentiels manquent. \\
+		\hline
+		Critère 4~: \textcolor{red}{CLARTÉ} -- Formulation compréhensible et structurée
+		
+		\smallskip
+		Question principale~: Les définitions sont-elles rédigées de manière claire, cohérente et compréhensible~?
+		&
+		Toutes les définitions sont clairement formulées, structurées et directement compréhensibles.
+		&
+		La plupart des définitions sont claires. Une à deux formulations ambiguës ou mal structurées.
+		&
+		Plusieurs définitions sont confuses, mal structurées ou difficiles à comprendre.
+		&
+		Les définitions sont incohérentes, illisibles ou ne permettent pas de comprendre le concept visé. \\
+		\hline
+		Critère 5~: \textcolor{red}{PERTINENCE} -- Adéquation des définitions au contexte du cahier des charges
+		
+		\smallskip
+		Question principale~: Les définitions sont-elles systématiquement mises en lien avec le contexte de la planification électrique et du cahier des charges~?
+		&
+		Chaque définition est explicitement reliée au contexte de la planification électrique ou du cahier des charges.
+		&
+		La plupart des définitions sont contextualisées. Quelques-unes restent génériques sans lien explicite.
+		&
+		Plusieurs définitions sont déconnectées du contexte. L'apprenti ne fait pas le lien avec la pratique.
+		&
+		Aucune définition n'est mise en relation avec le contexte de la planification électrique. \\
+		\hline
+		Critère 6~: \textcolor{red}{COHÉRENCE} -- Articulation logique entre les définitions de concepts liés
+		
+		\smallskip
+		Question principale~: Les définitions de concepts proches (ex.~: cahier des charges / exigences / normes SIA) sont-elles cohérentes entre elles~?
+		&
+		Les définitions de concepts liés sont parfaitement cohérentes et complémentaires. Aucune contradiction.
+		&
+		Les définitions sont globalement cohérentes. Une légère incohérence ou chevauchement entre deux concepts.
+		&
+		Des incohérences ou des confusions sont présentes entre plusieurs concepts liés.
+		&
+		Les définitions sont contradictoires ou montrent une confusion totale entre les concepts. \\
+		\hline
+		Critère 7~: \textcolor{red}{RESPECT DES NORMES} -- Référence correcte aux normes SIA comme fondement du règlement intérieur
+		
+		\smallskip
+		Question principale~: L'apprenti identifie-t-il correctement le lien entre règlement intérieur et normes SIA dans ses définitions~?
+		&
+		Le lien entre règlement intérieur et normes SIA est clairement établi et correctement formulé.
+		&
+		Le lien est mentionné mais formulé de manière imprécise ou incomplète.
+		&
+		Le lien entre règlement intérieur et normes SIA est confus ou partiellement erroné.
+		&
+		Aucune référence aux normes SIA n'est présente ou le lien est entièrement faux. \\
+		\hline
+		Critère 8~: \textcolor{red}{RÉFLEXION} -- Capacité à distinguer des concepts proches
+		
+		\smallskip
+		Question principale~: L'apprenti parvient-il à différencier des concepts proches tels que compétences opérationnelles, objectifs évaluateurs et dimensions~?
+		&
+		Les distinctions entre concepts proches sont clairement établies avec des critères différenciateurs explicites.
+		&
+		Les distinctions sont généralement présentes mais manquent parfois de précision dans les critères différenciateurs.
+		&
+		Les distinctions sont partielles. Certains concepts proches sont confondus ou leurs différences ne sont pas expliquées.
+		&
+		Aucune distinction n'est opérée entre les concepts proches. Confusion généralisée. \\
+		\hline
+		Critère 9~: \textcolor{red}{COMMUNICATION TECHNIQUE} -- Qualité rédactionnelle adaptée au destinataire professionnel
+		\smallskip
+		Question principale~: Le style de rédaction est-il adapté à un contexte professionnel destiné au maître d'ouvrage ou à la direction de projet~?
+		&
+		La rédaction est soignée, professionnelle et adaptée au destinataire. Orthographe et syntaxe correctes.
+		&
+		La rédaction est globalement correcte. Quelques négligences orthographiques ou syntaxiques mineures.
+		&
+		La rédaction comporte de nombreuses fautes ou un style inadapté au contexte professionnel.
+		&
+		La rédaction est inexploitable en contexte professionnel. Fautes nombreuses et style inapproprié. \\
+		\hline
+		\multicolumn{5}{|c|}{\textbf{Total maximal~: 27 points (9 critères $\times$ 3 points)}} \\
+		\hline
+	\end{longtable}
+	
+\end{document}

@@ -1,0 +1,177 @@
+% ---
+% filename : "telecom_catv_20260520_007_composants_passifs_coaxiaux.tex"
+% id : "telecom_catv_20260520_007"
+% title : "Identification_des_composants_passifs_en_telereseau_CATV"
+% domain : "TELECOM"
+% subdomain : "coaxial"
+% tags : ["TC", "DIT", "suisse", "CATV", "coaxial", "impedance", "75_ohms"]
+% difficulty : 1
+% time_solve : 8
+% has_octave : false
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{07.06.2026}
+\newcommand\brancheTe{TC}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC IELE,PELE}
+\begin{questions}
+\question 
+
+Vous devez chercher sur l'Internet les deux composants décrits ci-dessous et expliquez brièvement leur rôle technique dans des installations coaxiales~:
+\begin{parts}
+    \part[3] Une résistance terminale.
+    \part[3] Un boîtier métallique muni d'une entrée "IN" et de plusieurs sorties symétriques pour la distribution du signal vers les appartements.
+\end{parts}
+
+
+\begin{solution}
+
+
+\begin{itemize}
+    \item \textbf{a)} : \textbf{Résistance terminale} (ou résistance finale) de \qty{75}{[\ohm]}. Son rôle est de fermer la ligne de transmission sur son impédance caractéristique afin d'absorber l'énergie du signal et d'empêcher les réflexions (Return Loss) qui dégraderaient la qualité de l'image (échos ou gel d'image en numérique).
+    \item \textbf{b)} : \textbf{Distributeur} (ou répartiteur). Son rôle est de diviser le signal d'entrée en plusieurs sorties ayant une atténuation de passage identique (symétrique). Dans un immeuble, il permet de dériver le signal vers les différents PEA (points en étoile d'appartement).
+\end{itemize}
+
+
+
+\end{solution}
+\end{questions}
+\end{document}

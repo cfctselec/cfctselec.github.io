@@ -1,0 +1,177 @@
+% ---
+% filename : "telecom_cablage_universel_20260520_009_next_paradiaphonie.tex"
+% id : "telecom_cablage_20260520_009"
+% title : "Analyse_de_la_paradiaphonie_NEXT_en_cablage_CUC"
+% domain : "TELECOM"
+% subdomain : "Câblage_Universel"
+% tags : ["TC", "DIT", "suisse", "CUC", "NEXT", "diaphonie", "mesure", "rj45"]
+% difficulty : 2
+% time_solve : 10
+% has_octave : false
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{07.06.2026}
+\newcommand\brancheTe{TC}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC IELE,PELE}
+\begin{questions}
+\question[3] Qu'entend-on par \textbf{NEXT} lors de la mesure d'un câble réseau à paires torsadées ? Choisissez la définition technique correcte parmi les propositions suivantes et justifiez votre choix en expliquant l'origine physique du phénomène~:
+ \begin{checkboxes}
+	\choice L'atténuation linéique du signal sur la longueur du câble.
+	\CorrectChoice La paradiaphonie : parasites induits sur une autre paire à l'extrémité locale (côté émetteur).
+	\choice L'atténuation de retour (Return Loss) due à un défaut d'impédance.
+	\choice La télédiaphonie : parasites induits sur une autre paire à l'extrémité distante.
+\end{checkboxes}
+
+\begin{solution}
+
+\textbf{Définition correcte :}
+Le \textbf{NEXT} (Near End CrossTalk) correspond à la \textbf{paradiaphonie}. Il s'agit des parasites induits par une paire émettrice sur une paire voisine, mesurés à l'extrémité locale, c'est-à-dire du même côté que l'émetteur.
+
+\textbf{Justification technique :}
+Physiquement, le courant circulant dans une paire crée un champ électromagnétique qui induit un courant parasite dans les paires adjacentes. Cet effet est particulièrement marqué au début de la liaison car le signal perturbateur y possède son intensité maximale (avant d'être atténué par la longueur du câble). 
+
+
+
+
+\end{solution}
+\end{questions}
+\end{document}

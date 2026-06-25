@@ -1,0 +1,194 @@
+% ---
+% filename : "telecom_services_20260520_008_tarification_numeros_speciaux.tex"
+% id : "telecom_services_20260520_008"
+% title : "Tarification_des_numeros_de_services_speciaux_en_Suisse"
+% domain : "TELECOM"
+% subdomain : "Services_Telephoniques"
+% tags : ["TC", "DIT", "suisse", "tarification", "0800", "0901", "084x", "OFCOM"]
+% difficulty : 1
+% time_solve : 8
+% has_octave : false
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{07.06.2026}
+\newcommand\brancheTe{TC}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC IELE,PELE}
+\begin{questions}
+\question[9]
+Donner un ordre de grandeur du prix des numéros surtaxés en suisse (basé sur les tarifs réseau fixe) :
+\begin{itemize}
+    \item \textbf{0800} (Numéros d'appel gratuits)
+    \item \textbf{0901} (Services à valeur ajoutée - Divertissement, jeux)
+    \item \textbf{084x} (Numéros de partage de frais)
+\end{itemize}
+
+Consultez votre support de cours de télécommunication sur les numéros spéciaux (chapitre 6.1.5) et vérifiez sur le site de l'OFCOM (Office fédéral de la communication) les dernières directives sur l'indication des prix pour les services à valeur ajoutée\\
+     \url{https://www.bakom.admin.ch/fr/autres-numeros-payants-ou-gratuits}
+
+\begin{solution}
+
+
+\begin{itemize}
+    \item \textbf{0800} $\rightarrow$ \qty{0.00}{[CHF]} (Le service est entièrement gratuit pour l'appelant, les frais étant supportés par le détenteur du numéro).
+    \item \textbf{0901} $\rightarrow$ \qty{1.00}{[CHF\per\minute]} (Service à valeur ajoutée pour le divertissement. Note : le tarif réel est défini par le prestataire mais cet ordre de grandeur est typique).
+    \item \textbf{084x} $\rightarrow$ \qty{0.075}{[CHF\per\minute]} (Maximum). Il s'agit d'un numéro à frais partagés où l'appelant paie un tarif proche de la communication locale, le reste étant à la charge du prestataire.
+\end{itemize}
+
+\section*{Résumé des tarifs (2026) des numéros suisses (OFCOM)}
+
+\renewcommand{\arraystretch}{1.8} % Augmente l'espace vertical entre les lignes
+
+\begin{tabularx}{\linewidth}{X>{\raggedright\arraybackslash}X}
+	\textbf{Préfixe} & \textbf{Prix} \\ \hline
+	0800 & Gratuit \\ 
+	084x & Tarif national unique, max. 7,5 cts/min + TVA (depuis fixe) \\ 
+	0900/0901/0906 & Libre, plafonds: 100 CHF base, 10 CHF/min, 400 CHF total \\ 
+	112, 117, 118, 144, 145, 147 & Gratuit (urgences) \\ 
+	Numéros courts payants & 20 cts à ~2 CHF/min et/ou par appel \\ 
+	SMS/MMS payants & Max. 100 CHF/message, 5 CHF/min, 400 CHF total; confirmation requise >10 CHF \\
+\end{tabularx}
+
+
+
+\end{solution}
+\end{questions}
+\end{document}
