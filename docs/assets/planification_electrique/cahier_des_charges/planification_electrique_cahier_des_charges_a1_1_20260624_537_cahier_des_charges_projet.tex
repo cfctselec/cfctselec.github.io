@@ -1,0 +1,332 @@
+% planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet.tex
+% ---
+% filename: ["planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet.tex"]
+% id: "planification_electrique_cahier_des_charges_a1_1_20260624_537"
+% title: "Cahier des charges de projet et règlement interne (a1.1)"
+% domain: "Planification électrique"
+% subdomain: "cahier_des_charges"
+% tags: ["cahier_des_charges_projet", "normes_SIA", "exigences_du_projet", "objectifs_du_projet", "planification_temps_ressources"]
+% difficulty: 2
+% time_solve: 45
+% has_octave: false
+% octave_files: []
+% author: "om"
+% orfo_code: "a1.1"
+% annee: "1ere_annee"
+% semestre: "S1"
+% periodes: 40
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+\usepackage{longtable}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{20.05.2026}
+\newcommand\brancheTe{a1.1}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+	\section*{Préparation TC PQ CFC IELE,PELE}
+
+
+	
+	\begin{questions}
+		
+		\question[20]{Cahier des charges de projet et règlement interne}
+		
+		\textbf{Situation professionnelle}
+		
+		Vous êtes apprenti planificateur-électricien CFC en première année chez ElectroPlan SA, un bureau d'étude basé à Lausanne et spécialisé dans la planification d'installations électriques pour des bâtiments tertiaires soumis aux normes SIA. Le bureau vient de recevoir un mandat pour la rénovation électrique complète d'un étage de bureaux dans un immeuble existant. Le maître d'ouvrage a transmis une note de mandat générale avec des objectifs de sécurité, d'efficacité énergétique et de flexibilité des postes de travail, mais sans préciser tous les détails techniques.  
+		
+		ElectroPlan SA dispose d'un règlement interne reprenant les extraits essentiels des normes SIA applicables aux installations électriques, à la coordination avec les autres corps de métier et à l'organisation du chantier. Sur cette base, le bureau souhaite établir un cahier des charges de projet clair et complet afin d'éviter les malentendus, de définir les exigences et de planifier les ressources nécessaires. Vous participez, sous la supervision de votre formateur, à l'analyse de ce mandat et à la préparation du cahier des charges.
+		
+		\begin{parts}
+			
+			% --------------------------------------------------
+			% BLOC 1 : VOCABULAIRE EXHAUSTIF
+			% --------------------------------------------------
+			
+			\part[1] Dans le contexte de la planification électrique, définissez précisément le terme suivant~: \textbf{cahier des charges de projet}. Précisez son rôle pour le maître d'ouvrage et pour le bureau d'étude.
+			\begin{solution}
+				Le cahier des charges de projet est un document écrit qui décrit de manière structurée le contexte, les objectifs, les exigences techniques et organisationnelles, les normes à respecter, les responsabilités et les délais d'un projet. Il sert de base contractuelle et technique entre le maître d'ouvrage et le bureau d'étude, permet de clarifier les attentes, de prévenir les malentendus et de guider la planification détaillée des installations électriques.
+			\end{solution}
+			
+			\part[1] Dans le texte fourni, définissez précisément le terme suivant~: \textbf{mandat de projet}. Expliquez en quoi il se distingue du cahier des charges de projet.
+			\begin{solution}
+				Le mandat de projet est la décision initiale du maître d'ouvrage de lancer un projet, avec une description générale du besoin, du budget approximatif, des délais souhaités et des objectifs globaux. Il est souvent plus bref et moins détaillé que le cahier des charges. Le cahier des charges de projet, lui, reprend et précise le mandat, en détaillant les exigences techniques et organisationnelles, les normes applicables et les responsabilités.
+			\end{solution}
+			
+			\part[1] Définissez le terme \textbf{besoins du maître d'ouvrage} dans le cadre d'un projet d'installation électrique.
+			\begin{solution}
+				Les besoins du maître d'ouvrage regroupent les attentes fonctionnelles, techniques, esthétiques, économiques et organisationnelles relatives au projet. Ils incluent par exemple le nombre de postes de travail, le niveau de confort et de sécurité souhaité, les exigences de flexibilité, les contraintes budgétaires et les délais. Ces besoins doivent être identifiés, documentés et traduits en exigences dans le cahier des charges de projet.
+			\end{solution}
+			
+			\part[1] Dans le contexte du cahier des charges, définissez le terme \textbf{exigences du projet}.
+			\begin{solution}
+				Les exigences du projet sont des conditions à respecter pour considérer le projet comme réussi. Elles peuvent être techniques (puissance disponible, niveaux d'éclairement, types de circuits), organisationnelles (délais d'exécution, phases de chantier), réglementaires (respect des normes SIA et prescriptions légales) ou qualitatives (fiabilité, maintenabilité). Elles sont formulées de manière vérifiable et servent de base pour la conception et le contrôle du projet.
+			\end{solution}
+			
+			\part[1] Expliquez le terme \textbf{objectifs du projet} tel qu'il apparaît dans le cahier des charges.
+			\begin{solution}
+				Les objectifs du projet décrivent les résultats à atteindre avec le projet d'installation électrique. Ils peuvent concerner la sécurité des personnes et des biens, l'efficacité énergétique, la flexibilité des installations, la disponibilité, le confort des utilisateurs ou l'image du bâtiment. Ils orientent toutes les décisions de planification et doivent être cohérents avec les besoins du maître d'ouvrage et les contraintes du projet.
+			\end{solution}
+			
+			\part[1] Dans le cadre de la planification électrique, définissez \textbf{normes SIA}.
+			\begin{solution}
+				Les normes SIA sont des normes techniques élaborées par la Société suisse des ingénieurs et des architectes. Elles fixent des exigences et des règles de bonne pratique pour la planification, la réalisation et l'exploitation des constructions, y compris les installations électriques. Elles servent de référence pour garantir la sécurité, la qualité, la coordination entre les corps de métier et la conformité aux prescriptions.
+			\end{solution}
+			
+			\part[1] Définissez le terme \textbf{règlement interne de l'entreprise} en lien avec les normes SIA.
+			\begin{solution}
+				Le règlement interne de l'entreprise regroupe les procédures, directives et standards internes propres au bureau d'étude ou à l'entreprise. Il peut reprendre et adapter les normes SIA et d'autres prescriptions pour les intégrer dans les méthodes de travail, la structure des documents, la gestion des dossiers, la communication interne et externe. Il sert de référence quotidienne aux collaborateurs, y compris aux apprentis.
+			\end{solution}
+			
+			\part[1] Expliquez le terme \textbf{droits et obligations} dans le contexte du cahier des charges de projet.
+			\begin{solution}
+				Les droits et obligations décrivent ce que chaque partie peut attendre de l'autre et ce qu'elle doit fournir ou respecter. Pour le maître d'ouvrage, il s'agit par exemple de fournir les informations nécessaires, de valider des décisions et de payer les prestations. Pour le bureau d'étude, cela inclut la fourniture d'études conformes aux normes, le respect des délais et la documentation. Le cahier des charges formalise ces droits et obligations pour éviter les conflits.
+			\end{solution}
+			
+			\part[1] Dans le contexte du projet, définissez \textbf{parties prenantes}.
+			\begin{solution}
+				Les parties prenantes sont toutes les personnes ou organisations impliquées ou concernées par le projet. Cela inclut le maître d'ouvrage, les utilisateurs, le bureau d'étude, les architectes, les ingénieurs spécialisés, les entreprises d'installation, les autorités, etc. Le cahier des charges doit tenir compte des besoins et des contraintes des principales parties prenantes.
+			\end{solution}
+			
+			\part[1] Définissez le terme \textbf{analyse de projet} dans le cadre de la compétence a1.
+			\begin{solution}
+				L'analyse de projet est la phase durant laquelle on examine le mandat, les documents de base, les normes et les besoins du maître d'ouvrage pour comprendre la situation initiale et les enjeux. Elle permet d'identifier les informations manquantes, les risques, les contraintes et les possibilités d'optimisation. Elle précède la rédaction détaillée du cahier des charges de projet.
+			\end{solution}
+			
+			\part[1] Dans le texte fourni, expliquez le terme \textbf{structure du cahier des charges de projet}.
+			\begin{solution}
+				La structure du cahier des charges de projet correspond à l'organisation des rubriques et des chapitres du document. Elle peut inclure par exemple le contexte, les objectifs, les exigences techniques, les exigences d'exploitation et de maintenance, les normes à respecter, les responsabilités, les délais et la documentation à fournir. Une structure claire aide à ne rien oublier et à faciliter la lecture pour toutes les parties prenantes.
+			\end{solution}
+			
+			\part[1] Définissez \textbf{prévention des malentendus} en lien avec le cahier des charges.
+			\begin{solution}
+				La prévention des malentendus consiste à formuler les objectifs, les exigences et les responsabilités de manière claire, complète et non ambiguë. Le cahier des charges contribue à cette prévention en décrivant précisément ce qui est attendu, les limites du mandat et les conditions-cadres. Cela réduit le risque de conflits, de retards et de coûts supplémentaires lors de la réalisation.
+			\end{solution}
+			
+			\part[1] Dans ce contexte, expliquez le terme \textbf{planification du temps}.
+			\begin{solution}
+				La planification du temps consiste à répartir les tâches du projet sur une échelle temporelle, à définir des jalons et à estimer la durée de chaque activité. Pour un apprenti, il s'agit par exemple de prévoir le nombre de périodes ou d'heures nécessaires pour analyser la situation, rédiger le cahier des charges et le faire valider. Cette planification permet de respecter les délais et de coordonner le travail avec les autres acteurs.
+			\end{solution}
+			
+			\part[1] Définissez \textbf{planification des ressources} dans un projet d'installation électrique.
+			\begin{solution}
+				La planification des ressources consiste à déterminer les moyens nécessaires pour réaliser le projet~: ressources humaines (personnes, compétences, temps), ressources matérielles (logiciels, documents, standards) et financières. Elle permet d'assurer que les ressources nécessaires sont disponibles au bon moment et en quantité suffisante, en lien avec la planification du temps.
+			\end{solution}
+			
+			\part[1] Dans le cadre d'un bureau d'étude, expliquez le terme \textbf{structure de données interne}.
+			\begin{solution}
+				La structure de données interne désigne la manière dont les documents, les fichiers et les informations sont organisés dans le système de l'entreprise, par exemple dans un serveur de fichiers ou un système de gestion de documents. Elle comprend des conventions de nommage, des répertoires, des modèles de documents et des procédures d'archivage. Elle facilite la recherche, le partage et la traçabilité des informations liées au cahier des charges.
+			\end{solution}
+			
+			\part[1] Définissez \textbf{coordination avec l'architecte} dans le cadre du cahier des charges.
+			\begin{solution}
+				La coordination avec l'architecte consiste à échanger les informations nécessaires sur la structure du bâtiment, les plans, les contraintes architecturales et les interfaces avec les installations électriques. Le cahier des charges doit préciser les responsabilités et les modalités de ces échanges, par exemple les formats de fichiers, les délais de remise des plans et les réunions de coordination.
+			\end{solution}
+			
+			\part[1] Expliquez le terme \textbf{interfaces avec les autres corps de métier}.
+			\begin{solution}
+				Les interfaces avec les autres corps de métier sont les points de contact entre les installations électriques et les autres domaines tels que le chauffage, la ventilation, la sécurité incendie ou les systèmes informatiques. Le cahier des charges doit décrire ces interfaces, préciser qui est responsable de quoi et comment les coordinations techniques seront réalisées afin d'éviter les conflits et les incompatibilités.
+			\end{solution}
+			
+			\part[1] Dans le texte fourni, définissez \textbf{programme de délais}.
+			\begin{solution}
+				Le programme de délais est un document qui présente la planification globale du projet avec les principales phases, les dates de début et de fin, ainsi que les jalons importants. Il permet à toutes les parties prenantes de connaître les échéances et de coordonner leurs activités. Le cahier des charges se réfère au programme de délais pour fixer les engagements temporels.
+			\end{solution}
+			
+			\part[1] Définissez le terme \textbf{document de base} dans l'analyse de projet.
+			\begin{solution}
+				Un document de base est un document initial utilisé pour comprendre la situation et préparer le cahier des charges. Il peut s'agir de la note de mandat, de plans existants, de rapports d'état des installations, de directives du maître d'ouvrage ou du règlement interne. Ces documents servent de référence pour identifier les besoins, les contraintes et les informations manquantes.
+			\end{solution}
+			
+			\part[1] Expliquez \textbf{validation du cahier des charges} avec le maître d'ouvrage.
+			\begin{solution}
+				La validation du cahier des charges est l'étape durant laquelle le maître d'ouvrage vérifie que le document correspond à ses besoins et à ses attentes. Après lecture et discussion, le maître d'ouvrage approuve le contenu ou demande des ajustements. La validation formalise l'accord entre les parties et permet de passer à la phase de conception détaillée.
+			\end{solution}
+			
+			% --------------------------------------------------
+			% BLOC 2 : COMPRÉHENSION TRANSVERSALE
+			% --------------------------------------------------
+			
+			\part[2] Expliquez en quoi le \textbf{cahier des charges de projet} permet de traduire les \textbf{besoins du maître d'ouvrage} en \textbf{exigences du projet} concrètes pour la planification électrique.
+			\begin{solution}
+				Le cahier des charges part des besoins exprimés par le maître d'ouvrage (confort, sécurité, flexibilité, budget, délais) et les reformule en exigences techniques et organisationnelles vérifiables. Par exemple, un besoin de flexibilité se traduit par des exigences sur le nombre de circuits, la modularité des prises et la réserve de puissance. Ainsi, le document fait le lien entre les attentes générales du client et les paramètres concrets que le planificateur doit respecter.
+			\end{solution}
+			
+			\part[2] Montrez le lien entre le \textbf{règlement interne basé sur les normes SIA} et la \textbf{prévention des malentendus} dans le cahier des charges.
+			\begin{solution}
+				Le règlement interne basé sur les normes SIA fournit des références claires et reconnues pour la sécurité, la qualité et la coordination. En s'appuyant sur ces références dans le cahier des charges, le planificateur évite les formulations vagues et subjectives et précise les règles à appliquer. Cela réduit le risque d'interprétations différentes entre le maître d'ouvrage, le bureau d'étude et les entreprises, et contribue à prévenir les malentendus.
+			\end{solution}
+			
+			% --------------------------------------------------
+			% BLOC 3 : APPLICATION CHIFFRÉE
+			% --------------------------------------------------
+			
+			\part[2] Pour ce projet, on estime que l'analyse du mandat, la préparation et la validation du cahier des charges représentent au total \qty{24}{heures} de travail pour le bureau d'étude. On répartit ces \qty{24}{heures} de la manière suivante~: \qty{25}{\percent} pour l'analyse de projet, \qty{50}{\percent} pour la rédaction du cahier des charges, et le reste pour la validation avec le maître d'ouvrage. Calculez le nombre d'heures prévues pour chaque phase.
+			\begin{solution}
+				On calcule d'abord les heures pour l'analyse et la rédaction~:
+				\[
+				\text{Analyse} = \qty{24}{heures} \cdot \dfrac{25}{100} = \qty{6}{heures}
+				\]
+				\[
+				\text{Rédaction} = \qty{24}{heures} \cdot \dfrac{50}{100} = \qty{12}{heures}
+				\]
+				Il reste alors~:
+				\[
+				\text{Validation} = \qty{24}{heures} - \qty{6}{heures} - \qty{12}{heures} = \qty{6}{heures}
+				\]
+				Les durées prévues sont donc~: \qty{6}{heures} pour l'analyse, \qty{12}{heures} pour la rédaction et \qty{6}{heures} pour la validation.
+			\end{solution}
+			
+			\part[2] Vous disposez de périodes d'enseignement de \qty{45}{minutes}. Vous souhaitez consacrer environ \qty{5}{periodes} à un travail en classe pour que les apprentis analysent des extraits de documents et rédigent un mini cahier des charges. Calculez la durée totale de ce travail en heures et en minutes.
+			\begin{solution}
+				Une période dure \qty{45}{minutes}. Pour \qty{5}{periodes}, la durée totale est~:
+				\[
+				\text{Durée totale} = \qty{5}{} \cdot \qty{45}{minutes} = \qty{225}{minutes}
+				\]
+				On convertit en heures~:
+				\[
+				\qty{225}{minutes} = \qty{3}{heures} \; \qty{45}{minutes}
+				\]
+				La durée totale de travail est donc de \qty{3}{heures} et \qty{45}{minutes}.
+			\end{solution}
+			
+		\end{parts}
+		
+	\end{questions}
+
+\end{document}

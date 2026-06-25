@@ -650,7 +650,7 @@ def process_exercises():
 
 if __name__ == "__main__":
     print("\n--- Menu principal ---")
-    print("1. Traiter les exercices existants (compilation, indexation)")
+    print("1. Traiter les exercices existants dans contribution (compilation, indexation)")
     print("2. Créer un nouvel exercice à partir d'un copier-coller LaTeX")
     print("3. Quitter")
     

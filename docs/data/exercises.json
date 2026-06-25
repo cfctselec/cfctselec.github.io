@@ -1138,5 +1138,67 @@
     "donnee_url": "assets/telecom/wireless/telecom_sans_fil_20260520_815_analyse_portee_wifi_donnee.pdf",
     "solution_url": "assets/telecom/wireless/telecom_sans_fil_20260520_815_analyse_portee_wifi_solution.pdf",
     "search_text": "optimisation_de_la_portee_wlan_en_milieu_obstrue telecom wireless tc dit suisse wlan wifi portée atténuation fréquence optimisation de la portee wlan en milieu obstrue telecom wireless tc dit suisse wlan wifi portee attenuation frequence"
+  },
+  {
+    "filename": [
+      "Planification_electrique_preparation_planification_a1_1_20250713_247_vocabulaire_orfo_a1_a2.tex"
+    ],
+    "id": "planification_electrique_preparation_planification_a1_120250713_247",
+    "title": "a1.1 – Vocabulaire exhaustif du cahier des charges et des normes SIA",
+    "domain": "PLANIFICATION ÉLECTRIQUE",
+    "subdomain": "Préparation_planification",
+    "tags": [
+      "a1_1",
+      "cahier_des_charges",
+      "normes_SIA",
+      "maître_d_ouvrage",
+      "liste_questions"
+    ],
+    "difficulty": 2,
+    "time_solve": 45,
+    "has_octave": false,
+    "octave_files": [],
+    "author": "om",
+    "orfo_code": "a1.1",
+    "annee": "1ere_annee",
+    "semestre": "S1",
+    "periodes": 40,
+    "date": "2026-06-25T08:23:13",
+    "tex_url": "assets/planification_electrique/preparation_planification/Planification_electrique_preparation_planification_a1_1_20250713_247_vocabulaire_orfo_a1_a2.tex",
+    "images": [],
+    "donnee_url": "assets/planification_electrique/preparation_planification/Planification_electrique_preparation_planification_a1_1_20250713_247_vocabulaire_orfo_a1_a2_donnee.pdf",
+    "solution_url": "assets/planification_electrique/preparation_planification/Planification_electrique_preparation_planification_a1_1_20250713_247_vocabulaire_orfo_a1_a2_solution.pdf",
+    "search_text": "a1.1 – vocabulaire exhaustif du cahier des charges et des normes sia planification électrique préparation_planification a1_1 cahier_des_charges normes_sia maître_d_ouvrage liste_questions a1 1vocabulaire exhaustif du cahier des charges et des normes sia planification electrique preparation planification a1 1cahier des charges normes sia maitre douvrage liste questions"
+  },
+  {
+    "filename": [
+      "planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet.tex"
+    ],
+    "id": "planification_electrique_cahier_des_charges_a1_120260624_537",
+    "title": "Cahier des charges de projet et règlement interne (a1.1)",
+    "domain": "PLANIFICATION ÉLECTRIQUE",
+    "subdomain": "Cahier_des_charges",
+    "tags": [
+      "cahier_des_charges_projet",
+      "normes_SIA",
+      "exigences_du_projet",
+      "objectifs_du_projet",
+      "planification_temps_ressources"
+    ],
+    "difficulty": 2,
+    "time_solve": 45,
+    "has_octave": false,
+    "octave_files": [],
+    "author": "om",
+    "orfo_code": "a1.1",
+    "annee": "1ere_annee",
+    "semestre": "S1",
+    "periodes": 40,
+    "date": "2026-06-25T08:33:26",
+    "tex_url": "assets/planification_electrique/cahier_des_charges/planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet.tex",
+    "images": [],
+    "donnee_url": "assets/planification_electrique/cahier_des_charges/planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet_donnee.pdf",
+    "solution_url": "assets/planification_electrique/cahier_des_charges/planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet_solution.pdf",
+    "search_text": "cahier des charges de projet et règlement interne (a1.1) planification électrique cahier_des_charges cahier_des_charges_projet normes_sia exigences_du_projet objectifs_du_projet planification_temps_ressources cahier des charges de projet et reglement interne a1 1planification electrique cahier des charges cahier des charges projet normes sia exigences du projet objectifs du projet planification temps ressources"
   }
 ]
