@@ -1,0 +1,204 @@
+% ---
+% filename : ["electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine.tex"]
+% id : "electrotechnique_electromagnetisme_20260827_212"
+% title : "Calcul du flux magnétique d'une bobine"
+% domain : "Électrotechnique"
+% subdomain : "Électromagnétisme"
+% tags : ["flux_magnétique", "bobine", "champ_magnétique", "solénoïde", "induction", "ts"]
+% difficulty : 2
+% time_solve : 8
+% has_octave : true
+% octave_files : ["electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+\usepackage{longtable}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{28.08.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question[6] Calculez le flux magnétique à l'intérieur d'une bobine de \qty{25}{[cm]} de longueur, sur laquelle sont enroulées \qty{800}{[spires]} formant une section de \qty{15}{[cm^2]}, parcourues par un courant de \qty{5}{[A]}.
+
+\begin{solution}
+La bobine possède un noyau d'air, sa perméabilité relative est donc $\mu_r = 1$. La perméabilité du vide est définie par la constante $\mu_0 = 4\pi \cdot 10^{-7}{[\text{H/m}]}$.
+
+Calcul de l'excitation magnétique (champ magnétique $H$) au centre de la bobine~:
+\begin{align*}
+H &= \dfrac{N \cdot I}{l} \\[6pt]
+H &= \dfrac{800 \cdot \qty{5}{[A]}}{\qty{0,25}{[m]}} = \qty{16000}{[A/m]}
+\end{align*}
+
+Calcul de l'induction magnétique ($B$) :
+\begin{align*}
+B &= \mu_0 \cdot \mu_r \cdot H \\[6pt]
+B &= 4\pi \cdot 10^{-7} \cdot 1 \cdot 16000 = \qty{0,020106}{[T]}
+\end{align*}
+
+Calcul du flux magnétique ($\Phi$) à travers la section transversale $S$ :
+La section doit être convertie en mètres carrés : $S = \qty{15}{[cm^2]} = \qty{15e-4}{[m^2]}$.
+\begin{align*}
+\Phi &= B \cdot S \\[6pt]
+\Phi &= \qty{0,020106}{[T]} \cdot \qty{15e-4}{[m^2]} = \qty{3,0159e-5}{[Wb]} = \qty{30,159}{[\mu Wb]}
+\end{align*}
+
+\begin{verbatim}
+% Données de l'énoncé
+N = 800;              % Nombre de spires
+l = 0.25;             % Longueur de la bobine [m] (25 cm)
+S = 15e-4;            % Section de la bobine [m^2] (15 cm^2)
+I = 5;                % Intensité du courant [A]
+mu_0 = 4 * pi * 1e-7; % Perméabilité du vide [H/m]
+
+% 1. Calcul du champ magnétique H
+H = (N * I) / l;
+printf("Champ magnétique : H = %.2f [A/m]\n", H);
+
+% 2. Calcul de l'induction magnétique B
+B = mu_0 * H;
+printf("Induction magnétique : B = %.6f [T]\n", B);
+
+% 3. Calcul du flux magnétique Phi
+Phi = B * S;
+printf("Flux magnétique : Phi = %.8e [Wb] (soit %.3f [uWb])\n", Phi, Phi * 1e6);
+\end{verbatim}
+\end{solution}
+\end{questions}
+\end{document}

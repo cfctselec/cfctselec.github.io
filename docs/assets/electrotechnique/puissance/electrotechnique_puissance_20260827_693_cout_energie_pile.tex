@@ -1,0 +1,200 @@
+% ---
+% filename : ["electrotechnique_puissance_20260827_693_cout_energie_pile.tex"]
+% id : "electrotechnique_puissance_20260827_693"
+% title : "Coût de l'énergie d'une pile"
+% domain : "Électrotechnique"
+% subdomain : "Puissance"
+% tags : ["énergie_électrique", "pile", "capacité", "coût", "ts"]
+% difficulty : 1
+% time_solve : 4
+% has_octave : true
+% octave_files : ["electrotechnique_puissance_20260827_693_cout_energie_pile.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+\usepackage{longtable}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{28.08.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question[6] Une pile d'une tension de \qty{4,5}{[V]} et d'une capacité de \qty{3}{[Ah]} coûte \qty{1,50}{CHF}.\\Quel est le prix en CHF de la conversion pour \qty{1}{[kWh]} d'énergie ?
+
+\begin{solution}
+
+Calcul de l'énergie totale emmagasinée par la pile ($W$) :
+\begin{align*}
+W &= U \cdot C \\[6pt]
+W &= \qty{4,5}{[V]} \cdot \qty{3}{[Ah]} = \qty{13,5}{[Wh]}
+\end{align*}
+
+Conversion de l'énergie totale en kilowattheures ($W_{kWh}$) :
+\begin{align*}
+W_{kWh} &= \dfrac{W}{\qty{1000}{[Wh/kWh]}} \\[6pt]
+W_{kWh} &= \dfrac{\qty{13,5}{[Wh]}}{\qty{1000}{[Wh/kWh]}} = \qty{0,0135}{[kWh]}
+\end{align*}
+
+Calcul du coût de l'énergie par kilowattheure ($C_{kWh}$) :
+\begin{align*}
+C_{kWh} &= \dfrac{\text{Prix}}{W_{kWh}} \\[6pt]
+C_{kWh} &= \dfrac{\qty{1,50}{[CHF]}}{\qty{0,0135}{[kWh]}} = \qty{111,1111}{[CHF/kWh]}
+\end{align*}
+
+\begin{verbatim}
+% Données de l'énoncé
+U = 4.5;          % Tension de la pile [V]
+C = 3;            % Capacité de la pile [Ah]
+prix = 1.50;      % Prix d'achat de la pile [CHF]
+
+% 1. Calcul de l'énergie totale en Wh (notion d'énergie notée W)
+W_wh = U * C;
+printf("Énergie totale de la pile : W_wh = %.2f [Wh]\n", W_wh);
+
+% 2. Conversion de l'énergie en kWh
+W_kwh = W_wh / 1000;
+printf("Énergie totale en kWh : W_kwh = %.5f [kWh]\n", W_kwh);
+
+% 3. Calcul du coût du kWh d'énergie
+cout_kwh = prix / W_kwh;
+printf("Coût du kWh d'énergie : cout_kwh = %.4f [CHF/kWh]\n", cout_kwh);
+\end{verbatim}
+\end{solution}
+\end{questions}
+\end{document}
