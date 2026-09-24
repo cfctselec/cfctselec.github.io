@@ -345,7 +345,7 @@ def create_new_exercise_from_input():
     print("\n--- 🛠️ CONFIGURATION DES MÉTADONNÉES ---")
     print("Appuyez sur ENTREE pour conserver la valeur par défaut.\n")
 
-    nomauteur_val = prompt_with_default("E-mail de l'auteur", 
+    nomauteur_val = prompt_with_default("e-mail de l'auteur", 
                                         user_meta.get("author", "bdminasmorgul@protonmail.com"))
     dateTe_val = prompt_with_default("Date de l'épreuve", 
                                      user_meta.get("dateTe", datetime.date.today().strftime("%d.%m.%Y")))
