@@ -1,0 +1,200 @@
+% ---
+% filename : ["electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus.tex"]
+% id : "electrotechnique_circuits_ac_20260827_694"
+% title : "Hauteur d'image d'une tension alternative à l'oscilloscope"
+% domain : "Électrotechnique"
+% subdomain : "Circuits_AC"
+% tags : ["oscilloscope", "tension_alternative", "valeur_efficace", "tension_crête_à_crête", "ts"]
+% difficulty : 2
+% time_solve : 8
+% has_octave : true
+% octave_files : ["electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+\usepackage{longtable}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{28.08.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question[3] Un oscilloscope présente une déviation verticale de \qty{0,5}{[mm/V]}. Quelle sera la hauteur de l'image d'une tension alternative sinusoïdale de \qty{35,36}{[V]} efficaces, mesurée pointe à pointe ?
+
+\begin{solution}
+La hauteur de l'image sur l'écran d'un oscilloscope correspond à l'amplitude totale de la tension visualisée, c'est-à-dire sa valeur crête-à-crête (pointe à pointe). Nous devons d'abord déterminer la tension maximale à partir de la tension efficace fournie, en déduire la tension crête-à-crête, puis appliquer la sensibilité de déviation verticale de l'appareil.
+
+Calcul de la tension maximale (crête) $U_{max}$ :
+\begin{align*}
+U_{max} &= U_{eff} \cdot \sqrt{2} \\[6pt]
+U_{max} &= \qty{35,36}{[V]} \cdot \sqrt{2} = \qty{50,0069}{[V]}
+\end{align*}
+
+Calcul de la tension crête-à-crête (pointe à pointe) $U_{pp}$ :
+\begin{align*}
+U_{pp} &= 2 \cdot U_{max} \\[6pt]
+U_{pp} &= 2 \cdot \qty{50,0069}{[V]} = \qty{100,0137}{[V]}
+\end{align*}
+
+Calcul de la hauteur de l'image sur l'écran ($h$) :
+\begin{align*}
+h &= U_{pp} \cdot S_v \\[6pt]
+h &= \qty{100,0137}{[V]} \cdot \qty{0,5}{[mm/V]} = \qty{50,0069}{[mm]}
+\end{align*}
+
+\begin{verbatim}
+% Données de l'énoncé
+U_eff = 35.36;    % Tension efficace de l'onde alternative [V]
+S_v = 0.5;        % Déviation verticale de l'oscilloscope [mm/V]
+
+% 1. Calcul de la tension maximale (crête)
+U_max = U_eff * sqrt(2);
+printf("Tension maximale : U_max = %.4f [V]\n", U_max);
+
+% 2. Calcul de la tension crête-à-crête
+U_pp = 2 * U_max;
+printf("Tension crête-à-crête : U_pp = %.4f [V]\n", U_pp);
+
+% 3. Calcul de la hauteur verticale de l'image
+h = U_pp * S_v;
+printf("Hauteur verticale de l'image : h = %.4f [mm]\n", h);
+\end{verbatim}
+\end{solution}
+\end{questions}
+\end{document}

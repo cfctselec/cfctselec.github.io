@@ -1200,5 +1200,96 @@
     "donnee_url": "assets/planification_electrique/cahier_des_charges/planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet_donnee.pdf",
     "solution_url": "assets/planification_electrique/cahier_des_charges/planification_electrique_cahier_des_charges_a1_1_20260624_537_cahier_des_charges_projet_solution.pdf",
     "search_text": "cahier des charges de projet et règlement interne (a1.1) planification électrique cahier_des_charges cahier_des_charges_projet normes_sia exigences_du_projet objectifs_du_projet planification_temps_ressources cahier des charges de projet et reglement interne a1 1planification electrique cahier des charges cahier des charges projet normes sia exigences du projet objectifs du projet planification temps ressources"
+  },
+  {
+    "filename": [
+      "electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine.tex"
+    ],
+    "id": "electrotechnique_electromagnetisme_20260827_212",
+    "title": "Calcul du flux magnétique d'une bobine",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Électromagnétisme",
+    "tags": [
+      "flux_magnétique",
+      "bobine",
+      "champ_magnétique",
+      "solénoïde",
+      "induction",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 8,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine.m"
+    ],
+    "author": "om",
+    "date": "2026-08-28T07:52:34",
+    "tex_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine_donnee.pdf",
+    "solution_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine_solution.pdf",
+    "octave_url": "assets/electrotechnique/electromagnetisme/electrotechnique_electromagnetisme_20260827_212_flux_magnetique_bobine.m",
+    "search_text": "calcul du flux magnétique d'une bobine électrotechnique électromagnétisme flux_magnétique bobine champ_magnétique solénoïde induction ts calcul du flux magnetique dune bobine electrotechnique electromagnetisme flux magnetique bobine champ magnetique solenoide induction ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_puissance_20260827_693_cout_energie_pile.tex"
+    ],
+    "id": "electrotechnique_puissance_20260827_693",
+    "title": "Coût de l'énergie d'une pile",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Puissance",
+    "tags": [
+      "énergie_électrique",
+      "pile",
+      "capacité",
+      "coût",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 4,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_puissance_20260827_693_cout_energie_pile.m"
+    ],
+    "author": "om",
+    "date": "2026-08-28T08:51:50",
+    "tex_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260827_693_cout_energie_pile.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260827_693_cout_energie_pile_donnee.pdf",
+    "solution_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260827_693_cout_energie_pile_solution.pdf",
+    "octave_url": "assets/electrotechnique/puissance/electrotechnique_puissance_20260827_693_cout_energie_pile.m",
+    "search_text": "coût de l'énergie d'une pile électrotechnique puissance énergie_électrique pile capacité coût ts cout de lenergie dune pile electrotechnique puissance energie electrique pile capacite cout ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus.tex"
+    ],
+    "id": "electrotechnique_circuits_ac_20260827_694",
+    "title": "Hauteur d'image d'une tension alternative à l'oscilloscope",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Circuits_AC",
+    "tags": [
+      "oscilloscope",
+      "tension_alternative",
+      "valeur_efficace",
+      "tension_crête_à_crête",
+      "ts"
+    ],
+    "difficulty": 2,
+    "time_solve": 8,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus.m"
+    ],
+    "author": "om",
+    "date": "2026-08-28T09:07:12",
+    "tex_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus_donnee.pdf",
+    "solution_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus_solution.pdf",
+    "octave_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus.m",
+    "search_text": "hauteur d'image d'une tension alternative à l'oscilloscope électrotechnique circuits_ac oscilloscope tension_alternative valeur_efficace tension_crête_à_crête ts hauteur dimage dune tension alternative al oscilloscope electrotechnique circuits ac oscilloscope tension alternative valeur efficace tension crete acrete ts"
   }
 ]
