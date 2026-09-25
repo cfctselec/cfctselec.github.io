@@ -1,0 +1,239 @@
+% ---
+% filename : "electrotechnique_machines_20260923_418_nb_paires_poles_glissement.tex"
+% id : "electrotechnique_machines_20260923_418"
+% title : "Nombre de paires de pôles et glissement d'un moteur asynchrone"
+% domain : "Électrotechnique"
+% subdomain : "Machines"
+% tags : ["moteur_asynchrone", "triphasé", "glissement", "frequence_synchronisme", "paires_de_pôles"]
+% difficulty : 1
+% time_solve : 8
+% has_octave : true
+% octave_files : ["electrotechnique_machines_20260923_418_nb_paires_poles_glissement.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+\usepackage{longtable}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{23.09.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question
+Un moteur asynchrone triphasé est relié au réseau \qty{400}{[V]}/\qty{230}{[V]} – \qty{50}{[Hz]}. En pleine charge, sa fréquence de rotation est \qty{1425}{[tr/min]}.
+
+Déterminer :
+
+\begin{parts}
+    \part[3] le nombre de paires de pôles du stator.
+    \part[3] le glissement du moteur en pleine charge.
+\end{parts}
+
+\begin{solution}
+
+La fréquence de synchronisme d'un moteur asynchrone triphasé dépend directement du nombre de paires de pôles selon la relation suivante, où $f$ est la fréquence du réseau et $p$ le nombre de paires de pôles~:
+\begin{align*}
+    n_s = \dfrac{60 \cdot f}{p}
+\end{align*}
+Pour $f = \qty{50}{[Hz]}$, les fréquences de synchronisme possibles selon le nombre de paires de pôles sont~:
+\begin{align*}
+    p = 1 \quad &\Rightarrow \quad n_s = \qty{3000}{[tr/min]} \\[6pt]
+    p = 2 \quad &\Rightarrow \quad n_s = \qty{1500}{[tr/min]} \\[6pt]
+    p = 3 \quad &\Rightarrow \quad n_s = \qty{1000}{[tr/min]} \\[6pt]
+    p = 4 \quad &\Rightarrow \quad n_s = \qty{750}{[tr/min]}
+\end{align*}
+
+1. Nombre de paires de pôles
+
+On exprime $p$ à partir de la relation de synchronisme :
+\begin{align*}
+    p = \dfrac{60 \cdot f}{n_s} = \dfrac{60 \cdot 50}{1500} = \dfrac{3000}{1500} = 2
+\end{align*}
+Le stator possède donc \boxed{2 \text{ paires de pôles}}
+
+2. Glissement en pleine charge
+
+Le glissement est défini par le rapport entre la fréquence de glissement ($n_s - n$) et la fréquence de synchronisme~:
+\begin{align*}
+    s = \dfrac{n_s - n}{n_s} = \dfrac{1500 - 1425}{1500} = \dfrac{75}{1500} = 0,05 \\[6pt]
+    s_{\%} = 0,05 \cdot 100 = 5 \text{ \%}
+\end{align*}
+
+Le glissement en pleine charge est donc \boxed{s = 0,05 = 5 \text{ \%}}, valeur typique pour un moteur asynchrone à rotor à cage en régime nominal.
+\newpage
+\begin{verbatim}
+% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+% Puis copier-coller le code dans OCTAVE
+
+% Données de l'exercice
+f = 50;        % Fréquence du réseau [Hz]
+n = 1425;      % Fréquence du rotor en pleine charge [tr/min]
+
+% 1. Recherche du nombre de paires de pôles
+% Les fréquences de synchronisme possibles sont n_s = 60*f/p
+% On recherche p tel que n_s est la valeur la plus proche de n
+% (le rotor tourne toujours légèrement en dessous de n_s)
+p = 1;
+while (true)
+  n_s = 60 * f / p;
+  printf("p = %d paires de pôles  ->  n_s = %.0f tr/min\n", p, n_s);
+  if (n_s <= n)
+    % On conserve la dernière valeur de n_s supérieure à n
+    if (p > 1)
+      p = p - 1;
+      n_s = 60 * f / p;
+    end
+    break;
+  end
+  p = p + 1;
+end
+
+printf("\n--- Résultats ---\n");
+printf("Nombre de paires de pôles du stator : p = %d (soit %d pôles)\n", p, 2*p);
+printf("Fréquence de synchronisme retenue     : n_s = %.0f tr/min\n", n_s);
+
+% 2. Calcul du glissement
+g = (n_s - n) / n_s;
+printf("Glissement                          : g = %.4f\n", g);
+printf("Glissement en pourcentage           : g = %.1f %%\n", g * 100);
+\end{verbatim}
+
+\end{solution}
+\end{questions}
+\end{document}

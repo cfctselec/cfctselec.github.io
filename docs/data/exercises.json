@@ -1291,5 +1291,93 @@
     "solution_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus_solution.pdf",
     "octave_url": "assets/electrotechnique/circuits_ac/electrotechnique_circuits_ac_20260827_694_hauteur_oscilloscope_sinus.m",
     "search_text": "hauteur d'image d'une tension alternative à l'oscilloscope électrotechnique circuits_ac oscilloscope tension_alternative valeur_efficace tension_crête_à_crête ts hauteur dimage dune tension alternative al oscilloscope electrotechnique circuits ac oscilloscope tension alternative valeur efficace tension crete acrete ts"
+  },
+  {
+    "filename": [
+      "electrotechnique_machines_20260922_137_moteur_monophase_plaque_signaletique.tex"
+    ],
+    "id": "electrotechnique_machines_20260922_137",
+    "title": "Calcul du courant nominal et réglage de la protection thermique d'un moteur monophasé",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Machines",
+    "tags": [
+      "moteur_monophasé",
+      "plaque_signalétique",
+      "courant_nominal",
+      "protection_thermique",
+      "rendement",
+      "cos_phi",
+      "ts"
+    ],
+    "difficulty": 1,
+    "time_solve": 4,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_machines_20260922_137_moteur_monophase_plaque_signaletique.m"
+    ],
+    "author": "om",
+    "date": "2026-09-22T23:14:23",
+    "tex_url": "assets/electrotechnique/machines/electrotechnique_machines_20260922_137_moteur_monophase_plaque_signaletique.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/machines/electrotechnique_machines_20260922_137_moteur_monophase_plaque_signaletique_donnee.pdf",
+    "solution_url": "assets/electrotechnique/machines/electrotechnique_machines_20260922_137_moteur_monophase_plaque_signaletique_solution.pdf",
+    "octave_url": "assets/electrotechnique/machines/electrotechnique_machines_20260922_137_moteur_monophase_plaque_signaletique.m",
+    "search_text": "calcul du courant nominal et réglage de la protection thermique d'un moteur monophasé électrotechnique machines moteur_monophasé plaque_signalétique courant_nominal protection_thermique rendement cos_phi ts calcul du courant nominal et reglage de la protection thermique dun moteur monophase electrotechnique machines moteur monophase plaque signaletique courant nominal protection thermique rendement cos phi ts"
+  },
+  {
+    "filename": "electrotechnique_machines_20260923_418_nb_paires_poles_glissement.tex",
+    "id": "electrotechnique_machines_20260923_418",
+    "title": "Nombre de paires de pôles et glissement d'un moteur asynchrone",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Machines",
+    "tags": [
+      "moteur_asynchrone",
+      "triphasé",
+      "glissement",
+      "frequence_synchronisme",
+      "paires_de_pôles"
+    ],
+    "difficulty": 1,
+    "time_solve": 8,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_machines_20260923_418_nb_paires_poles_glissement.m"
+    ],
+    "author": "om",
+    "date": "2026-09-23T00:05:30",
+    "tex_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_418_nb_paires_poles_glissement.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_418_nb_paires_poles_glissement_donnee.pdf",
+    "solution_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_418_nb_paires_poles_glissement_solution.pdf",
+    "octave_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_418_nb_paires_poles_glissement.m",
+    "search_text": "nombre de paires de pôles et glissement d'un moteur asynchrone électrotechnique machines moteur_asynchrone triphasé glissement frequence_synchronisme paires_de_pôles nombre de paires de poles et glissement dun moteur asynchrone electrotechnique machines moteur asynchrone triphase glissement frequence synchronisme paires de poles"
+  },
+  {
+    "filename": "electrotechnique_machines_20260923_217_paires_poles_frequence.tex",
+    "id": "electrotechnique_machines_20260923_217",
+    "title": "Paires de pôles et fréquence à 50 Hz d'un moteur asynchrone triphasé",
+    "domain": "ÉLECTROTECHNIQUE",
+    "subdomain": "Machines",
+    "tags": [
+      "moteur_asynchrone",
+      "triphasé",
+      "fréquence_synchrone",
+      "glissement",
+      "paire_de_pôles"
+    ],
+    "difficulty": 2,
+    "time_solve": 8,
+    "has_octave": true,
+    "octave_files": [
+      "electrotechnique_machines_20260923_217_paires_poles_frequence.m"
+    ],
+    "author": "om",
+    "date": "2026-09-23T00:33:26",
+    "tex_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_217_paires_poles_frequence.tex",
+    "images": [],
+    "donnee_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_217_paires_poles_frequence_donnee.pdf",
+    "solution_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_217_paires_poles_frequence_solution.pdf",
+    "octave_url": "assets/electrotechnique/machines/electrotechnique_machines_20260923_217_paires_poles_frequence.m",
+    "search_text": "paires de pôles et fréquence à 50 hz d'un moteur asynchrone triphasé électrotechnique machines moteur_asynchrone triphasé fréquence_synchrone glissement paire_de_pôles paires de poles et frequence a50 hz dun moteur asynchrone triphase electrotechnique machines moteur asynchrone triphase frequence synchrone glissement paire de poles"
   }
 ]

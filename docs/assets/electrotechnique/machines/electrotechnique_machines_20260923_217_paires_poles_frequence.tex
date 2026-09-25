@@ -1,0 +1,227 @@
+% ---
+% filename : "electrotechnique_machines_20260923_217_paires_poles_frequence.tex"
+% id : "electrotechnique_machines_20260923_217"
+% title : "Paires de pôles et fréquence à 50 Hz d'un moteur asynchrone triphasé"
+% domain : "Électrotechnique"
+% subdomain : "Machines"
+% tags : ["moteur_asynchrone", "triphasé", "fréquence_synchrone", "glissement", "paire_de_pôles"]
+% difficulty : 2
+% time_solve : 8
+% has_octave : true
+% octave_files : ["electrotechnique_machines_20260923_217_paires_poles_frequence.m"]
+% author : "om"
+% ---
+\documentclass[a4paper,12pt,answers,addpoints]{exam}
+
+% ---------------------------------------------------------
+% LANGUE, ENCODAGE, FONTS
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+
+% ---------------------------------------------------------
+% GÉOMÉTRIE ET MISE EN PAGE
+% ---------------------------------------------------------
+\usepackage[left=1.7cm,right=1.5cm,top=2cm,bottom=1cm]{geometry}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{needspace}
+
+% ---------------------------------------------------------
+% MATHÉMATIQUES
+% ---------------------------------------------------------
+\usepackage{amsmath, amssymb, bm, esvect}
+
+\newcommand{\V}{\overrightarrow}
+\def\vect#1{\overrightarrow{\strut#1}}
+\providecommand{\Degrees}[0]{\ensuremath{^\circ}}
+
+% ---------------------------------------------------------
+% UNITÉS ET GRANDEURS (SIunitx)
+% ---------------------------------------------------------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\DeclareSIUnit \var {var}
+\DeclareSIUnit \VA {VA}
+\DeclareSIUnit \kVA {kVA}
+\DeclareSIUnit[quantity-product={}] \degree{\text{\textdegree}}
+
+% Permet la césure dans les nombres avec unités (évite les Underfull \hbox)
+%\AllowBreakAtQQ
+
+% ---------------------------------------------------------
+% GRAPHIQUES : TikZ + CircuitikZ (sans tkz-fct qui cause des erreurs spath3)
+% ---------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	intersections,
+	decorations.pathreplacing,
+	%	calligraphy,
+	positioning
+}
+
+\usepackage[european,straightvoltages,EFvoltages]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+
+% Symbole étoile-triangle personnalisé
+\newcommand{\wye}{%
+	\mathbin{\tikz[x=1ex,y=1ex]{%
+			\draw[line width=.1ex] (0,0)--(45:1)--++(-45:1) (45:1)--++(0,1);
+	}}%
+}
+
+% ---------------------------------------------------------
+% TABLEAUX
+% ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{tabu}
+\usepackage{longtable}
+
+% ---------------------------------------------------------
+% HYPERLIENS
+% ---------------------------------------------------------
+\usepackage[colorlinks=true,
+menucolor=red,
+breaklinks=true,
+urlcolor=blue,
+linkcolor=blue]{hyperref}
+
+% ---------------------------------------------------------
+% COMMANDES PERSONNELLES
+% ---------------------------------------------------------
+\newcommand\nomauteur{bdminasmorgul@protonmail.com}
+\newcommand\dateTe{23.09.2026}
+\newcommand\brancheTe{TS}
+
+% ---------------------------------------------------------
+% STYLE DE L'EXERCICE
+% ---------------------------------------------------------
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+
+% En-tête avec largeur fixe pour éviter les dépassements
+\firstpageheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+\runningheader{\brancheTe\ (\nomauteur)}{Élève : }{\makebox[3.5cm][r]{\dateTe\ \thepage/\numpages}}
+
+% Pied de page
+\newcommand{\totalpointtts}{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west, inner sep=0pt, outer sep=0pt]
+		at ([xshift=0.5cm,yshift=0.5cm]current page.south west)
+		{\rotatebox{90}{Total des points : \numpoints}};
+	\end{tikzpicture}%
+}
+
+\firstpagefooter{\hspace*{\fill}\totalpointtts}{}{}
+\runningfooter{\hspace*{\fill}\totalpointtts}{}{}
+
+% Réglages exam
+\printanswers
+\addpoints
+\pointsinmargin
+\bracketedpoints
+
+% ---------------------------------------------------------
+% LISTINGS (code)
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{octavestyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*), ref=\alph*)}
+\newenvironment{explication}{%
+	\par\noindent\textbf{Explication. }\itshape
+}{\par\normalfont}
+\renewcommand\partlabel{\arabic{partno}.}
+\begin{document}
+	\unframedsolutions
+	\pointsinmargin
+	\bracketedpoints
+	
+\section*{Préparation TS PQ CFC ELMO,IELE,PELE}
+\begin{questions}
+\question
+D'après sa plaque signalétique, un moteur asynchrone triphasé, fabriqué aux USA, tourne à \qty{850}{[tr/min]} pour une fréquence du réseau de \qty{60}{[Hz]}.
+\begin{parts}
+\part[3] Combien comporte-t-il de paires de pôles~?
+\part[3] Quelle est sa fréquence de rotation s'il est alimenté sous \qty{50}{[Hz]}~?
+\end{parts}
+
+\begin{solution}
+	
+1. Determination du nombre de paires de poles.
+
+La fréquence de rotation d'un moteur asynchrone est toujours legerement inferieure a sa fréquence de synchronisme, donnee par :
+\begin{align*}
+n_s = \dfrac{60 \cdot f}{p}
+\end{align*}
+avec $p$ le nombre de paires de poles. Pour $f = \qty{60}{[Hz]}$, les fréquences de synchronisme possibles sont \qty{3600}{[tr/min]} ($p=1$), \qty{1800}{[tr/min]} ($p=2$), \qty{1200}{[tr/min]} ($p=3$), \qty{900}{[tr/min]} ($p=4$), \qty{720}{[tr/min]} ($p=5$), etc. La fréquence de \qty{850}{[tr/min]} n'etant possible que juste en dessous de \qty{900}{[tr/min]} (un moteur asynchrone ne peut tourner qu'en dessous de sa fréquence de synchronisme), on retient :
+\begin{align*}
+n_s = \qty{900}{[tr/min]} \quad \Rightarrow \quad p = \dfrac{60 \cdot f}{n_s} = \dfrac{60 \cdot 60}{900} = 4
+\end{align*}
+Le moteur comporte donc 4 paires de poles, soit 8 poles.
+
+2. Calcul du glissement a 60 Hz.
+
+\begin{align*}
+s = \dfrac{n_s - n}{n_s} = \dfrac{900 - 850}{900} = 0,0556
+\end{align*}
+Le glissement vaut environ \qty{5,56}{\%}.
+
+3. fréquence de rotation a 50 Hz.
+
+La nouvelle fréquence de synchronisme vaut :
+\begin{align*}
+n_{s50} = \dfrac{60 \cdot f}{p} = \dfrac{60 \cdot 50}{4} = \qty{750}{[tr/min]}
+\end{align*}
+En supposant que le moteur entraine la meme charge, le glissement est identique. Sa fréquence de rotation devient alors :
+\begin{align*}
+n_{50} = n_{s50} \cdot (1 - s) = 750 \cdot (1 - 0,0556) = \qty{708,3}{[tr/min]}
+\end{align*}
+
+
+\newpage
+\begin{verbatim}
+% Télécharger OCTAVE depuis https://wiki.octave.org/Using_Octave et l'installer
+% Puis copier-coller le code dans OCTAVE
+f_usa = 60;          % frequence du reseau americain [Hz]
+n     = 850;         % fréquence de rotation relevee [tr/min]
+
+% 1. fréquence de synchronisme la plus proche au-dessus de 850 tr/min a 60 Hz
+p = 4;               % nombre de paires de poles recherche
+ns_60 = 60 * f_usa / p;
+printf("fréquence de synchronisme a 60 Hz : ns = %.0f tr/min\n", ns_60);
+
+% Verification : p recalcule a partir de ns
+p_calc = 60 * f_usa / ns_60;
+printf("Nombre de paires de poles : p = %.0f (soit %.0f poles)\n", p_calc, 2*p_calc);
+
+% 2. Glissement a 60 Hz
+s = (ns_60 - n) / ns_60;
+printf("Glissement : s = %.4f soit %.2f %%\n", s, 100*s);
+
+% 3. fréquence a 50 Hz (meme charge => glissement identique)
+f_fr = 50;
+ns_50 = 60 * f_fr / p_calc;
+n_50  = ns_50 * (1 - s);
+printf("fréquence de synchronisme a 50 Hz : ns = %.0f tr/min\n", ns_50);
+printf("fréquence de rotation a 50 Hz : n = %.1f tr/min\n", n_50);
+\end{verbatim}
+\end{solution}
+\end{questions}
+\end{document}
